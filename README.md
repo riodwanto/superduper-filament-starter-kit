@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/1odp/superduper-filament-starter-kit/assets/5293897/2324ac90-8879-4a59-82f5-8128aef9744a" alt="Alt text for the image" width="200"/>
+  <img src="https://i.postimg.cc/4djrcJXx/logo.png" alt="Starter kit logo" width="200"/>
 </p>
 
 ## Introduction
