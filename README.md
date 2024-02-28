@@ -30,7 +30,7 @@ To start using this as your kickstart, follow these steps:
 Create project with this composer command
 
 ```bash
-composer create-project 1odp/superduper-filament-starter-kit
+composer create-project riodwanto/superduper-filament-starter-kit
 ```
 
 Setup your environment
@@ -78,4 +78,4 @@ These are [Filament Plugins](https://filamentphp.com/plugins) that used for this
 
 Filament Starter is provided under the [MIT License](LICENSE.md).
 
-If you discover a bug, please [open an issue](https://github.com/1odp/superduper-filament-starter-kit/issues).
+If you discover a bug, please [open an issue](https://github.com/riodwanto/superduper-filament-starter-kit/issues).
