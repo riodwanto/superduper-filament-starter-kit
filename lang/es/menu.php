@@ -1,14 +1,9 @@
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Navigation Group
-    |--------------------------------------------------------------------------
-    */
-    'nav_group.sample' => 'Ejemplo',
+    'nav_group.sample' => 'Muestra',
     'nav_group.blog' => 'Blog',
     'nav_group.access' => 'Acceso',
-    'nav_group.settings' => 'Configuraciones',
-    'nav_group.activities' => 'Actividades',
-];
+    'nav_group.settings' => 'Ajustes',
+    'nav_group.activities' => 'Actividades'
+    ];
