@@ -19,9 +19,8 @@ class BannerResource extends Resource
     protected static ?string $model = Banner::class;
     protected static int $globalSearchResultsLimit = 20;
 
-    protected static ?int $navigationSort = 0;
+    protected static ?int $navigationSort = -1;
     protected static ?string $navigationIcon = 'fluentui-image-shadow-24';
-    protected static ?string $navigationGroup = 'Sample';
 
     public static function form(Form $form): Form
     {
@@ -55,7 +54,7 @@ class BannerResource extends Resource
     {
         return $table
             ->columns([
-                SpatieMediaLibraryImageColumn::make('media')->label('Image')
+                SpatieMediaLibraryImageColumn::make('media')
                     ->collection('banners')
                     ->wrap(),
                 Tables\Columns\TextColumn::make('title')
@@ -139,5 +138,10 @@ class BannerResource extends Resource
         return [
             'Category' => $record->category,
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("menu.nav_group.sample");
     }
 }

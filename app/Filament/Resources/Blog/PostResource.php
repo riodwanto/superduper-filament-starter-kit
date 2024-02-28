@@ -22,8 +22,6 @@ class PostResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationGroup = 'Blog';
-
     protected static ?string $navigationIcon = 'fluentui-news-20';
 
     protected static ?int $navigationSort = 0;
@@ -150,5 +148,10 @@ class PostResource extends Resource
             'create' => Pages\CreatePost::route('/create'),
             'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("menu.nav_group.blog");
     }
 }

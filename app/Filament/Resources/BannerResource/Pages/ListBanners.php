@@ -10,12 +10,15 @@ class ListBanners extends ListRecords
 {
     protected static string $resource = BannerResource::class;
 
-    protected ?string $subheading = 'This page is sample page.';
-
     protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make(),
         ];
+    }
+
+    public function getSubHeading(): string
+    {
+        return  __('resource.banner.subheading');
     }
 }

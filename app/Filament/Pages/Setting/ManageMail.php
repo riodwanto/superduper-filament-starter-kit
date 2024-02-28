@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\SettingsPage;
 use Filament\Support\Facades\FilamentView;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Mail;
 
 use function Filament\Support\is_app_url;
@@ -20,13 +21,8 @@ class ManageMail extends SettingsPage
 
     protected static string $settings = MailSettings::class;
 
-    protected static ?string $title = 'Mail Settings';
-    protected ?string $heading = 'Mail Settings';
-    protected ?string $subheading = 'Manage mail configuration.';
-
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?int $navigationSort = 99;
     protected static ?string $navigationIcon = 'fluentui-mail-settings-20';
-    protected static ?string $navigationLabel = 'Mail';
 
     /**
      * @var array<string, mixed> | null
@@ -199,5 +195,30 @@ class ManageMail extends SettingsPage
                 ->title($title)
                 ->error()
                 ->send();
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("menu.nav_group.settings");
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __("page.mail_settings.navigationLabel");
+    }
+
+    public function getTitle(): string|Htmlable
+    {
+        return __("page.mail_settings.title");
+    }
+
+    public function getHeading(): string|Htmlable
+    {
+        return __("page.mail_settings.heading");
+    }
+
+    public function getSubheading(): string|Htmlable|null
+    {
+        return __("page.mail_settings.subheading");
     }
 }
