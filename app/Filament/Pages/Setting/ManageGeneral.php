@@ -50,13 +50,16 @@ class ManageGeneral extends SettingsPage
         return $form
             ->schema([
                 Forms\Components\Section::make('Site')
-                    ->description('Manage basic settings.')
+                    ->label(fn () => __('page.general_settings.sections.site'))
+                    ->description(fn () => __('page.general_settings.sections.site.description'))
                     ->icon('fluentui-web-asset-24-o')
                     ->schema([
                         Forms\Components\Grid::make()->schema([
-                            Forms\Components\TextInput::make('brand_name')->label('Brand Name')
+                            Forms\Components\TextInput::make('brand_name')
+                                ->label(fn () => __('page.general_settings.fields.brand_name'))
                                 ->required(),
-                            Forms\Components\Select::make('site_active')->label('Site Status')
+                            Forms\Components\Select::make('site_active')
+                                ->label(fn () => __('page.general_settings.fields.site_active'))
                                 ->options([
                                     0 => "Not Active",
                                     1 => "Active",
@@ -66,32 +69,43 @@ class ManageGeneral extends SettingsPage
                         ]),
                         Forms\Components\Grid::make()->schema([
                             Forms\Components\Grid::make()->schema([
-                                Forms\Components\TextInput::make('brand_logoHeight')->label('Brand Logo Height')
+                                Forms\Components\TextInput::make('brand_logoHeight')
+                                    ->label(fn () => __('page.general_settings.fields.brand_logoHeight'))
                                     ->required()
                                     ->columnSpan(2),
-                                Forms\Components\FileUpload::make('brand_logo')->label('Brand Logo')
+                                Forms\Components\FileUpload::make('brand_logo')
+                                    ->label(fn () => __('page.general_settings.fields.brand_logo'))
                                     ->image()
                                     ->required()
                                     ->columnSpan(2),
                             ])
                             ->columnSpan(2),
-                            Forms\Components\FileUpload::make('site_favicon')->label('Site Favicon')
+                            Forms\Components\FileUpload::make('site_favicon')
+                                ->label(fn () => __('page.general_settings.fields.site_favicon'))
                                 ->image()
                                 ->acceptedFileTypes(['image/x-icon', 'image/vnd.microsoft.icon'])
                                 ->required(),
                         ])->columns(4),
                     ]),
                 Forms\Components\Section::make('Theme')
-                    ->description('Change default theme.')
+                    ->label(fn () => __('page.general_settings.sections.theme.title'))
+                    ->description(fn () => __('page.general_settings.sections.theme.description'))
                     ->icon('fluentui-color-24-o')
                     ->schema([
-                        Forms\Components\ColorPicker::make('site_theme.primary')->label('Primary')->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.secondary')->label('Secondary')->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.gray')->label('Gray')->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.success')->label('Success')->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.danger')->label('Danger')->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.info')->label('Info')->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.warning')->label('Warning')->rgb(),
+                        Forms\Components\ColorPicker::make('site_theme.primary')
+                            ->label(fn () => __('page.general_settings.fields.primary'))->rgb(),
+                        Forms\Components\ColorPicker::make('site_theme.secondary')
+                            ->label(fn () => __('page.general_settings.fields.secondary'))->rgb(),
+                        Forms\Components\ColorPicker::make('site_theme.gray')
+                            ->label(fn () => __('page.general_settings.fields.gray'))->rgb(),
+                        Forms\Components\ColorPicker::make('site_theme.success')
+                            ->label(fn () => __('page.general_settings.fields.success'))->rgb(),
+                        Forms\Components\ColorPicker::make('site_theme.danger')
+                            ->label(fn () => __('page.general_settings.fields.danger'))->rgb(),
+                        Forms\Components\ColorPicker::make('site_theme.info')
+                            ->label(fn () => __('page.general_settings.fields.info'))->rgb(),
+                        Forms\Components\ColorPicker::make('site_theme.warning')
+                            ->label(fn () => __('page.general_settings.fields.warning'))->rgb(),
                     ])
                     ->columns(3),
             ])
