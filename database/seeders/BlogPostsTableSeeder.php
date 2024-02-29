@@ -19,9 +19,8 @@ class BlogPostsTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Assuming you have a Role model and each User might have roles assigned
         $authorIds = User::whereHas('roles', function ($query) {
-            $query->where('name', '=', 'author'); // Adjust based on your roles setup
+            $query->where('name', '=', 'author');
         })->pluck('id')->toArray();
 
         $categoryIds = Category::pluck('id')->toArray();

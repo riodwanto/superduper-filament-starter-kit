@@ -13,35 +13,17 @@ class RolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->command->warn(PHP_EOL . 'Creating roles..');
+        $roles = ["super_admin", "admin", "author"];
 
-        DB::table('roles')->insert(
-            [
-                'name' => 'super_admin',
-                'guard_name' => 'web',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
-        DB::table('roles')->insert(
-            [
-                'name' => 'admin',
-                'guard_name' => 'web',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
-        DB::table('roles')->insert(
-            [
-                'name' => 'author',
-                'guard_name' => 'web',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
-        $this->command->info(PHP_EOL . 'Done Creating roles..');
+        foreach ($roles as $key => $role) {
+            DB::table('roles')->insert(
+                [
+                    'name' => $role,
+                    'guard_name' => 'web',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        }
     }
 }

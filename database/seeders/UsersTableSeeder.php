@@ -29,11 +29,11 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
         // Bind superadmin to FilamentShiled
         Artisan::call('shield:super-admin', ['--user' => $sid]);
 
-        $roles = DB::table('roles')->where('name', '!=', 'super_admin')->get();
-
+        $roles = DB::table('roles')->whereNot('name', 'super_admin')->get();
         foreach ($roles as $role) {
             for ($i = 0; $i < 5; $i++) {
                 $userId = Str::uuid();
