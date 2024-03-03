@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b412a3fc0d30cab05cd5689ec6755c4",
+    "content-hash": "e4fb2f23fdd746383269151fd807a01b",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -5782,6 +5782,78 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "riodwanto/filament-ace-editor",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/riodwanto/filament-ace-editor.git",
+                "reference": "06894ad2ff03e6bd6f7768febdb7e9c2dd86a930"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/riodwanto/filament-ace-editor/zipball/06894ad2ff03e6bd6f7768febdb7e9c2dd86a930",
+                "reference": "06894ad2ff03e6bd6f7768febdb7e9c2dd86a930",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "filament/filament": "^3.0",
+                "nunomaduro/collision": "^7.9",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.0",
+                "pestphp/pest-plugin-arch": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Riodwanto\\FilamentAceEditor\\FilamentAceEditorServiceProvider"
+                    ],
+                    "aliases": {
+                        "FilamentAceEditor": "Riodwanto\\FilamentAceEditor\\Facades\\FilamentAceEditor"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Riodwanto\\FilamentAceEditor\\": "src/",
+                    "Riodwanto\\FilamentAceEditor\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rio Dewanto P",
+                    "email": "rdp.tech@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Ace Editor implementation for Filament 3 Form",
+            "homepage": "https://github.com/riodwanto/filament-ace-editor",
+            "keywords": [
+                "code-editor",
+                "filament",
+                "filament-ace-editor",
+                "filament-field",
+                "filament-form-field",
+                "laravel",
+                "riodwanto"
+            ],
+            "support": {
+                "issues": "https://github.com/riodwanto/filament-ace-editor/issues",
+                "source": "https://github.com/riodwanto/filament-ace-editor"
+            },
+            "time": "2024-03-03T11:54:56+00:00"
         },
         {
             "name": "ryangjchandler/blade-capture-directive",
