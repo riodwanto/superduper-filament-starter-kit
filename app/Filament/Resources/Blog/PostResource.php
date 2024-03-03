@@ -80,45 +80,45 @@ class PostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->columns([
-            SpatieMediaLibraryImageColumn::make('media')->label('Image')
-                ->collection('blog/posts')
-                ->wrap(),
+            ->columns([
+                SpatieMediaLibraryImageColumn::make('media')->label('Image')
+                    ->collection('blog/posts')
+                    ->wrap(),
 
-            Tables\Columns\TextColumn::make('title')
-                ->searchable()
-                ->sortable(),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('slug')
-                ->searchable()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('slug')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
-            Tables\Columns\TextColumn::make('author.name')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
+                Tables\Columns\TextColumn::make('author.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
 
-            Tables\Columns\TextColumn::make('status')
-                ->badge()
-                ->getStateUsing(fn (Post $record): string => $record->published_at?->isPast() ? 'Published' : 'Draft')
-                ->colors([
-                    'success' => 'Published',
-                ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->getStateUsing(fn (Post $record): string => $record->published_at?->isPast() ? 'Published' : 'Draft')
+                    ->colors([
+                        'success' => 'Published',
+                    ]),
 
-            Tables\Columns\TextColumn::make('category.name')
-                ->searchable()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
-            Tables\Columns\TextColumn::make('published_at')
-                ->label('Published Date')
-                ->date(),
+                Tables\Columns\TextColumn::make('published_at')
+                    ->label('Published Date')
+                    ->date(),
 
-            Tables\Columns\TextColumn::make('updated_at')
-            ->label('Updated')
-            ->since(),
-        ])
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Updated')
+                    ->since(),
+            ])
             ->filters([
                 //
             ])
