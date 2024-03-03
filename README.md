@@ -2,17 +2,12 @@
   <img src="https://i.postimg.cc/4djrcJXx/logo.png" alt="Starter kit logo" width="200"/>
 </p>
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/riodwanto/superduper-filament-starter-kit.svg?style=flat-square)](https://packagist.org/packages/riodwanto/superduper-filament-starter-kit)
+[![Total Downloads](https://img.shields.io/packagist/dt/riodwanto/superduper-filament-starter-kit.svg?style=flat-square)](https://packagist.org/packages/riodwanto/superduper-filament-starter-kit)
+
 ## Introduction
 
 A starting point to create your next Filament 3 💡 app. With pre-installed plugins, pre-configured, and custom page. So you don't start all over again.
-
-## Table of Contents
-
--   [Introduction](#introduction)
--   [Features](#features)
--   [Getting Started](#getting-started)
--   [Plugins](#plugins)
--   [License](#license)
 
 ## Features
 
@@ -73,6 +68,7 @@ These are [Filament Plugins](https://filamentphp.com/plugins) that used for this
 | [Exceptions](https://github.com/bezhansalleh/filament-exceptions)                                   | [bezhansalleh](https://github.com/bezhansalleh)     |
 | [Breezy](https://github.com/jeffgreco13/filament-breezy)                                            | [jeffgreco13](https://github.com/jeffgreco13)       |
 | [Logger](https://github.com/z3d0x/filament-logger)                                                  | [z3d0x](https://github.com/z3d0x)                   |
+| [Ace Code Editor](https://github.com/riodwanto/filament-ace-editor)                                                  | [riodwanto](https://github.com/riodwanto)                   |
 
 ## License
 
