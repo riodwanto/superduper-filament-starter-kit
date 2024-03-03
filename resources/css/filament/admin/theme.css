@@ -24,7 +24,7 @@
 
 /* SIDEBAR ITEM */
 .fi-sidebar-item a {
-    @apply py-2 px-4 rounded-xl;
+    @apply px-4 py-2 rounded-xl;
 }
 
 .fi-sidebar-item a > span,
@@ -44,7 +44,7 @@
 }
 
 .fi-sidebar-item-active a {
-    @apply bg-primary-100 shadow-md dark:bg-primary-900 dark:shadow-lg;
+    @apply shadow-md bg-primary-100 dark:bg-primary-900 dark:shadow-lg;
 }
 
 .fi-sidebar-item a:hover svg,
