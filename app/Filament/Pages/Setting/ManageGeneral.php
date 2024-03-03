@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Setting;
 
+use App\Services\FileService;
 use App\Settings\GeneralSettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
@@ -11,6 +12,7 @@ use Filament\Pages\SettingsPage;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Storage;
+use Riodwanto\FilamentAceEditor\AceEditor;
 
 use function Filament\Support\is_app_url;
 
@@ -27,22 +29,31 @@ class ManageGeneral extends SettingsPage
      */
     public ?array $data = [];
 
+    public string $themePath = '';
+
+    public string $twConfigPath = '';
+
     public function mount(): void
     {
+        $this->themePath = resource_path('css/filament/admin/theme.css');
+        $this->twConfigPath = resource_path('css/filament/admin/tailwind.config.js');
+
         $this->fillForm();
     }
 
     protected function fillForm(): void
     {
-        $this->callHook('beforeFill');
-
         $settings = app(static::getSettings());
 
         $data = $this->mutateFormDataBeforeFill($settings->toArray());
 
-        $this->form->fill($data);
+        $fileService = new FileService;
 
-        $this->callHook('afterFill');
+        $data['theme-editor'] = $fileService->readfile($this->themePath);
+
+        $data['tw-config-editor'] = $fileService->readfile($this->twConfigPath);
+
+        $this->form->fill($data);
     }
 
     public function form(Form $form): Form
@@ -79,7 +90,7 @@ class ManageGeneral extends SettingsPage
                                     ->required()
                                     ->columnSpan(2),
                             ])
-                            ->columnSpan(2),
+                                ->columnSpan(2),
                             Forms\Components\FileUpload::make('site_favicon')
                                 ->label(fn () => __('page.general_settings.fields.site_favicon'))
                                 ->image()
@@ -87,27 +98,41 @@ class ManageGeneral extends SettingsPage
                                 ->required(),
                         ])->columns(4),
                     ]),
-                Forms\Components\Section::make('Theme')
-                    ->label(fn () => __('page.general_settings.sections.theme.title'))
-                    ->description(fn () => __('page.general_settings.sections.theme.description'))
-                    ->icon('fluentui-color-24-o')
-                    ->schema([
-                        Forms\Components\ColorPicker::make('site_theme.primary')
-                            ->label(fn () => __('page.general_settings.fields.primary'))->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.secondary')
-                            ->label(fn () => __('page.general_settings.fields.secondary'))->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.gray')
-                            ->label(fn () => __('page.general_settings.fields.gray'))->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.success')
-                            ->label(fn () => __('page.general_settings.fields.success'))->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.danger')
-                            ->label(fn () => __('page.general_settings.fields.danger'))->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.info')
-                            ->label(fn () => __('page.general_settings.fields.info'))->rgb(),
-                        Forms\Components\ColorPicker::make('site_theme.warning')
-                            ->label(fn () => __('page.general_settings.fields.warning'))->rgb(),
+                Forms\Components\Tabs::make('Tabs')
+                    ->tabs([
+                        Forms\Components\Tabs\Tab::make('Color Palette')
+                            ->schema([
+                                Forms\Components\ColorPicker::make('site_theme.primary')
+                                    ->label(fn () => __('page.general_settings.fields.primary'))->rgb(),
+                                Forms\Components\ColorPicker::make('site_theme.secondary')
+                                    ->label(fn () => __('page.general_settings.fields.secondary'))->rgb(),
+                                Forms\Components\ColorPicker::make('site_theme.gray')
+                                    ->label(fn () => __('page.general_settings.fields.gray'))->rgb(),
+                                Forms\Components\ColorPicker::make('site_theme.success')
+                                    ->label(fn () => __('page.general_settings.fields.success'))->rgb(),
+                                Forms\Components\ColorPicker::make('site_theme.danger')
+                                    ->label(fn () => __('page.general_settings.fields.danger'))->rgb(),
+                                Forms\Components\ColorPicker::make('site_theme.info')
+                                    ->label(fn () => __('page.general_settings.fields.info'))->rgb(),
+                                Forms\Components\ColorPicker::make('site_theme.warning')
+                                    ->label(fn () => __('page.general_settings.fields.warning'))->rgb(),
+                            ])
+                            ->columns(3),
+                        Forms\Components\Tabs\Tab::make('Code Editor')
+                            ->schema([
+                                Forms\Components\Grid::make()->schema([
+                                    AceEditor::make('theme-editor')
+                                        ->label('theme.css')
+                                        ->mode('css')
+                                        ->height('24rem'),
+                                    AceEditor::make('tw-config-editor')
+                                        ->label('tailwind.config.js')
+                                        ->height('24rem')
+                                ])
+                            ]),
                     ])
-                    ->columns(3),
+                    ->persistTabInQueryString()
+                    ->columnSpanFull(),
             ])
             ->columns(3)
             ->statePath('data');
@@ -116,15 +141,7 @@ class ManageGeneral extends SettingsPage
     public function save(): void
     {
         try {
-            $this->callHook('beforeValidate');
-
-            $data = $this->form->getState();
-
-            $this->callHook('afterValidate');
-
-            $data = $this->mutateFormDataBeforeSave($data);
-
-            $this->callHook('beforeSave');
+            $data = $this->mutateFormDataBeforeSave($this->form->getState());
 
             $data = $this->handleUpload($data);
 
@@ -133,7 +150,9 @@ class ManageGeneral extends SettingsPage
             $settings->fill($data);
             $settings->save();
 
-            $this->callHook('afterSave');
+            $fileService = new FileService;
+            $fileService->writeFile($this->themePath, $data['theme-editor']);
+            $fileService->writeFile($this->twConfigPath, $data['tw-config-editor']);
 
             Notification::make()
                 ->title('Settings updated.')
