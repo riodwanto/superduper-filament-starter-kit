@@ -1,13 +1,15 @@
 <p align="center">
   <img src="https://i.postimg.cc/4djrcJXx/logo.png" alt="Starter kit logo" width="200"/>
+
+  [![Latest Version on Packagist](https://img.shields.io/packagist/v/riodwanto/superduper-filament-starter-kit.svg?style=flat-square)](https://packagist.org/packages/riodwanto/superduper-filament-starter-kit)
+    [![Total Downloads](https://img.shields.io/packagist/dt/riodwanto/superduper-filament-starter-kit.svg?style=flat-square)](https://packagist.org/packages/riodwanto/superduper-filament-starter-kit)
 </p>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/riodwanto/superduper-filament-starter-kit.svg?style=flat-square)](https://packagist.org/packages/riodwanto/superduper-filament-starter-kit)
-[![Total Downloads](https://img.shields.io/packagist/dt/riodwanto/superduper-filament-starter-kit.svg?style=flat-square)](https://packagist.org/packages/riodwanto/superduper-filament-starter-kit)
+<p align="center">
+    A starting point to create your next Filament 3 💡 app. With pre-installed plugins, pre-configured, and custom page. So you don't start all over again.
+</p>
 
-## Introduction
 
-A starting point to create your next Filament 3 💡 app. With pre-installed plugins, pre-configured, and custom page. So you don't start all over again.
 
 ## Features
 
@@ -57,7 +59,7 @@ password: superadmin
 
 ## Plugins
 
-These are [Filament Plugins](https://filamentphp.com/plugins) that used for this project.
+These are [Filament Plugins](https://filamentphp.com/plugins) use for this project.
 
 | **Plugin**                                                                                          | **Author**                                          |
 | :-------------------------------------------------------------------------------------------------- | :-------------------------------------------------- |
@@ -68,7 +70,7 @@ These are [Filament Plugins](https://filamentphp.com/plugins) that used for this
 | [Exceptions](https://github.com/bezhansalleh/filament-exceptions)                                   | [bezhansalleh](https://github.com/bezhansalleh)     |
 | [Breezy](https://github.com/jeffgreco13/filament-breezy)                                            | [jeffgreco13](https://github.com/jeffgreco13)       |
 | [Logger](https://github.com/z3d0x/filament-logger)                                                  | [z3d0x](https://github.com/z3d0x)                   |
-| [Ace Code Editor](https://github.com/riodwanto/filament-ace-editor)                                                  | [riodwanto](https://github.com/riodwanto)                   |
+| [Ace Code Editor](https://github.com/riodwanto/filament-ace-editor)                                 | [riodwanto](https://github.com/riodwanto)           |
 
 ## License
 
