@@ -42,8 +42,6 @@ class ManageMail extends SettingsPage
 
         $data = $this->mutateFormDataBeforeFill($settings->toArray());
 
-        // dd($data);
-
         $this->form->fill($data);
 
         $this->callHook('afterFill');

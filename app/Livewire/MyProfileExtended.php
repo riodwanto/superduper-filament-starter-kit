@@ -92,7 +92,6 @@ class MyProfileExtended extends MyProfileComponent
 
             $this->redirect('my-profile', navigate: FilamentView::hasSpaMode() && is_app_url('my-profile'));
         } catch (\Throwable $th) {
-            dd($th);
             Notification::make()
                 ->title('Failed to update.')
                 ->danger()
