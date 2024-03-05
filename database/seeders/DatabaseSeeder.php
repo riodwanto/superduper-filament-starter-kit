@@ -13,15 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(RolesTableSeeder::class);
-
-        $this->call(UsersTableSeeder::class);
-
-        $this->call(BannersTableSeeder::class);
-
-        $this->call(BlogCategoriesTableSeeder::class);
-
-        $this->call(BlogPostsTableSeeder::class);
+        $this->call([
+            RolesTableSeeder::class,
+            UsersTableSeeder::class,
+            BannersTableSeeder::class,
+            BlogCategoriesTableSeeder::class,
+            BlogPostsTableSeeder::class,
+        ]);
 
         Artisan::call('shield:generate --all');
     }
