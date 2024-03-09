@@ -12,6 +12,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class PostResource extends Resource
@@ -59,8 +61,12 @@ class PostResource extends Resource
                             ->columnSpan('full'),
 
                         Forms\Components\Select::make('blog_author_id')
-                            ->relationship('author', 'firstname')
-                            ->searchable()
+                            ->relationship(
+                                name: 'author',
+                                modifyQueryUsing: fn (Builder $query) => $query->with('roles')->whereRelation('roles', 'name', '=', 'admin'),
+                            )
+                            ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->firstname} {$record->lastname}")
+                            ->searchable(['firstname', 'lastname'])
                             ->required(),
 
                         Forms\Components\Select::make('blog_category_id')
@@ -95,7 +101,7 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('author.name')
-                    ->searchable()
+                    ->searchable(['firstname', 'lastname'])
                     ->sortable()
                     ->toggleable(),
 
