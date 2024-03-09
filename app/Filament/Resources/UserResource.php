@@ -47,12 +47,8 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Select::make('roles')->label('Role')
-                    ->relationship(name: 'roles', titleAttribute: 'name', modifyQueryUsing: function (Builder $query) {
-                        return $query->whereNotIn('name', ['filament_user']);
-                    })
-                    ->options(function (Get $get) {
-                        return DB::table('roles')->whereNotIn('id', $get('roles'))->pluck('name', 'id');
-                    })
+                    ->relationship('roles', 'name')
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => Str::headline($record->name))
                     ->native(false),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
