@@ -73,6 +73,11 @@ These are [Filament Plugins](https://filamentphp.com/plugins) use for this proje
 | [Logger](https://github.com/z3d0x/filament-logger)                                                  | [z3d0x](https://github.com/z3d0x)                   |
 | [Ace Code Editor](https://github.com/riodwanto/filament-ace-editor)                                 | [riodwanto](https://github.com/riodwanto)           |
 
+## Plugins Recomendation
+
+Plugins recommendation for your starter in my personal opinion:
+- [Rupadana API Resources](https://filamentphp.com/plugins/rupadana-api-service) - Generate API for your Resources.
+
 ## License
 
 Filament Starter is provided under the [MIT License](LICENSE.md).
