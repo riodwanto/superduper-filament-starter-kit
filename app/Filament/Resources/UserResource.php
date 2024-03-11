@@ -7,10 +7,12 @@ use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,36 +35,90 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('username')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('firstname')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('lastname')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Select::make('roles')->label('Role')
-                    ->relationship('roles', 'name')
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => Str::headline($record->name))
-                    ->native(false),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
-                    ->dehydrated(fn (?string $state): bool => filled($state))
-                    ->required(fn (string $operation): bool => $operation === 'create'),
-            ]);
+
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Grid::make()
+                            ->schema([
+                                SpatieMediaLibraryFileUpload::make('media')
+                                    ->hiddenLabel()
+                                    ->avatar()
+                                    ->collection('avatars')
+                                    ->alignCenter()
+                                    ->columnSpanFull(),
+                                Forms\Components\TextInput::make('username')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('email')
+                                    ->email()
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('firstname')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('lastname')
+                                    ->required()
+                                    ->maxLength(255),
+                            ]),
+                    ])
+                    ->columnSpan([
+                        'sm' => 1,
+                        'lg' => 2
+                    ]),
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make('Role')
+                            ->schema([
+                                Select::make('roles')->label('Role')
+                                    ->hiddenLabel()
+                                    ->relationship('roles', 'name')
+                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => Str::headline($record->name))
+                                    ->native(false),
+                            ])
+                            ->compact(),
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('password')
+                                    ->password()
+                                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                                    ->dehydrated(fn (?string $state): bool => filled($state))
+                                    ->revealable()
+                                    ->required(),
+                                Forms\Components\TextInput::make('passwordConfirmation')
+                                    ->password()
+                                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                                    ->dehydrated(fn (?string $state): bool => filled($state))
+                                    ->revealable()
+                                    ->same('password')
+                                    ->required(),
+                            ])
+                            ->compact()
+                            ->hidden(fn (string $operation): bool => $operation === 'edit'),
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\Placeholder::make('email_verified_at')
+                                    ->content(fn (User $record): ?string => $record->email_verified_at),
+                                Forms\Components\Placeholder::make('created_at')
+                                    ->label('Created at')
+                                    ->content(fn (User $record): ?string => $record->created_at?->diffForHumans()),
+                                Forms\Components\Placeholder::make('updated_at')
+                                    ->label('Last modified at')
+                                    ->content(fn (User $record): ?string => $record->updated_at?->diffForHumans()),
+                            ])
+                            ->hidden(fn (string $operation): bool => $operation === 'create'),
+                    ])
+                    ->columnSpan(1),
+            ])
+            ->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                SpatieMediaLibraryImageColumn::make('media')->label('Avatar')
+                    ->collection('avatars')
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('username')->label('Username')
                     ->description(fn (Model $record) => $record->firstname.' '.$record->lastname)
                     ->searchable(),
