@@ -110,27 +110,28 @@ class GenerateLang extends Command
      * @return string The array as a string.
      */
     protected function arrayToString(array $array, $indentLevel = 1)
-    {
-        $indent = str_repeat('    ', $indentLevel); // 4 spaces for indentation
-        $entries = [];
+{
+    $indent = str_repeat('    ', $indentLevel); // 4 spaces for indentation
+    $entries = [];
 
-        foreach ($array as $key => $value) {
-            $entryKey = is_string($key) ? "'$key'" : $key;
-            if (is_array($value)) {
-                $entryValue = $this->arrayToString($value, $indentLevel + 1);
-                $entries[] = "$indent$entryKey => $entryValue";
-            } else {
-                $entryValue = is_string($value) ? "'$value'" : $value;
-                $entries[] = "$indent$entryKey => $entryValue";
-            }
-        }
-
-        $glue = ",\n";
-        $body = implode($glue, $entries);
-        if ($indentLevel > 1) {
-            return "[\n$body,\n" . str_repeat('    ', $indentLevel - 1) . ']';
+    foreach ($array as $key => $value) {
+        $entryKey = is_string($key) ? "'$key'" : $key;
+        if (is_array($value)) {
+            $entryValue = $this->arrayToString($value, $indentLevel + 1);
+            $entries[] = "$indent$entryKey => $entryValue";
         } else {
-            return "[\n$body\n$indent]";
+            // Escape single quotes inside strings
+            $entryValue = is_string($value) ? "'" . addcslashes($value, "'") . "'" : $value;
+            $entries[] = "$indent$entryKey => $entryValue";
         }
     }
+
+    $glue = ",\n";
+    $body = implode($glue, $entries);
+    if ($indentLevel > 1) {
+        return "[\n$body,\n" . str_repeat('    ', $indentLevel - 1) . ']';
+    } else {
+        return "[\n$body\n$indent]";
+    }
+}
 }

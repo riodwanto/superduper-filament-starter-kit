@@ -59,7 +59,7 @@ return [
             'port' => 'Port',
             'encryption' => 'Chiffrement',
             'timeout' => 'Temps mort',
-            'username' => 'Nom d'utilisateur',
+            'username' => 'Nom d\'utilisateur',
             'password' => 'Mot de passe',
             'email' => 'E-mail',
             'name' => 'Nom',
