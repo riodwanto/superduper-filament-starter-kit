@@ -10,42 +10,57 @@
     A starting point to create your next Filament 3 💡 app. With pre-installed plugins, pre-configured, and custom page. So you don't start all over again.
 </p>
 
-
-
-## Features
+#### Features
 
 -   🛡 [Filament Shield](#plugins-used) for managing role access
 -   👨🏻‍🦱 customizable profile page from [Filament Breezy](#plugins-used)
 -   🌌 Managable media with [Filament Spatie Media](#plugins-used)
 -   🖼 Theme settings for changing panel color
 -   💌 Setting mail on the fly in Mail settings
+-   🅻 Lang Generator
 -   Etc..
 
-## Getting Started
 
-To start using this as your kickstart, follow these steps:
+#### Latest update
+###### Version: v1.13.0
+- New UserResource UI form
+- Add avatar to user add & edit
+- New Theme settings UI
+- Bugs fix & Improvement
+- Etc
 
-Create project with this composer command
+[Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
+
+###### Upcoming:
+- 
+- Forgot Password
+- User Verification
+- Filament Multi Tenancy 🔥
+- ...
+
+#### Getting Started
+
+Create project with this composer command:
 
 ```bash
 composer create-project riodwanto/superduper-filament-starter-kit
 ```
 
-Setup your environment
+Setup your env:
 
 ```bash
 cd superduper-filament-starter-kit
 cp .env.example .env
 ```
 
-After create project, Run migration & seeder
+Run migration & seeder:
 
 ```bash
 php artisan migrate
 php artisan db:seed
 ```
 
-or
+<p align="center">or</p>
 
 ```bash
 php artisan migrate:fresh --seed
@@ -58,7 +73,34 @@ email: superadmin@starter-kit.com
 password: superadmin
 ```
 
-## Plugins
+#### Language Generator
+This project include lang generator. 
+```
+php artisan superduper:lang-translate [from] [to]
+```
+Generator will look up files inside folder `[from]`. Get all variables inside the file; create a file and translate using `translate.googleapis.com`.
+
+This is what the translation process looks like.
+```
+❯ php artisan superduper:lang-translate en fr es
+
+ 🔔 Translate to 'fr'
+ 3/3 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100% -- ✅
+
+ 🔔 Translate to 'es'
+ 1/3 [▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░]  33% -- 🔄 Processing: page.php
+```
+###### usage example:
+* Single output
+```
+php artisan superduper:lang-translate en fr
+```
+* Multiple output
+```
+php artisan superduper:lang-translate en es ar fr pt-PT pt-BR zh-CN zh-TW
+```
+
+#### Plugins
 
 These are [Filament Plugins](https://filamentphp.com/plugins) use for this project.
 
@@ -73,12 +115,19 @@ These are [Filament Plugins](https://filamentphp.com/plugins) use for this proje
 | [Logger](https://github.com/z3d0x/filament-logger)                                                  | [z3d0x](https://github.com/z3d0x)                   |
 | [Ace Code Editor](https://github.com/riodwanto/filament-ace-editor)                                 | [riodwanto](https://github.com/riodwanto)           |
 
-## Plugins Recomendation
+#### Plugins Recommendation
 
-Plugins recommendation for your starter in my personal opinion:
-- [Rupadana API Resources](https://filamentphp.com/plugins/rupadana-api-service) - Generate API for your Resources.
+Other recommendations for your starter, in my personal opinion:
 
-## License
+- [Rupadana - API Resources](https://filamentphp.com/plugins/rupadana-api-service) : Generate API for your Resources.
+- [Bezhan Salleh - Language Switch](https://filamentphp.com/plugins/bezhansalleh-language-switch) : Zero config Language Switcher plugin for Filament Panels.
+- [Kenepa - Resource Lock](https://filamentphp.com/plugins/kenepa-resource-lock) : Resource locking when other user begins editing a resource.
+- [Baptiste Bouillot - Jobs monitor](https://filamentphp.com/plugins/croustibat-jobs-monitor) : Monitor background jobs.
+- [Ralph J. Smit - Components](https://filamentphp.com/plugins/ralphjsmit-components) : A collection of handy components.
+- [Tapp Network - Laravel Auditing](https://filamentphp.com/plugins/tapp-network-laravel-auditing) : Resource locking when other user begins editing a resource.
+- [Shuvro Roy - Spatie Laravel Health](https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health) : Resource locking when other user begins editing a resource.
+
+### License
 
 Filament Starter is provided under the [MIT License](LICENSE.md).
 
