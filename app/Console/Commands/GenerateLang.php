@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class GenerateLang extends Command
 {
-    protected $signature = 'lang:translate {from} {to*} {--file=}';
+    protected $signature = 'superduper:lang-translate {from} {to*} {--file=}';
     protected $description = 'Translate language files from one language to another using Google Translate';
 
     public function handle()
