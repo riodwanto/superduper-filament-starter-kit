@@ -32,7 +32,6 @@
 [Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
 
 ###### Upcoming:
-- 
 - Forgot Password
 - User Verification
 - Filament Multi Tenancy 🔥
