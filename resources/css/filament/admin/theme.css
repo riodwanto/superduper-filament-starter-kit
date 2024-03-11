@@ -76,3 +76,8 @@
 .fi-header-subheading {
     @apply !text-sm;
 }
+
+/* Filament Actions */
+.fi-dropdown-trigger button.fi-btn {
+    @apply !p-1;
+}
