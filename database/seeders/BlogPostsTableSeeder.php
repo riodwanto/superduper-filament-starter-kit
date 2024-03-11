@@ -25,12 +25,7 @@ class BlogPostsTableSeeder extends Seeder
 
         $categoryIds = Category::pluck('id')->toArray();
 
-        $numberOfPosts = 25;
-
-        $progressBar = $this->command->getOutput()->createProgressBar($numberOfPosts);
-        $progressBar->start();
-
-        foreach (range(1, $numberOfPosts) as $index) { // Seed 20 posts, adjust as needed
+        foreach (range(1, 50) as $index) {
             DB::table('blog_posts')->insert([
                 'blog_author_id' => $faker->randomElement($authorIds),
                 'blog_category_id' => $faker->randomElement($categoryIds),
@@ -44,11 +39,6 @@ class BlogPostsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-
-            $progressBar->advance();
         }
-
-        $progressBar->finish();
-        $this->command->info('blog_posts table seeded!');
     }
 }

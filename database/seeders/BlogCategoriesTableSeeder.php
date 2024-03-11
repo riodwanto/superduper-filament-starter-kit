@@ -18,12 +18,7 @@ class BlogCategoriesTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $num = 15;
-
-        $progressBar = $this->command->getOutput()->createProgressBar($num);
-        $progressBar->start();
-
-        foreach (range(1, $num) as $index) { // Seed 10 categories, adjust the number as needed
+        foreach (range(1, 15) as $index) {
             DB::table('blog_categories')->insert([
                 'name' => $faker->word,
                 'slug' => $faker->unique()->slug,
@@ -35,10 +30,6 @@ class BlogCategoriesTableSeeder extends Seeder
                 'updated_at' => now(),
             ]);
 
-            $progressBar->advance();
         }
-
-        $progressBar->finish();
-        $this->command->info('blog_categories table seeded!');
     }
 }
