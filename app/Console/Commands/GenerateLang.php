@@ -38,7 +38,8 @@ class GenerateLang extends Command
         }
 
         foreach ($targets as $to) {
-            $this->info("Starting translation to '{$to}'...");
+            $this->info("\n\n 🔔 Translate to '{$to}'");
+
             $bar = $this->output->createProgressBar(count($filesToProcess));
             $bar->setFormat(" %current%/%max% [%bar%] %percent:3s%% -- %message%");
             $bar->setMessage('Initializing...');
@@ -46,7 +47,9 @@ class GenerateLang extends Command
 
             foreach ($filesToProcess as $fileInfo) {
                 $filePath = $fileInfo['relativePathname'];
-                $bar->setMessage("Processing {$to} :: {$filePath}");
+
+                $bar->setMessage("🔄 Processing: {$filePath}");
+                $bar->display();
 
                 $translations = include $fileInfo['path'];
                 $translated = $this->translateArray($translations, $from, $to);
@@ -60,13 +63,14 @@ class GenerateLang extends Command
                 $outputContent = "<?php\n\nreturn " . $this->arrayToString($translated) . ";\n";
                 File::put($outputFile, $outputContent);
 
-                $bar->setMessage("Completed {$to} :: {$filePath}");
                 $bar->advance();
+
+                $bar->setMessage("✅");
             }
 
             $bar->finish();
-            $this->info("\n\n All files have been translated from {$from}.");
         }
+        $this->info("\n\n All files have been translate. \n");
     }
 
     protected function translateArray($content, $source, $target)
@@ -110,28 +114,28 @@ class GenerateLang extends Command
      * @return string The array as a string.
      */
     protected function arrayToString(array $array, $indentLevel = 1)
-{
-    $indent = str_repeat('    ', $indentLevel); // 4 spaces for indentation
-    $entries = [];
+    {
+        $indent = str_repeat('    ', $indentLevel); // 4 spaces for indentation
+        $entries = [];
 
-    foreach ($array as $key => $value) {
-        $entryKey = is_string($key) ? "'$key'" : $key;
-        if (is_array($value)) {
-            $entryValue = $this->arrayToString($value, $indentLevel + 1);
-            $entries[] = "$indent$entryKey => $entryValue";
+        foreach ($array as $key => $value) {
+            $entryKey = is_string($key) ? "'$key'" : $key;
+            if (is_array($value)) {
+                $entryValue = $this->arrayToString($value, $indentLevel + 1);
+                $entries[] = "$indent$entryKey => $entryValue";
+            } else {
+                // Escape single quotes inside strings
+                $entryValue = is_string($value) ? "'" . addcslashes($value, "'") . "'" : $value;
+                $entries[] = "$indent$entryKey => $entryValue";
+            }
+        }
+
+        $glue = ",\n";
+        $body = implode($glue, $entries);
+        if ($indentLevel > 1) {
+            return "[\n$body,\n" . str_repeat('    ', $indentLevel - 1) . ']';
         } else {
-            // Escape single quotes inside strings
-            $entryValue = is_string($value) ? "'" . addcslashes($value, "'") . "'" : $value;
-            $entries[] = "$indent$entryKey => $entryValue";
+            return "[\n$body\n$indent]";
         }
     }
-
-    $glue = ",\n";
-    $body = implode($glue, $entries);
-    if ($indentLevel > 1) {
-        return "[\n$body,\n" . str_repeat('    ', $indentLevel - 1) . ']';
-    } else {
-        return "[\n$body\n$indent]";
-    }
-}
 }
