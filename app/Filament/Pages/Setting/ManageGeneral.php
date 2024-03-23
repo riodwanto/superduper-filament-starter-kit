@@ -87,6 +87,9 @@ class ManageGeneral extends SettingsPage
                                 Forms\Components\FileUpload::make('brand_logo')
                                     ->label(fn () => __('page.general_settings.fields.brand_logo'))
                                     ->image()
+                                    ->directory('sites')
+                                    ->visibility('public')
+                                    ->moveFiles()
                                     ->required()
                                     ->columnSpan(2),
                             ])
@@ -94,6 +97,9 @@ class ManageGeneral extends SettingsPage
                             Forms\Components\FileUpload::make('site_favicon')
                                 ->label(fn () => __('page.general_settings.fields.site_favicon'))
                                 ->image()
+                                ->directory('sites')
+                                ->visibility('public')
+                                ->moveFiles()
                                 ->acceptedFileTypes(['image/x-icon', 'image/vnd.microsoft.icon'])
                                 ->required(),
                         ])->columns(4),
@@ -143,8 +149,6 @@ class ManageGeneral extends SettingsPage
         try {
             $data = $this->mutateFormDataBeforeSave($this->form->getState());
 
-            $data = $this->handleUpload($data);
-
             $settings = app(static::getSettings());
 
             $settings->fill($data);
@@ -161,32 +165,11 @@ class ManageGeneral extends SettingsPage
 
             $this->redirect(static::getUrl(), navigate: FilamentView::hasSpaMode() && is_app_url(static::getUrl()));
         } catch (\Throwable $th) {
-            throw $th;
             Notification::make()
                 ->title('Failed to update settings.')
                 ->danger()
                 ->send();
         }
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     */
-    protected function handleUpload(array $data): array
-    {
-        $data['brand_logo'] = collect($data['brand_logo'])->first();
-        if (!is_string($data['brand_logo'])) {
-            Storage::move('livewire-tmp/' . $data['brand_logo']->getFilename(), 'public/sites/logo.png');
-            $data['brand_logo'] = 'sites/logo.png';
-        }
-
-        $data['site_favicon'] = collect($data['site_favicon'])->first();
-        if (!is_string($data['site_favicon'])) {
-            Storage::move('livewire-tmp/' . $data['site_favicon']->getFilename(), 'public/sites/favicon.ico');
-            $data['site_favicon'] = 'sites/favicon.ico';
-        }
-
-        return $data;
     }
 
     public static function getNavigationGroup(): ?string
