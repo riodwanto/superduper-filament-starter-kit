@@ -30,6 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
+            ->emailVerification()
             ->favicon(fn (GeneralSettings $settings) => Storage::url($settings->site_favicon))
             ->brandName(fn (GeneralSettings $settings) => $settings->brand_name)
             ->brandLogo(fn (GeneralSettings $settings) => Storage::url($settings->brand_logo))
