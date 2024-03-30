@@ -124,7 +124,7 @@ Other recommendations for your starter, in my personal opinion:
 - [Baptiste Bouillot - Jobs monitor](https://filamentphp.com/plugins/croustibat-jobs-monitor) : Monitor background jobs.
 - [Ralph J. Smit - Components](https://filamentphp.com/plugins/ralphjsmit-components) : A collection of handy components.
 - [Tapp Network - Laravel Auditing](https://filamentphp.com/plugins/tapp-network-laravel-auditing) : Resource locking when other user begins editing a resource.
-- [Shuvro Roy - Spatie Laravel Health](https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health) : Resource locking when other user begins editing a resource.
+- [Shuvro Roy - Spatie Laravel Health](https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health) : Health monitoring for Filament.
 
 ### License
 
