@@ -34,7 +34,7 @@ return [
     'mail_settings' => [
         'title' => 'Configuración de correo',
         'heading' => 'Configuración de correo',
-        'subheading' => 'Gestionar la configuración del correo.',
+        'subheading' => 'Administrar la configuración del correo.',
         'navigationLabel' => 'Correo',
         'sections' => [
             'config' => [

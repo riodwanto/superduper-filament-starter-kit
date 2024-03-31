@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'sample.title' => '範例標題',
-    'sample.subheading' => '副標題範例',
-    'banner.title' => '橫幅',
-    'banner.subheading' => '這是Banner 資源的範例。'
+    'general.created_at' => '創建於',
+    'general.updated_at' => '最後修改於',
+    'general.email_verified_at' => '電子郵件驗證於',
+    'user.actions.resend_verification' => '重新發送驗證',
+    'user.notifications.notification_resent.title' => '已發送電子郵件驗證'
     ];
