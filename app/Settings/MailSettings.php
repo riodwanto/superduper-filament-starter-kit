@@ -29,4 +29,17 @@ class MailSettings extends Settings
             'password',
         ];
     }
+
+    public function loadMailSettingsToConfig($data = null): void
+    {
+        config([
+            'mail.mailers.smtp.host' => $data['host'] ?? $this->host,
+            'mail.mailers.smtp.port' => $data['port'] ?? $this->port,
+            'mail.mailers.smtp.encryption' => $data['encryption'] ?? $this->encryption,
+            'mail.mailers.smtp.username' => $data['username'] ?? $this->username,
+            'mail.mailers.smtp.password' => $data['password'] ?? $this->password,
+            'mail.from.address' => $data['from_address'] ?? $this->from_address,
+            'mail.from.name' => $data['from_name'] ?? $this->from_name,
+        ]);
+    }
 }

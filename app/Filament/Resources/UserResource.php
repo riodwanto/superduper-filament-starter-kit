@@ -3,22 +3,23 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Settings\MailSettings;
+use Exception;
+use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
+use Filament\Notifications\Auth\VerifyEmail;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -35,7 +36,6 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Grid::make()
@@ -97,12 +97,21 @@ class UserResource extends Resource
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\Placeholder::make('email_verified_at')
+                                    ->label(__('resource.general.email_verified_at'))
                                     ->content(fn (User $record): ?string => $record->email_verified_at),
+                                Forms\Components\Actions::make([
+                                    Action::make('resend_verification')
+                                        ->label(__('resource.user.actions.resend_verification'))
+                                        ->color('secondary')
+                                        ->action(fn (MailSettings $settings, Model $record) => static::doResendEmailVerification($settings, $record)),
+                                ])
+                                ->hidden(fn (User $user) => $user->email_verified_at != null)
+                                ->fullWidth(),
                                 Forms\Components\Placeholder::make('created_at')
-                                    ->label('Created at')
+                                    ->label(__('resource.general.created_at'))
                                     ->content(fn (User $record): ?string => $record->created_at?->diffForHumans()),
                                 Forms\Components\Placeholder::make('updated_at')
-                                    ->label('Last modified at')
+                                    ->label(__('resource.general.updated_at'))
                                     ->content(fn (User $record): ?string => $record->updated_at?->diffForHumans()),
                             ])
                             ->hidden(fn (string $operation): bool => $operation === 'create'),
@@ -190,5 +199,26 @@ class UserResource extends Resource
     public static function getNavigationGroup(): ?string
     {
         return __("menu.nav_group.access");
+    }
+
+    public static function doResendEmailVerification($settings = null, $user): void
+    {
+        if (! method_exists($user, 'notify')) {
+            $userClass = $user::class;
+
+            throw new Exception("Model [{$userClass}] does not have a [notify()] method.");
+        }
+
+        $notification = new VerifyEmail();
+        $notification->url = Filament::getVerifyEmailUrl($user);
+
+        $settings->loadMailSettingsToConfig();
+
+        $user->notify($notification);
+
+        Notification::make()
+            ->title(__('resource.user.notifications.notification_resent.title'))
+            ->success()
+            ->send();
     }
 }

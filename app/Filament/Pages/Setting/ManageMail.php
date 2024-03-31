@@ -38,9 +38,7 @@ class ManageMail extends SettingsPage
     {
         $this->callHook('beforeFill');
 
-        $settings = app(static::getSettings());
-
-        $data = $this->mutateFormDataBeforeFill($settings->toArray());
+        $data = $this->mutateFormDataBeforeFill(app(static::getSettings())->toArray());
 
         $this->form->fill($data);
 
@@ -108,7 +106,8 @@ class ManageMail extends SettingsPage
                                 Forms\Components\TextInput::make('mail_to')
                                     ->label(fn () => __('page.mail_settings.fields.mail_to'))
                                     ->hiddenLabel()
-                                    ->placeholder(fn () => __('page.mail_settings.fields.placeholder.receiver_email')),
+                                    ->placeholder(fn () => __('page.mail_settings.fields.placeholder.receiver_email'))
+                                    ->required(),
                                 Forms\Components\Actions::make([
                                         Forms\Components\Actions\Action::make('Send Test Mail')
                                             ->label(fn () => __('page.mail_settings.actions.send_test_mail'))
@@ -126,7 +125,7 @@ class ManageMail extends SettingsPage
             ->statePath('data');
     }
 
-    public function save(): void
+    public function save(MailSettings $settings = null): void
     {
         try {
             $this->callHook('beforeValidate');
@@ -139,8 +138,6 @@ class ManageMail extends SettingsPage
 
             $this->callHook('beforeSave');
 
-            $settings = app(static::getSettings());
-
             $settings->fill($data);
             $settings->save();
 
@@ -150,27 +147,18 @@ class ManageMail extends SettingsPage
 
             $this->redirect(static::getUrl(), navigate: FilamentView::hasSpaMode() && is_app_url(static::getUrl()));
         } catch (\Throwable $th) {
-            throw $th;
             $this->sendErrorNotification('Failed to update settings. '.$th->getMessage());
+            throw $th;
         }
     }
 
-    public function sendTestMail()
+    public function sendTestMail(MailSettings $settings = null)
     {
-        $settings = $this->form->getState();
+        $data = $this->form->getState();
 
-        config([
-            'mail.mailers.smtp.host' => $settings['host'],
-            'mail.mailers.smtp.port' => $settings['port'],
-            'mail.mailers.smtp.encryption' => $settings['encryption'],
-            'mail.mailers.smtp.username' => $settings['username'],
-            'mail.mailers.smtp.password' => $settings['password'],
-            'mail.from.address' => $settings['from_address'],
-            'mail.from.name' => $settings['from_name'],
-        ]);
-
+        $settings->loadMailSettingsToConfig($data);
         try {
-            $mailTo = $settings['mail_to'];
+            $mailTo = $data['mail_to'];
             $mailData = [
                 'title' => 'This is a test email to verify SMTP settings',
                 'body' => 'This is for testing email using smtp.'
@@ -196,7 +184,7 @@ class ManageMail extends SettingsPage
     {
         Notification::make()
                 ->title($title)
-                ->error()
+                ->danger()
                 ->send();
     }
 

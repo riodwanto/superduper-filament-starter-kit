@@ -3,17 +3,18 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Sample
+    | General
     |--------------------------------------------------------------------------
     */
-    'sample.title' => 'Sample Title',
-    'sample.subheading' => 'Sample Subheading',
+    'general.created_at' => 'Created at',
+    'general.updated_at' => 'Last modified at',
+    'general.email_verified_at' => 'Email verified at',
 
     /*
     |--------------------------------------------------------------------------
-    | Banner
+    | User
     |--------------------------------------------------------------------------
     */
-    'banner.title' => 'Banner',
-    'banner.subheading' => 'This is a sample of resource of Banner.',
+    'user.actions.resend_verification' => 'Resend Verification',
+    'user.notifications.notification_resent.title' => 'Email Verification Sent',
 ];

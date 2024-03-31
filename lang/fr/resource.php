@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'sample.title' => 'Exemple de titre',
-    'sample.subheading' => 'Exemple de sous-titre',
-    'banner.title' => 'Bannière',
-    'banner.subheading' => 'Ceci est un échantillon de ressource de Banner.'
+    'general.created_at' => 'Créé à',
+    'general.updated_at' => 'Dernière modification à',
+    'general.email_verified_at' => 'E-mail vérifié à',
+    'user.actions.resend_verification' => 'Renvoyer vérification',
+    'user.notifications.notification_resent.title' => 'Vérification par e-mail envoyée'
     ];
