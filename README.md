@@ -22,18 +22,18 @@
 
 
 #### Latest update
-###### Version: v1.13.0
+###### Version: v1.14.2
 - New UserResource UI form
 - Add avatar to user add & edit
 - New Theme settings UI
 - Bugs fix & Improvement
+- Forgot Password
+- User Verification
 - Etc
 
 [Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
 
 ###### Upcoming:
-- Forgot Password
-- User Verification
 - Filament Multi Tenancy 🔥
 - ...
 
@@ -89,7 +89,7 @@ This is what the translation process looks like.
  🔔 Translate to 'es'
  1/3 [▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░]  33% -- 🔄 Processing: page.php
 ```
-###### usage example:
+###### Usage example
 * Single output
 ```
 php artisan superduper:lang-translate en fr
@@ -97,6 +97,10 @@ php artisan superduper:lang-translate en fr
 * Multiple output
 ```
 php artisan superduper:lang-translate en es ar fr pt-PT pt-BR zh-CN zh-TW
+```
+###### If you are using json translation
+```
+php artisan superduper:lang-translate en fr --json
 ```
 
 #### Plugins
