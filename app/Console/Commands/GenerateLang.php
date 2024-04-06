@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class GenerateLang extends Command
 {
-    protected $signature = 'superduper:lang-translate {from} {to*} {--file=}';
+    protected $signature = 'superduper:lang-translate {from} {to*} {--file=} {--json}';
     protected $description = 'Translate language files from one language to another using Google Translate';
 
     public function handle()
@@ -16,13 +16,62 @@ class GenerateLang extends Command
         $from = $this->argument('from');
         $targets = $this->argument('to');
         $specificFile = $this->option('file');
+        $onlyJson = $this->option('json');
         $sourcePath = "lang/{$from}";
 
-        if (!File::isDirectory($sourcePath)) {
+        if (!$onlyJson && !File::isDirectory($sourcePath)) {
             $this->error("The source language directory does not exist: {$sourcePath}");
             return;
         }
 
+        if ($onlyJson) {
+            $sourcePath = "lang/{$from}.json";
+            if (!File::isFile($sourcePath)) {
+                $this->error("The source language json file does not exist: {$sourcePath}");
+                return;
+            }
+        }
+
+        if ($onlyJson):
+            $this->processJsonFile($sourcePath, $from, $targets);
+        else :
+            $this->processDirectory($sourcePath, $from, $targets, $specificFile);
+        endif;
+
+        $this->info("\n\n All files have been translate. \n");
+    }
+
+    protected function processJsonFile(string $sourceFile, string $from, array|string $targets) :void
+    {
+        foreach ($targets as $to) {
+            $this->info("\n\n 🔔 Translate to '{$to}'");
+
+            // get content of json file
+            $translations = json_decode(File::get($sourceFile), true, 512, JSON_THROW_ON_ERROR);
+
+            $bar = $this->output->createProgressBar(count($translations));
+            $bar->setFormat(" %current%/%max% [%bar%] %percent:3s%% -- %message%");
+            $bar->setMessage('Initializing...');
+            $bar->start();
+
+            $bar->setMessage("🔄 Processing: {$sourceFile}");
+            $bar->display();
+
+            $translated = $this->translateArray($translations, $from, $to, $bar);
+
+            $targetPath = "lang/{$to}.json";
+
+            $outputContent = json_encode($translated, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            File::put($targetPath, $outputContent);
+
+            $bar->setMessage("✅");
+        }
+
+        $bar->finish();
+    }
+
+    protected function processDirectory(string $sourcePath, string $from, array|string $targets, bool|array|string|null $specificFile): void
+    {
         $filesToProcess = [];
         if ($specificFile) {
             $filePath = $sourcePath . '/' . $specificFile;
@@ -70,16 +119,19 @@ class GenerateLang extends Command
 
             $bar->finish();
         }
-        $this->info("\n\n All files have been translate. \n");
     }
 
-    protected function translateArray($content, $source, $target)
+    protected function translateArray($content, $source, $target, $bar = null)
     {
         if (is_array($content)) {
             foreach ($content as $key => $value) {
                 $content[$key] = $this->translateArray($value, $source, $target);
+                $bar?->advance();
             }
             return $content;
+        } else if ($content === '' || $content === null){
+            $this->error("Translation value missing, make sure all translation values are not empty, in source file!");
+            exit();
         } else {
             return $this->translateUsingGoogleTranslate($content, $source, $target);
         }
