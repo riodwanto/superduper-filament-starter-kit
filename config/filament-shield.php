@@ -24,8 +24,8 @@ return [
     ],
 
     'panel_user' => [
-        'enabled' => false,
-        'name' => 'panel_user',
+        'enabled' => true,
+        'name' => 'admin_tenant',
     ],
 
     'permission_prefixes' => [
@@ -83,5 +83,4 @@ return [
     'register_role_policy' => [
         'enabled' => false,
     ],
-
 ];
