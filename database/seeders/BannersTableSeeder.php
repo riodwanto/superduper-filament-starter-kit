@@ -11,6 +11,7 @@ class BannersTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $tenant = DB::table('tenants')->first();
 
         for ($i = 0; $i < 25; $i++) {
             DB::table('banners')->insert([
@@ -26,6 +27,7 @@ class BannersTableSeeder extends Seeder
                 'click_url' => $faker->url,
                 'created_at' => $faker->dateTimeThisYear(),
                 'updated_at' => $faker->dateTimeThisYear(),
+                'tenant_id' => $tenant->id,
             ]);
         }
     }

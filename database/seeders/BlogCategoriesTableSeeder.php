@@ -17,6 +17,7 @@ class BlogCategoriesTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $tenant = DB::table('tenants')->first();
 
         foreach (range(1, 15) as $index) {
             DB::table('blog_categories')->insert([
@@ -28,6 +29,7 @@ class BlogCategoriesTableSeeder extends Seeder
                 'seo_description' => $faker->optional()->text($maxNbChars = 160),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'tenant_id' => $tenant->id,
             ]);
 
         }

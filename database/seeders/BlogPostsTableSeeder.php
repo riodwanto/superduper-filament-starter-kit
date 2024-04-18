@@ -18,6 +18,7 @@ class BlogPostsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $tenant = DB::table('tenants')->first();
 
         $authorIds = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'author');
@@ -38,6 +39,7 @@ class BlogPostsTableSeeder extends Seeder
                 'image' => $faker->optional()->imageUrl($width = 640, $height = 480),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'tenant_id' => $tenant->id,
             ]);
         }
     }
