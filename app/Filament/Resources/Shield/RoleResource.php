@@ -22,6 +22,8 @@ class RoleResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static ?string $tenantOwnershipRelationshipName = 'tenant';
+
     protected static $permissionsCollection;
 
     public static function getPermissionPrefixes(): array
@@ -205,9 +207,19 @@ class RoleResource extends Resource implements HasShieldPermissions
 
     public static function getResourceEntitiesSchema(): ?array
     {
-        static::$permissionsCollection = static::$permissionsCollection ?: Utils::getPermissionModel()::all();
+        static::$permissionsCollection = static::$permissionsCollection ?? Utils::getPermissionModel()::all();
+        $user = \App\Models\User::find(auth()->user()->id)->loadMissing('permissions');
+        $enabledPermissions = $user->getAllPermissions()
+            ->groupBy(function ($permission) {
+                $parts = explode('_', $permission->name);
+                return end($parts); // Gets the last element of the array from explode.
+            })
+            ->keys()
+            ->all();
 
-        return collect(FilamentShield::getResources())
+        $resources = array_intersect_key(FilamentShield::getResources(), array_flip($enabledPermissions));
+
+        return collect($resources)
             ->sortKeys()
             ->map(function ($entity) {
                 return Forms\Components\Section::make(FilamentShield::getLocalizedResourceLabel($entity['fqcn']))

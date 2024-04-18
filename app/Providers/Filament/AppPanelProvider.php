@@ -2,18 +2,16 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Auth\EmailVerification;
 use App\Filament\Pages\Auth\Login;
-use App\Filament\Pages\Auth\RequestPasswordReset;
 use App\Livewire\MyProfileExtended;
 use App\Models\Tenant;
-use App\Settings\GeneralSettings;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -21,30 +19,20 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id(config('filament.panel.main.id'))
-            ->path(config('filament.panel.main.path'))
+            ->id(config('filament.panel.tenant.id'))
+            ->path(config('filament.panel.tenant.path'))
             ->login(Login::class)
             ->tenant(Tenant::class)
-            ->passwordReset(RequestPasswordReset::class)
-            ->emailVerification(EmailVerification::class)
-            ->favicon(fn (GeneralSettings $settings) => Storage::url($settings->site_favicon))
-            ->brandName(fn (GeneralSettings $settings) => $settings->brand_name)
-            ->brandLogo(fn (GeneralSettings $settings) => Storage::url($settings->brand_logo))
-            ->brandLogoHeight(fn (GeneralSettings $settings) => $settings->brand_logoHeight)
-            ->colors(fn (GeneralSettings $settings) => $settings->site_theme)
-            ->databaseNotifications()->databaseNotificationsPolling('30s')
-            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
-            ->sidebarCollapsibleOnDesktop()
-            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->colors([
+                'primary' => Color::Amber,
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->resources([
                 config('filament-logger.activity_resource')
@@ -73,7 +61,6 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                \BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin::make(),
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
                     ->gridColumns([
                         'default' => 2,

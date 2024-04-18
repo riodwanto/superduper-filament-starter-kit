@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RolePolicy
@@ -25,7 +25,7 @@ class RolePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\Permission\Models\Role  $role
+     * @param  \App\Models\Role  $role
      * @return bool
      */
     public function view(User $user, Role $role): bool
@@ -48,7 +48,7 @@ class RolePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\Permission\Models\Role  $role
+     * @param  \App\Models\Role  $role
      * @return bool
      */
     public function update(User $user, Role $role): bool
@@ -60,7 +60,7 @@ class RolePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\Permission\Models\Role  $role
+     * @param  \App\Models\Role  $role
      * @return bool
      */
     public function delete(User $user, Role $role): bool
@@ -83,7 +83,7 @@ class RolePolicy
      * Determine whether the user can permanently delete.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\Permission\Models\Role  $role
+     * @param  \App\Models\Role  $role
      * @return bool
      */
     public function forceDelete(User $user, Role $role): bool
@@ -106,7 +106,7 @@ class RolePolicy
      * Determine whether the user can restore.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\Permission\Models\Role  $role
+     * @param  \App\Models\Role  $role
      * @return bool
      */
     public function restore(User $user, Role $role): bool
@@ -129,7 +129,7 @@ class RolePolicy
      * Determine whether the user can replicate.
      *
      * @param  \App\Models\User  $user
-     * @param  \Spatie\Permission\Models\Role  $role
+     * @param  \App\Models\Role  $role
      * @return bool
      */
     public function replicate(User $user, Role $role): bool
