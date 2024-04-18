@@ -165,10 +165,7 @@ class ManageGeneral extends SettingsPage
 
             $this->redirect(static::getUrl(), navigate: FilamentView::hasSpaMode() && is_app_url(static::getUrl()));
         } catch (\Throwable $th) {
-            Notification::make()
-                ->title('Failed to update settings.')
-                ->danger()
-                ->send();
+            throw $th;
         }
     }
 
