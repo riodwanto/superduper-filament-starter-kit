@@ -2,8 +2,10 @@
 
 namespace App\Models\Blog;
 
+use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
@@ -25,6 +27,7 @@ class Category extends Model
         'is_visible',
         'seo_title',
         'seo_description',
+        'tenant_id',
     ];
 
     /**
@@ -33,6 +36,11 @@ class Category extends Model
     protected $casts = [
         'is_visible' => 'boolean',
     ];
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 
     /** @return HasMany<Post> */
     public function posts(): HasMany

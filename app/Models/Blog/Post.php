@@ -2,6 +2,7 @@
 
 namespace App\Models\Blog;
 
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +33,7 @@ class Post extends Model implements HasMedia
         'published_at',
         'seo_title',
         'seo_description',
+        'tenant_id',
     ];
 
     /**
@@ -40,6 +42,11 @@ class Post extends Model implements HasMedia
     protected $casts = [
         'published_at' => 'date',
     ];
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 
     /** @return BelongsTo<User,self> */
     public function author(): BelongsTo

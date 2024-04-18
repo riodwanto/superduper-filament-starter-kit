@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Enums\Fit;
@@ -28,6 +29,7 @@ class Banner extends Model implements HasMedia
         'start_date',
         'end_date',
         'click_url',
+        'tenant_id',
     ];
 
     /**
@@ -36,6 +38,11 @@ class Banner extends Model implements HasMedia
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 
     public function registerMediaConversions(Media $media = null): void
     {

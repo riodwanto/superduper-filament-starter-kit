@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
+use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
@@ -18,10 +23,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail, HasAvatar, HasName, HasMedia
+class User extends Authenticatable
+    implements FilamentUser, HasTenants, MustVerifyEmail, HasAvatar, HasName, HasMedia
 {
     use InteractsWithMedia;
-    use HasUuids, HasRoles;
+    use HasUuids, HasRoles, HasPanelShield;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -57,18 +63,35 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         'password' => 'hashed',
     ];
 
-    public function getFilamentName(): string
-    {
-        return $this->username;
-    }
-
     public function canAccessPanel(Panel $panel): bool
     {
-        // if ($panel->getId() === 'admin') {
-        //     return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+        // if ($panel->getId() == config('filament.panel.main.id')) {
+        //     return $this->isSuperAdmin(); //# Only super admins can access the main panel
         // }
 
         return true;
+    }
+
+    //# --- Tenant related
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return $this->tenants()->whereKey($tenant)->exists();
+    }
+
+    public function tenants(): BelongsToMany
+    {
+        return $this->belongsToMany(Tenant::class);
+    }
+
+    public function getTenants(Panel $panel): Collection
+    {
+        return $this->tenants;
+    }
+    //# --- END
+
+    public function getFilamentName(): string
+    {
+        return $this->username;
     }
 
     public function getFilamentAvatarUrl(): ?string
