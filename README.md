@@ -22,7 +22,7 @@
 
 
 #### Latest update
-###### Version: v1.14.2
+###### Version: v1.14.4
 - New UserResource UI form
 - Add avatar to user add & edit
 - New Theme settings UI
@@ -34,8 +34,15 @@
 [Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
 
 ###### Upcoming:
-- Filament Multi Tenancy 🔥
+- ~~Filament Multi Tenancy 🔥~~
+- Add opcodesio/log-viewer for general log viewer
+- Member Module
+- Some Improvement
 - ...
+
+*Sadly, Filament Multi-Tenancy will not be included in this starter kit. This repository will focus on improvements for non-multi-tenants, since many rooms should be improved.*
+**But, I'll release on different repo for Multi Tenancy usecase.** 🍻
+
 
 #### Getting Started
 
@@ -65,11 +72,29 @@ php artisan db:seed
 php artisan migrate:fresh --seed
 ```
 
+Generate key:
+
+```bash
+php artisan key:generate
+```
+
+Run with:
+
+```bash
+php artisan serve
+```
+
 Now you can access with `/admin` path, using:
 
 ```bash
 email: superadmin@starter-kit.com
 password: superadmin
+```
+
+*It's recommend to run below command as suggested in [Filament Documentation](https://filamentphp.com/docs/3.x/panels/installation#improving-filament-panel-performance) for improving panel perfomance.*
+
+```bash
+php artisan icons:cache
 ```
 
 #### Language Generator
