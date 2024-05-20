@@ -87,7 +87,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         return $this->hasRole(config('filament-shield.super_admin.name'));
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(Media|null $media = null): void
     {
         $this->addMediaConversion('thumb')
             ->fit(Fit::Contain, 300, 300)
