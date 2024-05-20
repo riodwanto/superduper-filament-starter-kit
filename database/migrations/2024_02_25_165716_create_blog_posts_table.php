@@ -14,12 +14,14 @@ return new class() extends Migration
     public function up()
     {
         Schema::create('blog_posts', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->foreignUuid('blog_author_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('blog_category_id')->nullable()->nullOnDelete();
+            $table->foreignUlid('blog_category_id')->nullable()->nullOnDelete();
+            $table->boolean('is_featured')->default(false);
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('content');
+            $table->text('content_overview')->nullable();
             $table->date('published_at')->nullable();
             $table->string('seo_title', 60)->nullable();
             $table->string('seo_description', 160)->nullable();
