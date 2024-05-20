@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,8 +27,10 @@ class BannerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('category')
-                    ->maxLength(255),
+                Forms\Components\Select::make('banner_category_id')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->required(),
                 Forms\Components\TextInput::make('sort')
                     ->required()
                     ->numeric()
@@ -41,12 +44,20 @@ class BannerResource extends Resource
                     ->multiple()
                     ->reorderable()
                     ->required(),
-                Forms\Components\Toggle::make('is_active')
+                Forms\Components\Toggle::make('is_visible')
                     ->required(),
                 Forms\Components\DateTimePicker::make('start_date'),
                 Forms\Components\DateTimePicker::make('end_date'),
                 Forms\Components\TextInput::make('click_url')
                     ->maxLength(255),
+                Forms\Components\Select::make('click_url_target')
+                    ->options([
+                        '_blank' => 'New Tab',
+                        '_self' => 'Current Tab',
+                        // '_parent',
+                        // '_top'
+                    ])
+                    ->native(false),
             ]);
     }
 
@@ -59,20 +70,15 @@ class BannerResource extends Resource
                     ->wrap(),
                 Tables\Columns\TextColumn::make('title')
                     ->lineClamp(2)
-                    ->description(fn (Model $record): string => $record->description ?? '')->wrap()
+                    ->description(fn (Model $record): string => \Illuminate\Support\Str::limit($record->description, 50) ?? '')->wrap()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('is_active')->label('Status')
-                    ->badge()
-                    ->formatStateUsing(fn (string $state, $record) => match ($state) {
-                        '' => 'Not Active',
-                        '1' => 'Active',
-                    })
-                    ->color(fn (string $state): string => match ($state) {
-                        '' => 'danger',
-                        '1' => 'success',
-                    }),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->searchable()
+                    ->alignCenter()
+                    ->lineClamp(1),
+                Tables\Columns\IconColumn::make('is_visible')->label('Active')
+                    ->boolean()
+                    ->alignCenter(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->dateTime()
                     ->sortable(),
@@ -123,6 +129,11 @@ class BannerResource extends Resource
         ];
     }
 
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['category']);
+    }
+
     public static function getGlobalSearchResultTitle(Model $record): string | Htmlable
     {
         return $record->title;
@@ -130,18 +141,18 @@ class BannerResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['title', 'category'];
+        return ['title', 'category.name'];
     }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            'Category' => $record->category,
+            'Category' => $record->category->name,
         ];
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __("menu.nav_group.sample");
+        return __("menu.nav_group.banner");
     }
 }
