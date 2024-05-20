@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Enums\Fit;
@@ -13,35 +14,47 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Banner extends Model implements HasMedia
 {
     use InteractsWithMedia;
-    use HasFactory, HasUuids;
+    use HasFactory, HasUlids;
 
      /**
      * @var array<int, string>
      */
     protected $fillable = [
-        'category',
+        'banner_category_id',
         'sort',
         'title',
         'description',
         'image_url',
-        'is_active',
+        'click_url',
+        'click_url_target',
+        'is_visible',
         'start_date',
         'end_date',
-        'click_url',
     ];
 
     /**
      * @var array<string, string>
      */
     protected $casts = [
-        'is_active' => 'boolean',
+        'is_visible' => 'boolean',
     ];
 
-    public function registerMediaConversions(Media $media = null): void
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(BannerCategory::class, 'banner_category_id');
+    }
+
+    public function registerMediaConversions(Media|null $media = null): void
     {
         $this
             ->addMediaConversion('preview')
             ->fit(Fit::Contain, 300, 300)
             ->nonQueued();
     }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('banners')
+            ->singleFile();
+    }
+
 }

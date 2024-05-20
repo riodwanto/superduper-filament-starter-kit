@@ -3,6 +3,7 @@
 namespace App\Models\Blog;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +14,7 @@ use Spatie\Tags\HasTags;
 class Post extends Model implements HasMedia
 {
     use HasFactory;
-    use InteractsWithMedia, HasTags;
+    use InteractsWithMedia, HasTags, HasUlids;
 
     /**
      * @var string
@@ -29,9 +30,11 @@ class Post extends Model implements HasMedia
         'title',
         'slug',
         'content',
+        'content_overview',
         'published_at',
         'seo_title',
         'seo_description',
+        'is_featured'
     ];
 
     /**
@@ -39,6 +42,7 @@ class Post extends Model implements HasMedia
      */
     protected $casts = [
         'published_at' => 'date',
+        'is_featured' => 'boolean'
     ];
 
     /** @return BelongsTo<User,self> */

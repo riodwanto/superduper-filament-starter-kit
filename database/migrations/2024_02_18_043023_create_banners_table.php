@@ -12,16 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('banners', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('category', 255)->nullable()->index();
-            $table->integer('sort')->default(0)->index();
+            $table->ulid('id')->primary();
+            $table->foreignUlid('banner_category_id')->nullable()->nullOnDelete();
+            $table->smallInteger('sort')->default(0)->index();
+            $table->boolean('is_visible')->default(false)->index();
             $table->string('title', 255)->nullable();
             $table->string('description', 500)->nullable();
             $table->string('image_url', 255)->nullable();
-            $table->boolean('is_active')->default(false)->index();
-            $table->dateTime('start_date')->nullable();
-            $table->dateTime('end_date')->nullable();
             $table->string('click_url', 255)->nullable();
+            $table->string('click_url_target', 20)->default('_self')->nullable();
+            $table->dateTime('start_date')->nullable()->index();
+            $table->dateTime('end_date')->nullable()->index();
             $table->timestamps();
         });
     }

@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
 
         $roles = DB::table('roles')->whereNot('name', 'super_admin')->get();
         foreach ($roles as $role) {
-            for ($i = 0; $i < 20; $i++) {
+            for ($i = 0; $i < 10; $i++) {
                 $userId = Str::uuid();
                 DB::table('users')->insert([
                     'id' => $userId,
