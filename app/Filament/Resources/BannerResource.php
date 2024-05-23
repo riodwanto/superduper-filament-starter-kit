@@ -148,7 +148,7 @@ class BannerResource extends Resource
                     ->lineClamp(2)
                     ->wrap()
                     ->searchable()
-                    ->extraAttributes(['class' => 'w-96']),
+                    ->extraAttributes(['class' => '!w-96']),
                 Tables\Columns\TextColumn::make('category.name')
                     ->searchable()
                     ->alignCenter()
