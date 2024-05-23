@@ -14,11 +14,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use League\CommonMark\CommonMarkConverter;
 
 class BannerResource extends Resource
 {
     protected static ?string $model = Banner::class;
-    protected static int $globalSearchResultsLimit = 20;
+    protected static int $globalSearchResultsLimit = 10;
 
     protected static ?int $navigationSort = -1;
     protected static ?string $navigationIcon = 'fluentui-image-shadow-24';
@@ -139,18 +140,20 @@ class BannerResource extends Resource
     {
         return $table
             ->columns([
-                SpatieMediaLibraryImageColumn::make('media')
+                SpatieMediaLibraryImageColumn::make('media')->label('Images')
                     ->collection('banners')
                     ->wrap(),
                 Tables\Columns\TextColumn::make('title')
+                    ->description(fn(Model $record): string => strip_tags((new CommonMarkConverter())->convert($record->description)->getContent()))
                     ->lineClamp(2)
-                    ->description(fn(Model $record): string => \Illuminate\Support\Str::limit($record->description, 50) ?? '')->wrap()
-                    ->searchable(),
+                    ->wrap()
+                    ->searchable()
+                    ->extraAttributes(['class' => 'w-96']),
                 Tables\Columns\TextColumn::make('category.name')
                     ->searchable()
                     ->alignCenter()
-                    ->lineClamp(1),
-                Tables\Columns\IconColumn::make('is_visible')->label('Active')
+                    ->lineClamp(2),
+                Tables\Columns\IconColumn::make('is_visible')
                     ->boolean()
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('start_date')
@@ -158,8 +161,7 @@ class BannerResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('click_url')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
@@ -172,10 +174,34 @@ class BannerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('category')
+                    ->relationship('category', 'name')
+                    ->searchable(),
+                Tables\Filters\TernaryFilter::make('is_visible')
+                    ->label('Visibility')
+                    ->trueLabel('Visible')
+                    ->falseLabel('Hidden')
+                    ->nullable(),
+                Tables\Filters\Filter::make('start_date')
+                    ->form([
+                        Forms\Components\DatePicker::make('start_date'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['start_date'] ?? null, fn($query, $date) => $query->whereDate('start_date', '>=', $date));
+                    }),
+                Tables\Filters\Filter::make('end_date')
+                    ->form([
+                        Forms\Components\DatePicker::make('end_date'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['end_date'] ?? null, fn($query, $date) => $query->whereDate('end_date', '<=', $date));
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -186,6 +212,7 @@ class BannerResource extends Resource
             ->defaultSort('sort', 'asc')
             ->reorderable('sort');
     }
+
 
     public static function getRelations(): array
     {
