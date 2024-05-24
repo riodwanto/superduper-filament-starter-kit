@@ -78,7 +78,13 @@ Generate key:
 php artisan key:generate
 ```
 
-Run with:
+Run :
+
+```bash
+npm run dev
+OR
+npm run build
+```
 
 ```bash
 php artisan serve
