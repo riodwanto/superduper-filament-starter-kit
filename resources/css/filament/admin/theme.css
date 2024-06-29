@@ -8,7 +8,9 @@
 }
 
 /* SIDEBAR */
-.fi-sidebar.fi-sidebar-open { @apply lg:!w-1/5 2xl:!w-1/5; }
+.fi-sidebar.fi-sidebar-open {
+
+}
 
 .fi-sidebar-nav-groups { @apply gap-y-4 }
 
