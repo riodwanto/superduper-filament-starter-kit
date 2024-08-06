@@ -52,6 +52,15 @@ Create project with this composer command:
 ```bash
 composer create-project riodwanto/superduper-filament-starter-kit
 ```
+Setup your project easily using the one of setup scripts:
+    
+```bash
+./bin/setup.sh
+# run chmod +x ./bin/setup.sh if you get permission denied
+# or
+./bin/setup.php
+```
+Or manually:
 
 Setup your env:
 
