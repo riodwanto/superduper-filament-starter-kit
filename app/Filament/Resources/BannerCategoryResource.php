@@ -22,7 +22,7 @@ class BannerCategoryResource extends Resource
     protected static ?int $navigationSort = -1;
     protected static ?string $navigationIcon = 'fluentui-stack-20';
     protected static ?string $navigationLabel = 'Categories';
-    protected static ?string $navigationGroup = 'Banner';
+   
 
     public static function form(Form $form): Form
     {
@@ -118,5 +118,10 @@ class BannerCategoryResource extends Resource
         return [
             'index' => Pages\ListBannerCategories::route('/'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("menu.nav_group.banner");
     }
 }
