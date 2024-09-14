@@ -9,10 +9,12 @@ use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
+use JoseEspinal\RecordNavigation\Traits\HasRecordsList;
 
 class ListUsers extends ListRecords
 {
     use ExposesTableToWidgets;
+    use HasRecordsList;
 
     protected static string $resource = UserResource::class;
 

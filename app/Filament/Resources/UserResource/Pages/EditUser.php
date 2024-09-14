@@ -11,19 +11,18 @@ use Filament\Support\Enums\Alignment;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
+use JoseEspinal\RecordNavigation\Traits\HasRecordNavigation;
 
 class EditUser extends EditRecord
 {
+    use HasRecordNavigation;
+
     protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array
     {
-        return [
+        $actions = [
             Actions\ActionGroup::make([
-                Actions\CreateAction::make()
-                    ->label('Create')
-                    ->url(fn(): string => static::$resource::getNavigationUrl() . '/create'),
-
                 Actions\EditAction::make()
                     ->label('Change password')
                     ->form([
@@ -49,13 +48,21 @@ class EditUser extends EditRecord
                     ->modalSubmitActionLabel('Submit')
                     ->modalCancelActionLabel('Cancel'),
 
-                Actions\DeleteAction::make(),
+                Actions\DeleteAction::make()
+                    ->extraAttributes(["class" => "border-b"]),
+
+                Actions\CreateAction::make()
+                    ->label('Create new user')
+                    ->url(fn(): string => static::$resource::getNavigationUrl() . '/create'),
             ])
-                ->icon('heroicon-m-ellipsis-horizontal')
-                ->hiddenLabel()
-                ->button()
-                ->color('gray')
+            ->icon('heroicon-m-ellipsis-horizontal')
+            ->hiddenLabel()
+            ->button()
+            ->tooltip('More Actions')
+            ->color('gray')
         ];
+
+        return array_merge($this->getNavigationActions(), $actions);
     }
 
     protected function getRedirectUrl(): string
