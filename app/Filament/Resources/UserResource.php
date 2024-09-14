@@ -128,16 +128,22 @@ class UserResource extends Resource
                                 Forms\Components\TextInput::make('lastname')
                                     ->required()
                                     ->maxLength(255),
+                            ])
+                            ->columns(2),
 
-                                Select::make('roles')->label('Role')
+                        Forms\Components\Tabs\Tab::make('Roles')
+                            ->icon('heroicon-o-information-circle')
+                            ->schema([
+                                Select::make('roles')
+                                    ->hiddenLabel()
                                     ->relationship('roles', 'name')
                                     ->getOptionLabelFromRecordUsing(fn(Model $record) => Str::headline($record->name))
+                                    ->multiple()
                                     ->preload()
                                     ->searchable()
                                     ->optionsLimit(5)
                                     ->columnSpanFull(),
                             ])
-                            ->columns(2),
                     ])
                     ->columnSpan([
                         'sm' => 1,
