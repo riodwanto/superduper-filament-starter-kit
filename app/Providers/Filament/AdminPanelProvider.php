@@ -10,6 +10,7 @@ use App\Settings\GeneralSettings;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -42,6 +43,14 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()->databaseNotificationsPolling('30s')
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->sidebarCollapsibleOnDesktop()
+            ->navigationItems([
+                NavigationItem::make('Log Viewer')
+                    ->visible(fn(): bool => auth()->user()->can('access_log_viewer'))
+                    ->url(config('app.url').'/'.config('log-viewer.route_path'), shouldOpenInNewTab: true)
+                    ->icon('fluentui-document-bullet-list-multiple-20-o')
+                    ->group(__('menu.nav_group.activities'))
+                    ->sort(99),
+            ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->resources([
