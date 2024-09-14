@@ -8,7 +8,7 @@ return [
     'user.actions.resend_verification' => 'Reenviar verificação',
     'user.notifications.verify_sent.title' => 'Verificação de e-mail enviada',
     'user.notifications.verify_warning' => [
-        'title' => 'Não é possível enviar verificação de e-mail!',
+        'title' => 'Não foi possível enviar a verificação por e-mail!',
         'description' => 'Verifique sua configuração de e-mail ou tente novamente mais tarde.',
     ]
     ];
