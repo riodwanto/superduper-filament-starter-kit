@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use Illuminate\Support\ServiceProvider;
+use Opcodes\LogViewer\Facades\LogViewer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
                 ->paginated([10, 25, 50, 100])
                 ->extremePaginationLinks()
                 ->defaultSort('created_at', 'desc');
+        });
+
+        // # \Opcodes\LogViewer
+        LogViewer::auth(function ($request) {
+            $role = auth()?->user()?->roles?->first()->name;
+            return $role == config('filament-shield.super_admin.name');
         });
     }
 }

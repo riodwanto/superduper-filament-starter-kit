@@ -33,6 +33,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.4",
+        "opcodesio/log-viewer": "^3.11",
         "riodwanto/filament-ace-editor": "^1.0",
         "stichoza/google-translate-php": "^5.2",
         "z3d0x/filament-logger": "^0.7.2"
