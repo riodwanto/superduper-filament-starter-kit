@@ -132,7 +132,7 @@ class UserResource extends Resource
                             ->columns(2),
 
                         Forms\Components\Tabs\Tab::make('Roles')
-                            ->icon('heroicon-o-information-circle')
+                            ->icon('fluentui-shield-task-48')
                             ->schema([
                                 Select::make('roles')
                                     ->hiddenLabel()
