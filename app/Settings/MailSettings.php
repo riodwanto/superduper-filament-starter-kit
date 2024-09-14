@@ -42,4 +42,13 @@ class MailSettings extends Settings
             'mail.from.name' => $data['from_name'] ?? $this->from_name,
         ]);
     }
+
+    /**
+     * Check if MailSettings is configured with necessary values.
+     */
+    public function isMailSettingsConfigured(): bool
+    {
+        // Check if the essential fields are not null
+        return $this->host && $this->username && $this->password && $this->from_address;
+    }
 }
