@@ -103,7 +103,12 @@ class UserResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->live()
-                                    ->unique(),
+                                    ->rules(function ($record) {
+                                        $userId = $record?->id;
+                                        return $userId
+                                            ? ['unique:users,username,' . $userId]
+                                            : ['unique:users,username'];
+                                    }),
 
                                 Forms\Components\TextInput::make('email')
                                     ->email()
