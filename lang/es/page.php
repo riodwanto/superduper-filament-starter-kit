@@ -2,8 +2,8 @@
 
 return [
     'general_settings' => [
-        'title' => 'Configuración general',
-        'heading' => 'Configuración general',
+        'title' => 'Configuraciones generales',
+        'heading' => 'Configuraciones generales',
         'subheading' => 'Administre la configuración general del sitio aquí.',
         'navigationLabel' => 'General',
         'sections' => [
@@ -20,7 +20,7 @@ return [
             'brand_name' => 'Nombre de la marca',
             'site_active' => 'Estado del sitio',
             'brand_logoHeight' => 'Altura del logotipo de la marca',
-            'brand_logo' => 'Logotipo',
+            'brand_logo' => 'Logotipo de la marca',
             'site_favicon' => 'Favicón del sitio',
             'primary' => 'Primario',
             'secondary' => 'Secundario',

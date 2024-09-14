@@ -17,7 +17,7 @@ return [
             ],
         ],
         'fields' => [
-            'brand_name' => '品牌',
+            'brand_name' => '品牌名称',
             'site_active' => '站点状态',
             'brand_logoHeight' => '品牌标志高度',
             'brand_logo' => '品牌标志',
