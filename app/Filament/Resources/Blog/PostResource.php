@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Blog;
 use App\Filament\Resources\Blog\PostResource\Pages;
 use App\Models\Blog\Post;
 use Filament\Forms;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use TomatoPHP\FilamentMediaManager\Form\MediaManagerInput;
 
 class PostResource extends Resource
 {
@@ -34,11 +34,12 @@ class PostResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Image')
                     ->schema([
-                        SpatieMediaLibraryFileUpload::make('media')->hiddenLabel()
-                            ->collection('blog/posts')
-                            ->multiple()
-                            ->reorderable()
-                            ->required(),
+                        MediaManagerInput::make('images')
+                            ->hiddenLabel()
+                            ->schema([
+                            ])
+                            ->defaultItems(1)
+                            ->minItems(1),
                     ])
                     ->collapsible(),
                 Forms\Components\Section::make()
@@ -91,7 +92,7 @@ class PostResource extends Resource
         return $table
             ->columns([
                 SpatieMediaLibraryImageColumn::make('media')->label('Image')
-                    ->collection('blog/posts')
+                    ->collection('images')
                     ->wrap(),
 
                 Tables\Columns\TextColumn::make('title')
