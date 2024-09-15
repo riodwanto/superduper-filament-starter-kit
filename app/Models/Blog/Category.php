@@ -27,6 +27,7 @@ class Category extends Model
         'is_visible',
         'seo_title',
         'seo_description',
+        'parent_id',
     ];
 
     /**
@@ -35,6 +36,16 @@ class Category extends Model
     protected $casts = [
         'is_visible' => 'boolean',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 
     /** @return HasMany<Post> */
     public function posts(): HasMany
