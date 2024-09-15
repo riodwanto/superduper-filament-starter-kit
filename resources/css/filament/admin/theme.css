@@ -36,7 +36,7 @@
 
 .fi-sidebar-item a:focus,
 .fi-sidebar-item a:hover {
-    @apply bg-primary-100 shadow-md dark:bg-primary-900 dark:shadow-lg transition-all ease-in-out duration-100 !important;
+    @apply bg-primary-100 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] dark:bg-primary-900 dark:shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] transition-all ease-in-out duration-100 !important;
 }
 
 .fi-sidebar-item a:hover svg,
@@ -46,7 +46,7 @@
 }
 
 .fi-sidebar-item-active a {
-    @apply shadow-md bg-primary-100 dark:bg-primary-900 dark:shadow-lg;
+    @apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] bg-primary-100 dark:bg-primary-900 dark:shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px];
 }
 
 .fi-sidebar-item a:hover svg,
@@ -68,7 +68,7 @@
 }
 
 .fi-ta-ctn {
-    @apply shadow-xl;
+    @apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px];
 }
 
 .fi-header-heading {
