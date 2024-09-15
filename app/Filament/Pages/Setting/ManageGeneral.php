@@ -79,29 +79,29 @@ class ManageGeneral extends SettingsPage
                                 ->required(),
                         ]),
                         Forms\Components\Grid::make()->schema([
+                            Forms\Components\TextInput::make('brand_logoHeight')
+                                ->label(fn () => __('page.general_settings.fields.brand_logoHeight'))
+                                ->required()
+                                ->columnSpanFull()
+                                ->maxWidth('w-1/2'),
                             Forms\Components\Grid::make()->schema([
-                                Forms\Components\TextInput::make('brand_logoHeight')
-                                    ->label(fn () => __('page.general_settings.fields.brand_logoHeight'))
-                                    ->required()
-                                    ->columnSpan(2),
                                 Forms\Components\FileUpload::make('brand_logo')
                                     ->label(fn () => __('page.general_settings.fields.brand_logo'))
                                     ->image()
                                     ->directory('sites')
                                     ->visibility('public')
                                     ->moveFiles()
-                                    ->required()
-                                    ->columnSpan(2),
-                            ])
-                                ->columnSpan(2),
-                            Forms\Components\FileUpload::make('site_favicon')
-                                ->label(fn () => __('page.general_settings.fields.site_favicon'))
-                                ->image()
-                                ->directory('sites')
-                                ->visibility('public')
-                                ->moveFiles()
-                                ->acceptedFileTypes(['image/x-icon', 'image/vnd.microsoft.icon'])
-                                ->required(),
+                                    ->required(),
+
+                                Forms\Components\FileUpload::make('site_favicon')
+                                    ->label(fn () => __('page.general_settings.fields.site_favicon'))
+                                    ->image()
+                                    ->directory('sites')
+                                    ->visibility('public')
+                                    ->moveFiles()
+                                    ->acceptedFileTypes(['image/x-icon', 'image/vnd.microsoft.icon'])
+                                    ->required(),
+                            ]),
                         ])->columns(4),
                     ]),
                 Forms\Components\Tabs::make('Tabs')
