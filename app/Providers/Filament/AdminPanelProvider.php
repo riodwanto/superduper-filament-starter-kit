@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Auth\EmailVerification;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\RequestPasswordReset;
+use App\Filament\Resources\MenuResource;
 use App\Livewire\MyProfileExtended;
 use App\Settings\GeneralSettings;
 use Filament\Http\Middleware\Authenticate;
@@ -126,6 +127,19 @@ class AdminPanelProvider extends PanelProvider
                     ->myProfileComponents([
                         'personal_info' => MyProfileExtended::class,
                     ]),
+                \Datlechin\FilamentMenuBuilder\FilamentMenuBuilderPlugin::make()
+                    ->usingResource(MenuResource::class)
+                    ->addMenuPanels([
+                        \Datlechin\FilamentMenuBuilder\MenuPanel\StaticMenuPanel::make()
+                            ->addMany([
+                                'Home' => url('/'),
+                                'Blog' => url('/blog'),
+                            ])
+                            ->description('Default menus')
+                            ->collapsed(true)
+                            ->collapsible(true)
+                            ->paginate(perPage: 5, condition: true)
+                    ])
             ]);
     }
 }
