@@ -9,7 +9,7 @@
 
 /* SIDEBAR */
 .fi-sidebar.fi-sidebar-open {
-
+    /* @apply ; */
 }
 
 .fi-sidebar-nav-groups { @apply gap-y-4 }
@@ -64,7 +64,7 @@
 
 /* Content */
 .fi-main {
-    @apply lg:pl-12 !important;
+    /* @apply ; */
 }
 
 .fi-ta-ctn {
