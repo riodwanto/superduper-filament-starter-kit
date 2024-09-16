@@ -9,19 +9,21 @@
 
 /* SIDEBAR */
 .fi-sidebar.fi-sidebar-open {
-    /* @apply ; */
+    @apply !w-1/5;
 }
 
-.fi-sidebar-nav-groups { @apply gap-y-4 }
+.fi-sidebar-nav-groups {
+    @apply gap-y-4;
+}
 
 .fi-sidebar-header {
-    @apply py-2 !ring-0;
+    @apply py-2 !ring-0 bg-gray-50 dark:!bg-gray-950 !shadow-none;
 }
 
 .fi-sidebar-group > .fi-sidebar-group-items { @apply gap-y-2; }
 
 .fi-topbar nav {
-    @apply !ring-0 py-2 !border-none;
+    @apply !ring-0 py-2 !border-none bg-gray-50 dark:bg-gray-950 !shadow-none;
 }
 
 /* SIDEBAR ITEM */
@@ -31,7 +33,7 @@
 
 .fi-sidebar-item a > span,
 .fi-sidebar-item a > svg {
-    @apply font-semibold dark:font-bold dark:text-gray-100;
+    @apply font-semibold;
 }
 
 .fi-sidebar-item a:focus,
@@ -52,7 +54,7 @@
 .fi-sidebar-item a:hover svg,
 .fi-sidebar-item a:focus svg,
 .fi-sidebar-item-active svg {
-    @apply !text-secondary-500 dark:!text-secondary-500 transition-all ease-in-out duration-300 !important;
+    @apply transition-all ease-in-out duration-300 !important;
 }
 .fi-sidebar.fi-sidebar-open {
     .fi-sidebar-item a:hover svg,
@@ -64,10 +66,15 @@
 
 /* Content */
 .fi-main {
-    /* @apply ; */
+    @apply my-4 pb-4 bg-white dark:bg-gray-900 rounded-3xl shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px];
 }
 
-.fi-ta-ctn {
+.fi-simple-main,
+.fi-section,
+.fi-ta-ctn,
+.fi-fo-tabs,
+.fi-wi-stats-overview-stat,
+.fi-fo-repeater-item {
     @apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px];
 }
 
@@ -80,6 +87,9 @@
 }
 
 /* Filament Actions */
+.fi-btn.fi-btn-color-primary {
+    @apply text-secondary-50;
+}
 .fi-dropdown-trigger button.fi-btn {
     @apply !p-1;
 }
