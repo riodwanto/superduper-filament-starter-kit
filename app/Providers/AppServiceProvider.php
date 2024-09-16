@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Filament\Tables\Table;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
 
@@ -36,5 +39,15 @@ class AppServiceProvider extends ServiceProvider
             $role = auth()?->user()?->roles?->first()->name;
             return $role == config('filament-shield.super_admin.name');
         });
+
+        // # Hooks
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::CONTENT_END,
+            fn (): View => view('filament.components.panel-footer'),
+        );
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::USER_MENU_BEFORE,
+            fn (): View => view('filament.components.button-website'),
+        );
     }
 }
