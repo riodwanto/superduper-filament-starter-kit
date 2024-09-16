@@ -79,10 +79,6 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\FilamentInfoWidget::class,
             ])
-            ->renderHook(
-                'panels::content.end',
-                fn() => view('components.panel-footer'),
-            )
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
