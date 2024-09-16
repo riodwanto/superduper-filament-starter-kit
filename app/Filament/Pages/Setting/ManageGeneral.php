@@ -109,19 +109,19 @@ class ManageGeneral extends SettingsPage
                         Forms\Components\Tabs\Tab::make('Color Palette')
                             ->schema([
                                 Forms\Components\ColorPicker::make('site_theme.primary')
-                                    ->label(fn () => __('page.general_settings.fields.primary'))->rgb(),
+                                    ->label(fn () => __('page.general_settings.fields.primary')),
                                 Forms\Components\ColorPicker::make('site_theme.secondary')
-                                    ->label(fn () => __('page.general_settings.fields.secondary'))->rgb(),
+                                    ->label(fn () => __('page.general_settings.fields.secondary')),
                                 Forms\Components\ColorPicker::make('site_theme.gray')
-                                    ->label(fn () => __('page.general_settings.fields.gray'))->rgb(),
+                                    ->label(fn () => __('page.general_settings.fields.gray')),
                                 Forms\Components\ColorPicker::make('site_theme.success')
-                                    ->label(fn () => __('page.general_settings.fields.success'))->rgb(),
+                                    ->label(fn () => __('page.general_settings.fields.success')),
                                 Forms\Components\ColorPicker::make('site_theme.danger')
-                                    ->label(fn () => __('page.general_settings.fields.danger'))->rgb(),
+                                    ->label(fn () => __('page.general_settings.fields.danger')),
                                 Forms\Components\ColorPicker::make('site_theme.info')
-                                    ->label(fn () => __('page.general_settings.fields.info'))->rgb(),
+                                    ->label(fn () => __('page.general_settings.fields.info')),
                                 Forms\Components\ColorPicker::make('site_theme.warning')
-                                    ->label(fn () => __('page.general_settings.fields.warning'))->rgb(),
+                                    ->label(fn () => __('page.general_settings.fields.warning')),
                             ])
                             ->columns(3),
                         Forms\Components\Tabs\Tab::make('Code Editor')
