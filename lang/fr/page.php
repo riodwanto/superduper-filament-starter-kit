@@ -2,8 +2,8 @@
 
 return [
     'general_settings' => [
-        'title' => 'réglages généraux',
-        'heading' => 'réglages généraux',
+        'title' => 'Paramètres généraux',
+        'heading' => 'Paramètres généraux',
         'subheading' => 'Gérez les paramètres généraux du site ici.',
         'navigationLabel' => 'Général',
         'sections' => [
@@ -17,7 +17,7 @@ return [
             ],
         ],
         'fields' => [
-            'brand_name' => 'Marque',
+            'brand_name' => 'Nom de la marque',
             'site_active' => 'Statut du site',
             'brand_logoHeight' => 'Hauteur du logo de la marque',
             'brand_logo' => 'Logo de la marque',
@@ -27,7 +27,7 @@ return [
             'gray' => 'Gris',
             'success' => 'Succès',
             'danger' => 'Danger',
-            'info' => 'Info',
+            'info' => 'Informations',
             'warning' => 'Avertissement',
         ],
     ],
@@ -57,7 +57,7 @@ return [
             'driver' => 'Conducteur',
             'host' => 'Hôte',
             'port' => 'Port',
-            'encryption' => 'Chiffrement',
+            'encryption' => 'Cryptage',
             'timeout' => 'Temps mort',
             'username' => 'Nom d\'utilisateur',
             'password' => 'Mot de passe',

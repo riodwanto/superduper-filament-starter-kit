@@ -30,16 +30,25 @@ class CreateUser extends CreateRecord
             throw new Exception("Model [{$userClass}] does not have a [notify()] method.");
         }
 
-        $notification = new VerifyEmail();
-        $notification->url = Filament::getVerifyEmailUrl($user);
+        if ($settings->isMailSettingsConfigured()) {
+            $notification = new VerifyEmail();
+            $notification->url = Filament::getVerifyEmailUrl($user);
 
-        $settings->loadMailSettingsToConfig();
+            $settings->loadMailSettingsToConfig();
 
-        $user->notify($notification);
+            $user->notify($notification);
 
-        Notification::make()
-            ->title(__('resource.user.notifications.notification_resent.title'))
-            ->success()
-            ->send();
+
+            Notification::make()
+                ->title(__('resource.user.notifications.verify_sent.title'))
+                ->success()
+                ->send();
+        } else {
+            Notification::make()
+                ->title(__('resource.user.notifications.verify_warning.title'))
+                ->body(__('resource.user.notifications.verify_warning.description'))
+                ->warning()
+                ->send();
+        }
     }
 }

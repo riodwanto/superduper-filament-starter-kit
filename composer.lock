@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a329723d21da121d96c3fa76252956d6",
+    "content-hash": "cb27054fd1f24719b31af062a2276a5b",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -500,6 +500,60 @@
             "time": "2023-11-29T23:19:16+00:00"
         },
         {
+            "name": "calebporzio/sushi",
+            "version": "v2.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calebporzio/sushi.git",
+                "reference": "01dd34fe3374f5fb7ce63756c0419385e31cd532"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calebporzio/sushi/zipball/01dd34fe3374f5fb7ce63756c0419385e31cd532",
+                "reference": "01dd34fe3374f5fb7ce63756c0419385e31cd532",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo_sqlite": "*",
+                "ext-sqlite3": "*",
+                "illuminate/database": "^5.8 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "illuminate/support": "^5.8 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "php": "^7.1.3|^8.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^2.9 || ^3.1.4",
+                "orchestra/testbench": "3.8.* || 3.9.* || ^4.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
+                "phpunit/phpunit": "^7.5 || ^8.4 || ^9.0 || ^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sushi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Caleb Porzio",
+                    "email": "calebporzio@gmail.com"
+                }
+            ],
+            "description": "Eloquent's missing \"array\" driver.",
+            "support": {
+                "source": "https://github.com/calebporzio/sushi/tree/v2.5.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/calebporzio",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-04-24T15:23:03+00:00"
+        },
+        {
             "name": "carbonphp/carbon-doctrine-types",
             "version": "2.1.0",
             "source": {
@@ -875,6 +929,80 @@
                 "source": "https://github.com/DASPRiD/Enum/tree/1.0.5"
             },
             "time": "2023-08-25T16:18:39+00:00"
+        },
+        {
+            "name": "datlechin/filament-menu-builder",
+            "version": "v0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/datlechin/filament-menu-builder.git",
+                "reference": "62b1aac908ecd3265854e3257e26ee907eaeb276"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/datlechin/filament-menu-builder/zipball/62b1aac908ecd3265854e3257e26ee907eaeb276",
+                "reference": "62b1aac908ecd3265854e3257e26ee907eaeb276",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.9",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.1",
+                "pestphp/pest-plugin-arch": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Datlechin\\FilamentMenuBuilder\\FilamentMenuBuilderServiceProvider"
+                    ],
+                    "aliases": {
+                        "FilamentMenuBuilder": "Datlechin\\FilamentMenuBuilder\\Facades\\FilamentMenuBuilder"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Datlechin\\FilamentMenuBuilder\\": "src/",
+                    "Datlechin\\FilamentMenuBuilder\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ngo Quoc Dat",
+                    "email": "datlechin@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Create and manage menus and menu items",
+            "homepage": "https://github.com/datlechin/filament-menu-builder",
+            "keywords": [
+                "datlechin",
+                "filament-menu-builder",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/datlechin/filament-menu-builder/issues",
+                "source": "https://github.com/datlechin/filament-menu-builder"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/datlechin",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-09-01T07:50:58+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -2765,6 +2893,77 @@
             "time": "2024-06-09T18:50:11+00:00"
         },
         {
+            "name": "josespinal/filament-record-navigation",
+            "version": "v2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/josespinal/filament-record-navigation.git",
+                "reference": "6a6ef6ec2e66f9738ee5037d22192d58f38a7cb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/josespinal/filament-record-navigation/zipball/6a6ef6ec2e66f9738ee5037d22192d58f38a7cb1",
+                "reference": "6a6ef6ec2e66f9738ee5037d22192d58f38a7cb1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0||^11.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9",
+                "laravel/pint": "^1.14",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^9.0.0||^8.22.0",
+                "pestphp/pest": "^2.34",
+                "pestphp/pest-plugin-arch": "^2.7",
+                "pestphp/pest-plugin-laravel": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JoseEspinal\\RecordNavigation\\RecordNavigationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JoseEspinal\\RecordNavigation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jose Espinal",
+                    "email": "jespinal@industria.com.do",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Record navigation from views",
+            "homepage": "https://github.com/josespinal/filament-record-navigation",
+            "keywords": [
+                "Jose Espinal",
+                "filament-record-navigation",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/josespinal/filament-record-navigation/issues",
+                "source": "https://github.com/josespinal/filament-record-navigation/tree/v2.0.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Jose Espinal",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-06-05T22:01:23+00:00"
+        },
+        {
             "name": "kirschbaum-development/eloquent-power-joins",
             "version": "3.5.7",
             "source": {
@@ -4641,6 +4840,147 @@
                 }
             ],
             "time": "2024-03-06T16:17:14+00:00"
+        },
+        {
+            "name": "opcodesio/log-viewer",
+            "version": "v3.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opcodesio/log-viewer.git",
+                "reference": "608cde8a5fbac1e9959c060b780ef3ed26598aae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opcodesio/log-viewer/zipball/608cde8a5fbac1e9959c060b780ef3ed26598aae",
+                "reference": "608cde8a5fbac1e9959c060b780ef3ed26598aae",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0",
+                "opcodesio/mail-parser": "^0.1.6",
+                "php": "^8.0"
+            },
+            "conflict": {
+                "arcanedev/log-viewer": "^8.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.2",
+                "itsgoingd/clockwork": "^5.1",
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.0|^8.0",
+                "orchestra/testbench": "^7.6|^8.0|^9.0",
+                "pestphp/pest": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0",
+                "spatie/test-time": "^1.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Required for multi-host support. ^7.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Opcodes\\LogViewer\\LogViewerServiceProvider"
+                    ],
+                    "aliases": {
+                        "LogViewer": "Opcodes\\LogViewer\\Facades\\LogViewer"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Opcodes\\LogViewer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arunas Skirius",
+                    "email": "arukomp@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Fast and easy-to-use log viewer for your Laravel application",
+            "homepage": "https://github.com/opcodesio/log-viewer",
+            "keywords": [
+                "arukompas",
+                "better-log-viewer",
+                "laravel",
+                "log viewer",
+                "logs",
+                "opcodesio"
+            ],
+            "support": {
+                "issues": "https://github.com/opcodesio/log-viewer/issues",
+                "source": "https://github.com/opcodesio/log-viewer/tree/v3.11.1"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/arunas",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/arukompas",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-08-23T07:25:44+00:00"
+        },
+        {
+            "name": "opcodesio/mail-parser",
+            "version": "v0.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opcodesio/mail-parser.git",
+                "reference": "639ef31cbd146a63416283e75afce152e13233ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opcodesio/mail-parser/zipball/639ef31cbd146a63416283e75afce152e13233ea",
+                "reference": "639ef31cbd146a63416283e75afce152e13233ea",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^2.16",
+                "symfony/var-dumper": "^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Opcodes\\MailParser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arunas Skirius",
+                    "email": "arukomp@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Parse emails without the mailparse extension",
+            "keywords": [
+                "arukompas",
+                "email",
+                "email parser",
+                "mail",
+                "opcodesio",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/opcodesio/mail-parser/issues",
+                "source": "https://github.com/opcodesio/mail-parser/tree/v0.1.6"
+            },
+            "time": "2023-11-19T08:47:43+00:00"
         },
         {
             "name": "openspout/openspout",
@@ -7344,6 +7684,87 @@
             "time": "2023-12-25T11:46:58+00:00"
         },
         {
+            "name": "stichoza/google-translate-php",
+            "version": "v5.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Stichoza/google-translate-php.git",
+                "reference": "9429773d991c98f68a25bec40d20f590ea3312a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Stichoza/google-translate-php/zipball/9429773d991c98f68a25bec40d20f590ea3312a0",
+                "reference": "9429773d991c98f68a25bec40d20f590ea3312a0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "^7.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5.10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Stichoza\\GoogleTranslate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Levan Velijanashvili",
+                    "email": "me@stichoza.com"
+                }
+            ],
+            "description": "Free Google Translate API PHP Package",
+            "homepage": "https://github.com/Stichoza/google-translate-php",
+            "keywords": [
+                "google",
+                "php",
+                "translate",
+                "translating",
+                "translator"
+            ],
+            "support": {
+                "issues": "https://github.com/Stichoza/google-translate-php/issues",
+                "source": "https://github.com/Stichoza/google-translate-php/tree/v5.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://btc.com/bc1qc25j4x7yahghm8nnn6lypnw59nptylsw32nkfl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.paypal.me/stichoza",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://ko-fi.com/stichoza",
+                    "type": "ko_fi"
+                },
+                {
+                    "url": "https://liberapay.com/stichoza",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://opencollective.com/stichoza",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://www.patreon.com/stichoza",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2024-08-05T19:11:36+00:00"
+        },
+        {
             "name": "symfony/clock",
             "version": "v7.1.1",
             "source": {
@@ -9764,6 +10185,196 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.2.7"
             },
             "time": "2023-12-08T13:03:43+00:00"
+        },
+        {
+            "name": "tomatophp/console-helpers",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tomatophp/console-helpers.git",
+                "reference": "69dd818a2bfa7d038467fb526be6c9b573d36a34"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tomatophp/console-helpers/zipball/69dd818a2bfa7d038467fb526be6c9b573d36a34",
+                "reference": "69dd818a2bfa7d038467fb526be6c9b573d36a34",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TomatoPHP\\ConsoleHelpers\\ConsoleHelpersServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TomatoPHP\\ConsoleHelpers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fady Mondy",
+                    "email": "EngFadyMondy@gmail.com"
+                }
+            ],
+            "description": "tons of helper you need for you artisan command line application",
+            "keywords": [
+                "application",
+                "artisan",
+                "command",
+                "console",
+                "helpers",
+                "line"
+            ],
+            "support": {
+                "issues": "https://github.com/tomatophp/console-helpers/issues",
+                "source": "https://github.com/tomatophp/console-helpers/tree/v1.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/3x1io",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-02-12T12:00:38+00:00"
+        },
+        {
+            "name": "tomatophp/filament-icons",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tomatophp/filament-icons.git",
+                "reference": "30a1259a51498ee1b13de95409e1807e7ee69a80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tomatophp/filament-icons/zipball/30a1259a51498ee1b13de95409e1807e7ee69a80",
+                "reference": "30a1259a51498ee1b13de95409e1807e7ee69a80",
+                "shasum": ""
+            },
+            "require": {
+                "calebporzio/sushi": "*",
+                "filament/filament": "^3.0.0",
+                "php": "^8.1|^8.2",
+                "tomatophp/console-helpers": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TomatoPHP\\FilamentIcons\\FilamentIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TomatoPHP\\FilamentIcons\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fady Mondy",
+                    "email": "info@3x1.io"
+                }
+            ],
+            "description": "Picker & Table Column & Icons Provider for FilamentPHP",
+            "keywords": [
+                "Heroicons",
+                "component",
+                "filament",
+                "filamentphp",
+                "icons picker",
+                "laravel",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/tomatophp/filament-icons/issues",
+                "source": "https://github.com/tomatophp/filament-icons/tree/v1.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/3x1io",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-07-21T15:41:17+00:00"
+        },
+        {
+            "name": "tomatophp/filament-media-manager",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tomatophp/filament-media-manager.git",
+                "reference": "b52dc979b1901a739365e156fd6d501969e00719"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tomatophp/filament-media-manager/zipball/b52dc979b1901a739365e156fd6d501969e00719",
+                "reference": "b52dc979b1901a739365e156fd6d501969e00719",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^v3.0.0",
+                "filament/spatie-laravel-media-library-plugin": "^v3.0.0",
+                "php": "^8.1|^8.2",
+                "spatie/laravel-medialibrary": "^10.0|^11.0",
+                "tomatophp/console-helpers": "^1.1",
+                "tomatophp/filament-icons": "^v1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TomatoPHP\\FilamentMediaManager\\FilamentMediaManagerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TomatoPHP\\FilamentMediaManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fady Mondy",
+                    "email": "info@3x1.io"
+                }
+            ],
+            "description": "Manage your media files using spatie media library with easy to use GUI for FilamentPHP",
+            "keywords": [
+                "filament",
+                "laravel",
+                "manager",
+                "media",
+                "media-library",
+                "php",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/tomatophp/filament-media-manager/issues",
+                "source": "https://github.com/tomatophp/filament-media-manager/tree/v1.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/3x1io",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-08-12T08:53:27+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

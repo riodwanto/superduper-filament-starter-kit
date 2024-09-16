@@ -15,6 +15,7 @@ return new class() extends Migration
     {
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->ulid('parent_id')->nullable(); // Self-referencing foreign key
             $table->string('name');
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
@@ -22,6 +23,8 @@ return new class() extends Migration
             $table->string('seo_title', 60)->nullable();
             $table->string('seo_description', 160)->nullable();
             $table->timestamps();
+
+            $table->foreign('parent_id')->references('id')->on('blog_categories')->onDelete('cascade');
         });
     }
 

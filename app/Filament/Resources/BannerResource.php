@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BannerResource\Pages;
 use App\Models\Banner;
 use Filament\Forms;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -15,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use League\CommonMark\CommonMarkConverter;
+use TomatoPHP\FilamentMediaManager\Form\MediaManagerInput;
 
 class BannerResource extends Resource
 {
@@ -75,13 +75,12 @@ class BannerResource extends Resource
                                 Forms\Components\Section::make('Image')
                                     ->description('Upload banner images here')
                                     ->schema([
-                                        SpatieMediaLibraryFileUpload::make('media')
+                                        MediaManagerInput::make('images')
                                             ->hiddenLabel()
-                                            ->helperText('Select and upload images for the banner')
-                                            ->collection('banners')
-                                            ->multiple()
-                                            ->reorderable()
-                                            ->required(),
+                                            ->schema([
+                                            ])
+                                            ->defaultItems(1)
+                                            ->minItems(1),
                                     ])
                                     ->compact(),
                             ]),
@@ -141,7 +140,7 @@ class BannerResource extends Resource
         return $table
             ->columns([
                 SpatieMediaLibraryImageColumn::make('media')->label('Images')
-                    ->collection('banners')
+                    ->collection('images')
                     ->wrap(),
                 Tables\Columns\TextColumn::make('title')
                     ->description(fn(Model $record): string => strip_tags((new CommonMarkConverter())->convert($record->description)->getContent()))
@@ -200,9 +199,9 @@ class BannerResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()->hiddenLabel()->tooltip('Detail'),
+                Tables\Actions\EditAction::make()->hiddenLabel()->tooltip('Edit'),
+                Tables\Actions\DeleteAction::make()->hiddenLabel()->tooltip('Delete'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

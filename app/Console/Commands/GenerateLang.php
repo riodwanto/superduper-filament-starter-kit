@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class GenerateLang extends Command
 {
@@ -32,21 +32,20 @@ class GenerateLang extends Command
             }
         }
 
-        if ($onlyJson):
+        if ($onlyJson) {
             $this->processJsonFile($sourcePath, $from, $targets);
-        else :
+        } else {
             $this->processDirectory($sourcePath, $from, $targets, $specificFile);
-        endif;
+        }
 
-        $this->info("\n\n All files have been translate. \n");
+        $this->info("\n\n All files have been translated. \n");
     }
 
-    protected function processJsonFile(string $sourceFile, string $from, array|string $targets) :void
+    protected function processJsonFile(string $sourceFile, string $from, array|string $targets): void
     {
         foreach ($targets as $to) {
             $this->info("\n\n 🔔 Translate to '{$to}'");
 
-            // get content of json file
             $translations = json_decode(File::get($sourceFile), true, 512, JSON_THROW_ON_ERROR);
 
             $bar = $this->output->createProgressBar(count($translations));
@@ -129,8 +128,8 @@ class GenerateLang extends Command
                 $bar?->advance();
             }
             return $content;
-        } else if ($content === '' || $content === null){
-            $this->error("Translation value missing, make sure all translation values are not empty, in source file!");
+        } else if ($content === '' || $content === null) {
+            $this->error("Translation value missing, make sure all translation values are not empty, in the source file!");
             exit();
         } else {
             return $this->translateUsingGoogleTranslate($content, $source, $target);
@@ -139,32 +138,18 @@ class GenerateLang extends Command
 
     public function translateUsingGoogleTranslate($content, string $source, string $target)
     {
-        if (is_array($content)) {
-            $translatedArray = [];
-            foreach ($content as $key => $value) {
-                $translatedArray[$key] = $this->translateUsingGoogleTranslate($value, $source, $target);
-            }
-            return $translatedArray;
-        } else {
-            $response = Http::retry(3)
-                ->throw()
-                ->get('https://translate.googleapis.com/translate_a/single?client=gtx&sl=' . $source . '&tl=' . $target . '&dt=t&q=' . urlencode($content));
-            $response = json_decode($response->body());
-            $translatedText = '';
-            foreach ($response[0] as $translation) {
-                $translatedText .= $translation[0];
-            }
-            return !empty($translatedText) ? $translatedText : $content;
+        try {
+            // Use Stichoza\GoogleTranslate\GoogleTranslate for translation
+            $tr = new GoogleTranslate();
+            $tr->setSource($source);
+            $tr->setTarget($target);
+            return $tr->translate($content);
+        } catch (\Exception $e) {
+            $this->error("Failed to translate text: " . $e->getMessage());
+            return $content; // Return original text if translation fails
         }
     }
 
-    /**
-     * Convert an array to a string representation using short array syntax.
-     *
-     * @param array $array The array to convert.
-     * @param int $indentLevel The current indentation level (for formatting).
-     * @return string The array as a string.
-     */
     protected function arrayToString(array $array, $indentLevel = 1)
     {
         $indent = str_repeat('    ', $indentLevel); // 4 spaces for indentation
@@ -176,7 +161,6 @@ class GenerateLang extends Command
                 $entryValue = $this->arrayToString($value, $indentLevel + 1);
                 $entries[] = "$indent$entryKey => $entryValue";
             } else {
-                // Escape single quotes inside strings
                 $entryValue = is_string($value) ? "'" . addcslashes($value, "'") . "'" : $value;
                 $entries[] = "$indent$entryKey => $entryValue";
             }
