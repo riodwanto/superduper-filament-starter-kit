@@ -27,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
         Table::configureUsing(function (Table $table): void {
             $table
                 ->emptyStateHeading('No data yet')
-                ->striped()
                 ->defaultPaginationPageOption(10)
                 ->paginated([10, 25, 50, 100])
                 ->extremePaginationLinks()
@@ -42,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
 
         // # Hooks
         FilamentView::registerRenderHook(
-            PanelsRenderHook::CONTENT_END,
+            PanelsRenderHook::FOOTER,
             fn (): View => view('filament.components.panel-footer'),
         );
         FilamentView::registerRenderHook(
