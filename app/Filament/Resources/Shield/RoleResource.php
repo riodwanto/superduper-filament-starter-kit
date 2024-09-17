@@ -356,7 +356,7 @@ class RoleResource extends Resource implements HasShieldPermissions
         $count = count($options);
 
         return Forms\Components\Tabs\Tab::make('custom')
-            ->label(__('filament-shield::filament-shield.custom'))
+            ->label(__('vendor.filament-shield.custom'))
             ->visible(fn (): bool => (bool) Utils::isCustomPermissionEntityEnabled() && $count > 0)
             ->badge($count)
             ->schema([

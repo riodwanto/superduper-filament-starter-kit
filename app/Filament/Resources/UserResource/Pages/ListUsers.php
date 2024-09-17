@@ -9,10 +9,12 @@ use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
+use JoseEspinal\RecordNavigation\Traits\HasRecordsList;
 
 class ListUsers extends ListRecords
 {
     use ExposesTableToWidgets;
+    use HasRecordsList;
 
     protected static string $resource = UserResource::class;
 
@@ -34,6 +36,7 @@ class ListUsers extends ListRecords
         $tabs = [
             null => Tab::make('All'),
             'admin' => Tab::make()->query(fn ($query) => $query->with('roles')->whereRelation('roles', 'name', '=', 'admin')),
+            'author' => Tab::make()->query(fn ($query) => $query->with('roles')->whereRelation('roles', 'name', '=', 'author')),
         ];
 
         if ($user->isSuperAdmin()) {

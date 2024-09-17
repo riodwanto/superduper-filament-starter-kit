@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('banner_categories', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->ulid('parent_id')->nullable(); // Self-referencing foreign key
             $table->string('name');
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
             $table->boolean('is_active')->default(false);
             $table->timestamps();
+
+            $table->foreign('parent_id')->references('id')->on('banner_categories')->onDelete('cascade');
         });
     }
 

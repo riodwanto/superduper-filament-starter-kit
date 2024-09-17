@@ -29,6 +29,13 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('parent_id')
+                    ->label('Parent Category')
+                    ->options(Category::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->nullable()
+                    ->columnSpan('full'),
+
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
@@ -56,6 +63,9 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('parent.name')->label('Sub Category of')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),

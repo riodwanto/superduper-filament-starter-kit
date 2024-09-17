@@ -2,8 +2,8 @@
 
 return [
     'general_settings' => [
-        'title' => 'الاعدادات العامة',
-        'heading' => 'الاعدادات العامة',
+        'title' => 'الإعدادات العامة',
+        'heading' => 'الإعدادات العامة',
         'subheading' => 'إدارة إعدادات الموقع العامة هنا.',
         'navigationLabel' => 'عام',
         'sections' => [

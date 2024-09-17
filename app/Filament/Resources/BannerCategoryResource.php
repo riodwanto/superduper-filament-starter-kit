@@ -22,12 +22,19 @@ class BannerCategoryResource extends Resource
     protected static ?int $navigationSort = -1;
     protected static ?string $navigationIcon = 'fluentui-stack-20';
     protected static ?string $navigationLabel = 'Categories';
-    protected static ?string $navigationGroup = 'Banner';
+   
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('parent_id')
+                    ->label('Parent Category')
+                    ->options(BannerCategory::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->nullable()
+                    ->columnSpan('full'),
+
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
@@ -71,6 +78,9 @@ class BannerCategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('parent.name')->label('Sub Category of')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('is_active')->label('Status')
@@ -97,7 +107,7 @@ class BannerCategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->hiddenLabel()->tooltip('Edit'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -118,5 +128,10 @@ class BannerCategoryResource extends Resource
         return [
             'index' => Pages\ListBannerCategories::route('/'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("menu.nav_group.banner");
     }
 }
