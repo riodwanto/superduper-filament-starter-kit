@@ -20,7 +20,5 @@ class DatabaseSeeder extends Seeder
             BlogCategoriesTableSeeder::class,
             BlogPostsTableSeeder::class,
         ]);
-
-        Artisan::call('shield:generate --all');
     }
 }

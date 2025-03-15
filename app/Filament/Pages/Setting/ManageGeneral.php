@@ -79,11 +79,15 @@ class ManageGeneral extends SettingsPage
                                 ->required(),
                         ]),
                         Forms\Components\Grid::make()->schema([
+                            Forms\Components\Grid::make()->schema([
                             Forms\Components\TextInput::make('brand_logoHeight')
                                 ->label(fn () => __('page.general_settings.fields.brand_logoHeight'))
-                                ->required()
-                                ->columnSpanFull()
-                                ->maxWidth('w-1/2'),
+                                ->required(),
+                            Forms\Components\Toggle::make('search_engine_indexing')
+                                ->label('Admin Panel Indexing')
+                                ->helperText('When disabled, search engines will be instructed not to index the admin panel')
+                                ->default(true),
+                            ]),
                             Forms\Components\Grid::make()->schema([
                                 Forms\Components\FileUpload::make('brand_logo')
                                     ->label(fn () => __('page.general_settings.fields.brand_logo'))

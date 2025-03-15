@@ -13,6 +13,8 @@ class GeneralSettings extends Settings
     public ?string $site_favicon;
     public array $site_theme;
 
+    public bool $search_engine_indexing;
+
     public static function group(): string
     {
         return 'general';

@@ -11,6 +11,7 @@ return new class extends SettingsMigration
         $this->migrator->add('general.brand_logoHeight', '3rem');
         $this->migrator->add('general.site_active', true);
         $this->migrator->add('general.site_favicon', 'sites/logo.ico');
+        $this->migrator->add('general.search_engine_indexing', true);
         $this->migrator->add('general.site_theme', [
             "primary" => "#3150AE",
             "secondary" => "#3be5e8",
