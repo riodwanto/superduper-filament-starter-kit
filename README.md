@@ -63,6 +63,12 @@ php artisan db:seed
 php artisan migrate:fresh --seed
 ```
 
+Run Permissions & Policies:
+
+```bash
+php artisan shield:generate --all
+```
+
 Generate key:
 
 ```bash
