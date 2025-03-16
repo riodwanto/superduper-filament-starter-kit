@@ -2,14 +2,14 @@
 
 return [
     'general_settings' => [
-        'title' => 'Configuraciones generales',
-        'heading' => 'Configuraciones generales',
+        'title' => 'Configuración general',
+        'heading' => 'Configuración general',
         'subheading' => 'Administre la configuración general del sitio aquí.',
         'navigationLabel' => 'General',
         'sections' => [
             'site' => [
                 'title' => 'Sitio',
-                'description' => 'Administrar la configuración básica.',
+                'description' => 'Administrar configuraciones básicas.',
             ],
             'theme' => [
                 'title' => 'Tema',
@@ -17,11 +17,11 @@ return [
             ],
         ],
         'fields' => [
-            'brand_name' => 'Nombre de la marca',
+            'brand_name' => 'Marca',
             'site_active' => 'Estado del sitio',
             'brand_logoHeight' => 'Altura del logotipo de la marca',
             'brand_logo' => 'Logotipo de la marca',
-            'site_favicon' => 'Favicón del sitio',
+            'site_favicon' => 'Sitio favicon',
             'primary' => 'Primario',
             'secondary' => 'Secundario',
             'gray' => 'Gris',
@@ -34,7 +34,7 @@ return [
     'mail_settings' => [
         'title' => 'Configuración de correo',
         'heading' => 'Configuración de correo',
-        'subheading' => 'Gestionar la configuración del correo.',
+        'subheading' => 'Administrar la configuración del correo.',
         'navigationLabel' => 'Correo',
         'sections' => [
             'config' => [
@@ -46,24 +46,24 @@ return [
                 'description' => 'descripción',
             ],
             'mail_to' => [
-                'title' => 'Enviar por correo a',
+                'title' => 'Enviar',
                 'description' => 'descripción',
             ],
         ],
         'fields' => [
             'placeholder' => [
-                'receiver_email' => 'Correo electrónico del receptor..',
+                'receiver_email' => 'Correo electrónico del receptor ..',
             ],
             'driver' => 'Conductor',
             'host' => 'Anfitrión',
             'port' => 'Puerto',
-            'encryption' => 'Cifrado',
+            'encryption' => 'Encriptación',
             'timeout' => 'Se acabó el tiempo',
             'username' => 'Nombre de usuario',
             'password' => 'Contraseña',
             'email' => 'Correo electrónico',
             'name' => 'Nombre',
-            'mail_to' => 'Enviar por correo a',
+            'mail_to' => 'Enviar',
         ],
         'actions' => [
             'send_test_mail' => 'Enviar correo de prueba',

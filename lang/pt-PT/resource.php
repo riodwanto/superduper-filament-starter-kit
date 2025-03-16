@@ -2,13 +2,13 @@
 
 return [
     'general.created_at' => 'Criado em',
-    'general.updated_at' => 'Última modificação em',
-    'general.email_verified_at' => 'E-mail verificado em',
-    'banner.subheading' => 'Gerir conteúdo de banner',
-    'user.actions.resend_verification' => 'Reenviar verificação',
-    'user.notifications.verify_sent.title' => 'Verificação de e-mail enviada',
+    'general.updated_at' => 'Último modificado em',
+    'general.email_verified_at' => 'Email Verificado em',
+    'banner.subheading' => 'Gerencie o conteúdo do banner',
+    'user.actions.resend_verification' => 'Reenviar a verificação',
+    'user.notifications.verify_sent.title' => 'Verificação de email enviada',
     'user.notifications.verify_warning' => [
-        'title' => 'Não foi possível enviar a verificação por e-mail!',
-        'description' => 'Verifique a sua configuração de e-mail ou tente novamente mais tarde.',
+        'title' => 'Não é possível enviar a verificação de email!',
+        'description' => 'Verifique sua configuração de e -mail ou tente novamente mais tarde.',
     ]
     ];

@@ -21,7 +21,7 @@ return [
             'site_active' => 'حالة الموقع',
             'brand_logoHeight' => 'ارتفاع شعار العلامة التجارية',
             'brand_logo' => 'شعار العلامة التجارية',
-            'site_favicon' => 'أيقونة الموقع المفضلة',
+            'site_favicon' => 'موقع Favicon',
             'primary' => 'أساسي',
             'secondary' => 'ثانوي',
             'gray' => 'رمادي',
@@ -52,7 +52,7 @@ return [
         ],
         'fields' => [
             'placeholder' => [
-                'receiver_email' => 'البريد الإلكتروني للمتلقي..',
+                'receiver_email' => 'البريد الإلكتروني للمستقبل ..',
             ],
             'driver' => 'سائق',
             'host' => 'يستضيف',

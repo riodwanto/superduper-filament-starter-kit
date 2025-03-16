@@ -255,4 +255,9 @@ class BannerResource extends Resource
     {
         return __("menu.nav_group.banner");
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }

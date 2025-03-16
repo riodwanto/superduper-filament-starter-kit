@@ -18,20 +18,22 @@
 - 🖼 Theme settings for changing panel color
 - 💌 Setting mail on the fly in Mail settings
 - 🅻 Lang Generator
+- ⚙️ Frontend Web Settings (Sites Name, Sites Scripts, etc..)
+- 🔎 SEO Settings
 - Etc..
 
 #### Latest update
 
-##### Version: v1.15.xx
+##### Version: v1.16
 
-- Add *opcodesio/log-viewer*
-- Add new plugins
-- Bugs fix & Improvement
+- Contact Us / Inbox Resource
+- Sites (Frontend Web) Settings
+- SEO Settings
+- Social Media Settings
+- Fixings & Improvements
 - Etc
 
 [Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
-
-*Sadly, Filament Multi-Tenancy will not be included in this starter kit. This repository will focus on improvements for non-multi-tenants, since many rooms should be improved.*
 
 <a href="https://buymeacoffee.com/riodewanto" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
@@ -61,6 +63,18 @@ php artisan db:seed
 
 ```bash
 php artisan migrate:fresh --seed
+```
+
+Run Permissions & Policies:
+
+```bash
+php artisan shield:generate --all
+```
+
+One Liner:
+
+```bash
+php artisan migrate && php artisan db:seed && php artisan shield:generate --all
 ```
 
 Generate key:

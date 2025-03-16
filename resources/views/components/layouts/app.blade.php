@@ -9,6 +9,16 @@
 
         <title>{{ config('app.name') }}</title>
 
+        {{-- Search Engine Indexing Control --}}
+        @php
+            $generalSettings = app(\App\Settings\GeneralSettings::class);
+            $allowIndexing = $generalSettings->search_engine_indexing ?? false;
+        @endphp
+
+        @if(!$allowIndexing)
+            <meta name="robots" content="noindex, nofollow">
+        @endif
+
         <style>
             [x-cloak] {
                 display: none !important;

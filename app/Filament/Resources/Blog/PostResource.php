@@ -164,4 +164,9 @@ class PostResource extends Resource
     {
         return __("menu.nav_group.blog");
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }
