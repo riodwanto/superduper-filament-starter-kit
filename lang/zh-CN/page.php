@@ -2,9 +2,9 @@
 
 return [
     'general_settings' => [
-        'title' => '常规设置',
-        'heading' => '常规设置',
-        'subheading' => '在此管理常规站点设置。',
+        'title' => '一般设置',
+        'heading' => '一般设置',
+        'subheading' => '在此处管理一般站点设置。',
         'navigationLabel' => '一般的',
         'sections' => [
             'site' => [
@@ -19,11 +19,11 @@ return [
         'fields' => [
             'brand_name' => '品牌名称',
             'site_active' => '站点状态',
-            'brand_logoHeight' => '品牌标志高度',
-            'brand_logo' => '品牌标志',
-            'site_favicon' => '网站图标',
+            'brand_logoHeight' => '品牌徽标高度',
+            'brand_logo' => '品牌徽标',
+            'site_favicon' => '网站Favicon',
             'primary' => '基本的',
-            'secondary' => '中学',
+            'secondary' => '次要',
             'gray' => '灰色的',
             'success' => '成功',
             'danger' => '危险',
@@ -46,13 +46,13 @@ return [
                 'description' => '描述',
             ],
             'mail_to' => [
-                'title' => '邮寄至',
+                'title' => '邮寄到',
                 'description' => '描述',
             ],
         ],
         'fields' => [
             'placeholder' => [
-                'receiver_email' => '收件人邮箱..',
+                'receiver_email' => '接收器电子邮件..',
             ],
             'driver' => '司机',
             'host' => '主持人',
@@ -63,7 +63,7 @@ return [
             'password' => '密码',
             'email' => '电子邮件',
             'name' => '姓名',
-            'mail_to' => '邮寄至',
+            'mail_to' => '邮寄到',
         ],
         'actions' => [
             'send_test_mail' => '发送测试邮件',

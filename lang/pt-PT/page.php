@@ -2,26 +2,26 @@
 
 return [
     'general_settings' => [
-        'title' => 'Configurações Gerais',
-        'heading' => 'Configurações Gerais',
-        'subheading' => 'Gira as configurações gerais do site aqui.',
+        'title' => 'Configurações gerais',
+        'heading' => 'Configurações gerais',
+        'subheading' => 'Gerencie as configurações gerais do site aqui.',
         'navigationLabel' => 'General',
         'sections' => [
             'site' => [
                 'title' => 'Local',
-                'description' => 'Gerir configurações básicas.',
+                'description' => 'Gerenciar configurações básicas.',
             ],
             'theme' => [
                 'title' => 'Tema',
-                'description' => 'Altere o tema predefinido.',
+                'description' => 'Alterar tema padrão.',
             ],
         ],
         'fields' => [
-            'brand_name' => 'Marca',
-            'site_active' => 'Estado do site',
-            'brand_logoHeight' => 'Altura do logótipo da marca',
-            'brand_logo' => 'Logótipo da marca',
-            'site_favicon' => 'Favicon do site',
+            'brand_name' => 'Nome da marca',
+            'site_active' => 'Status do site',
+            'brand_logoHeight' => 'Altura do logotipo da marca',
+            'brand_logo' => 'Logotipo da marca',
+            'site_favicon' => 'Site Favicon',
             'primary' => 'Primário',
             'secondary' => 'Secundário',
             'gray' => 'Cinzento',
@@ -34,7 +34,7 @@ return [
     'mail_settings' => [
         'title' => 'Configurações de correio',
         'heading' => 'Configurações de correio',
-        'subheading' => 'Gerir configuração de email.',
+        'subheading' => 'Gerencie a configuração de email.',
         'navigationLabel' => 'Correspondência',
         'sections' => [
             'config' => [
@@ -46,27 +46,27 @@ return [
                 'description' => 'descrição',
             ],
             'mail_to' => [
-                'title' => 'Enviar para',
+                'title' => 'Correio para',
                 'description' => 'descrição',
             ],
         ],
         'fields' => [
             'placeholder' => [
-                'receiver_email' => 'E-mail do destinatário..',
+                'receiver_email' => 'E -mail do receptor ..',
             ],
             'driver' => 'Motorista',
             'host' => 'Anfitrião',
             'port' => 'Porto',
             'encryption' => 'Criptografia',
             'timeout' => 'Tempo esgotado',
-            'username' => 'Nome de utilizador',
+            'username' => 'Nome de usuário',
             'password' => 'Palavra-passe',
             'email' => 'E-mail',
             'name' => 'Nome',
-            'mail_to' => 'Enviar para',
+            'mail_to' => 'Correio para',
         ],
         'actions' => [
-            'send_test_mail' => 'Enviar e-mail de teste',
+            'send_test_mail' => 'Enviar e -mail de teste',
         ],
     ]
     ];
