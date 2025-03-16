@@ -221,7 +221,7 @@ class ManageSite extends SettingsPage
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Sites';
+        return __("menu.nav_group.sites");
     }
 
     public static function getNavigationLabel(): string
