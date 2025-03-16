@@ -10,7 +10,7 @@ return new class extends SettingsMigration
         $this->migrator->add('sites.name', 'SuperDuper Filament Starter Kit Website');
         $this->migrator->add('sites.logo', 'sites/logo.png');
         $this->migrator->add('sites.tagline', 'Starting point to kickstart your next project');
-        $this->migrator->add('sites.description', `A starting point to create your next Filament 3 💡 app. With pre-installed plugins, pre-configured, and custom page. So you don't start all over again.`);
+        $this->migrator->add('sites.description', "A starting point to create your next Filament 3 💡 app. With pre-installed plugins, pre-configured, and custom page. So you don't start all over again.");
         $this->migrator->add('sites.default_language', 'en');
         $this->migrator->add('sites.timezone', 'UTC');
         $this->migrator->add('sites.copyright_text', '© ' . date('Y') . ' Company Name. All rights reserved.');
