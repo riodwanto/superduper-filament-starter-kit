@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('media_has_models');
+        Schema::dropIfExists('folder_has_models');
     }
 };
