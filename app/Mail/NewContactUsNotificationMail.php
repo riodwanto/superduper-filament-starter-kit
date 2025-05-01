@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NewContactNotificationMail extends Mailable
+class NewContactUsNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,11 +30,11 @@ class NewContactNotificationMail extends Mailable
     public function build()
     {
         return $this->view('emails.contact.notification')
-            ->subject('New Contact')
-            ->replyTo($this->contact->email, $this->contact->name)
-            ->withSwiftMessage(function ($message) {
-                $message->getHeaders()
-                    ->addTextHeader('X-Mailer', 'PHP/' . phpversion());
-            });
+                    ->subject('New Contact Form Submission')
+                    ->replyTo($this->contact->email, "{$this->contact->firstname} {$this->contact->lastname}")
+                    ->withSwiftMessage(function ($message) {
+                        $message->getHeaders()
+                                ->addTextHeader('X-Mailer', 'PHP/' . phpversion());
+                    });
     }
 }

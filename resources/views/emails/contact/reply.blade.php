@@ -1,5 +1,5 @@
 <x-mail::message>
-# Hello {{ $contactUs->firstname }},
+# Hello {{ $contactUs->name }},
 
 Thank you for reaching out to us. Here's our response to your inquiry:
 
@@ -9,7 +9,7 @@ Thank you for reaching out to us. Here's our response to your inquiry:
 
 Your original message:
 <x-mail::panel>
-**Subject:** {{ $contactUs->title }}
+**Subject:** {{ $contactUs->subject }}
 
 {{ $contactUs->message }}
 </x-mail::panel>
