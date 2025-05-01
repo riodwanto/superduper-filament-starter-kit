@@ -83,13 +83,21 @@ Generate key:
 php artisan key:generate
 ```
 
-Run :
+Install dependencies: 
+
+```bash
+npm install
+```
+
+Build :
 
 ```bash
 npm run dev
 OR
 npm run build
 ```
+
+Start development server:
 
 ```bash
 php artisan serve
