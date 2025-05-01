@@ -131,4 +131,17 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Form Notification Recipients
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the recipients that will receive contact form
+    | notification emails. This can be a single email or an array of emails.
+    |
+    */
+
+    'contact_notification_recipients' => [
+        env('CONTACT_NOTIFICATION_EMAIL', 'info@superduper.com'),
+    ],
 ];
