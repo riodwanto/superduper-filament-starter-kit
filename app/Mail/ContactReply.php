@@ -27,7 +27,7 @@ class ContactReply extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->contactUs->reply_title,
+            subject: $this->contactUs->reply_subject,
         );
     }
 
