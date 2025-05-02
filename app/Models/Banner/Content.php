@@ -3,6 +3,7 @@
 namespace App\Models\Banner;
 
 use App\Models\User;
+use App\Traits\HasUserStamp;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ class Content extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use HasFactory, HasUlids, SoftDeletes;
+    use HasUserStamp;
 
     /**
      * The table associated with the model.
