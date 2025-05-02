@@ -20,13 +20,6 @@ class EditCategory extends EditRecord
         ];
     }
 
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        $data['updated_by'] = auth()->id();
-
-        return $data;
-    }
-
     public function getTitle(): string
     {
         return __('Edit Banner Category');
