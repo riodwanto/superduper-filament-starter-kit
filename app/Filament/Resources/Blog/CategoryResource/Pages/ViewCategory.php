@@ -4,21 +4,22 @@ namespace App\Filament\Resources\Blog\CategoryResource\Pages;
 
 use App\Filament\Resources\Blog\CategoryResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Resources\Pages\ViewRecord;
 
-class ListCategories extends ListRecords
+class ViewCategory extends ViewRecord
 {
     protected static string $resource = CategoryResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\EditAction::make(),
+            Actions\DeleteAction::make(),
         ];
     }
 
     public function getTitle(): string
     {
-        return __('Blog Categories');
+        return __('View Blog Category');
     }
 }

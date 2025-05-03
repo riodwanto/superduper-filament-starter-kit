@@ -19,3 +19,7 @@ Route::get('/', function () {
 
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])
     ->name('contact.submit');
+
+// TODO; Create actual blog preview component
+Route::post('/blog-preview')
+    ->name('blog.preview');
