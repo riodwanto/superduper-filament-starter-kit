@@ -59,7 +59,7 @@ class EditUser extends EditRecord
             ->color('gray')
         ];
 
-        return array_merge($this->getNavigationActions(), $actions);
+        return $actions;
     }
 
     protected function getRedirectUrl(): string
