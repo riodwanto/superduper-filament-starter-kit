@@ -3,14 +3,12 @@
 namespace App\Filament\Resources\Blog\PostResource\Pages;
 
 use App\Filament\Resources\Blog\PostResource;
+use App\Filament\Resources\Blog\PostResource\Widgets\BlogPostStatsWidget;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use JoseEspinal\RecordNavigation\Traits\HasRecordsList;
 
 class ListPosts extends ListRecords
 {
-    use HasRecordsList;
-
     protected static string $resource = PostResource::class;
 
     protected function getHeaderActions(): array
@@ -18,5 +16,17 @@ class ListPosts extends ListRecords
         return [
             Actions\CreateAction::make(),
         ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            BlogPostStatsWidget::class,
+        ];
+    }
+
+    protected function getFooterWidgets(): array
+    {
+        return [];
     }
 }

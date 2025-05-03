@@ -11,12 +11,9 @@ use Filament\Support\Enums\Alignment;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
-use JoseEspinal\RecordNavigation\Traits\HasRecordNavigation;
 
 class EditUser extends EditRecord
 {
-    use HasRecordNavigation;
-
     protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array
@@ -62,7 +59,7 @@ class EditUser extends EditRecord
             ->color('gray')
         ];
 
-        return array_merge($this->getNavigationActions(), $actions);
+        return $actions;
     }
 
     protected function getRedirectUrl(): string

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb27054fd1f24719b31af062a2276a5b",
+    "content-hash": "55214af97b7775bc892629c296a3ab67",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2088,6 +2088,80 @@
             "time": "2025-04-23T06:39:59+00:00"
         },
         {
+            "name": "flowframe/laravel-trend",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Flowframe/laravel-trend.git",
+                "reference": "5ace11d3075932652dc48963faa732c043aeb14d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Flowframe/laravel-trend/zipball/5ace11d3075932652dc48963faa732c043aeb14d",
+                "reference": "5ace11d3075932652dc48963faa732c043aeb14d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.37|^9|^10.0|^11.0|^12.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.4.3"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.3|^6.1|^8.0",
+                "orchestra/testbench": "^6.15|^7.0|^8.0|^9.0|^10.0",
+                "pestphp/pest": "^1.18|^2.34|^3.7",
+                "pestphp/pest-plugin-laravel": "^1.1|^2.3|^3.1",
+                "spatie/laravel-ray": "^1.23",
+                "vimeo/psalm": "^4.8|^5.6|^6.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Trend": "Flowframe\\Trend\\TrendFacade"
+                    },
+                    "providers": [
+                        "Flowframe\\Trend\\TrendServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Flowframe\\Trend\\": "src",
+                    "Flowframe\\Trend\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lars Klopstra",
+                    "email": "lars@flowframe.nl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily generate model trends",
+            "homepage": "https://github.com/flowframe/laravel-trend",
+            "keywords": [
+                "Flowframe",
+                "laravel",
+                "laravel-trend"
+            ],
+            "support": {
+                "issues": "https://github.com/Flowframe/laravel-trend/issues",
+                "source": "https://github.com/Flowframe/laravel-trend/tree/v0.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/larsklopstra",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-25T11:13:23+00:00"
+        },
+        {
             "name": "fruitcake/php-cors",
             "version": "v1.3.0",
             "source": {
@@ -2698,78 +2772,6 @@
                 "source": "https://github.com/jeffgreco13/filament-breezy/tree/v2.6.1"
             },
             "time": "2025-04-24T17:43:55+00:00"
-        },
-        {
-            "name": "josespinal/filament-record-navigation",
-            "version": "v2.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/josespinal/filament-record-navigation.git",
-                "reference": "d159125fbcbf7a41282d0c1bcd5af9947dccae59"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/josespinal/filament-record-navigation/zipball/d159125fbcbf7a41282d0c1bcd5af9947dccae59",
-                "reference": "d159125fbcbf7a41282d0c1bcd5af9947dccae59",
-                "shasum": ""
-            },
-            "require": {
-                "filament/support": "^3.0",
-                "illuminate/contracts": "^10.0||^11.0||^12.0",
-                "php": "^8.2",
-                "spatie/laravel-package-tools": "^1.16"
-            },
-            "require-dev": {
-                "larastan/larastan": "^2.9",
-                "laravel/pint": "^1.14",
-                "nunomaduro/collision": "^8.1.1||^7.10.0",
-                "orchestra/testbench": "^9.0.0||^8.22.0",
-                "pestphp/pest": "^2.34",
-                "pestphp/pest-plugin-arch": "^2.7",
-                "pestphp/pest-plugin-laravel": "^2.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "JoseEspinal\\RecordNavigation\\RecordNavigationServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "JoseEspinal\\RecordNavigation\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jose Espinal",
-                    "email": "jespinal@industria.com.do",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Record navigation from views",
-            "homepage": "https://github.com/josespinal/filament-record-navigation",
-            "keywords": [
-                "Jose Espinal",
-                "filament-record-navigation",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/josespinal/filament-record-navigation/issues",
-                "source": "https://github.com/josespinal/filament-record-navigation/tree/v2.2.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/Jose Espinal",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-04-13T18:47:44+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
