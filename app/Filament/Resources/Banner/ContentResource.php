@@ -15,6 +15,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 
 class ContentResource extends Resource
@@ -60,9 +61,40 @@ class ContentResource extends Resource
                                                     ->live(onBlur: true)
                                                     ->afterStateUpdated(fn($state, Forms\Set $set) => $set('slug', Str::slug($state))),
                                                 Forms\Components\TextInput::make('slug')
+                                                    ->disabled()
+                                                    ->dehydrated()
                                                     ->required()
                                                     ->maxLength(255)
-                                                    ->unique(Category::class, 'slug'),
+                                                    ->unique(Category::class, 'slug', ignoreRecord: true)
+                                                    ->helperText('URL-friendly version of the title - generated automatically')
+                                                    ->suffixAction(
+                                                        Forms\Components\Actions\Action::make('editSlug')
+                                                            ->icon('heroicon-o-pencil-square')
+                                                            ->modalHeading('Edit Slug')
+                                                            ->modalDescription('Customize the URL slug for this Category. Use lowercase letters, numbers, and hyphens only.')
+                                                            ->modalIcon('heroicon-o-link')
+                                                            ->modalSubmitActionLabel('Update Slug')
+                                                            ->form([
+                                                                Forms\Components\TextInput::make('new_slug')
+                                                                    ->hiddenLabel()
+                                                                    ->required()
+                                                                    ->maxLength(255)
+                                                                    ->live(debounce: 500)
+                                                                    ->afterStateUpdated(function (string $state, Forms\Set $set) {
+                                                                        $set('new_slug', Str::slug($state));
+                                                                    })
+                                                                    ->unique(Category::class, 'slug', ignoreRecord: true)
+                                                                    ->helperText('The slug will be automatically formatted as you type.')
+                                                            ])
+                                                            ->action(function (array $data, Forms\Set $set) {
+                                                                $set('slug', $data['new_slug']);
+
+                                                                Notification::make()
+                                                                    ->title('Slug updated')
+                                                                    ->success()
+                                                                    ->send();
+                                                            })
+                                                    ),
                                                 Forms\Components\Toggle::make('is_active')
                                                     ->label('Active')
                                                     ->default(true),
@@ -353,7 +385,7 @@ class ContentResource extends Resource
                             // Redirect to the edit page of the new clone
                             return redirect()->route('filament.admin.resources.banner.contents.edit', ['record' => $clone->id]);
                         }),
-                        Tables\Actions\DeleteAction::make()->hiddenLabel()->tooltip('Delete'),
+                    Tables\Actions\DeleteAction::make()->hiddenLabel()->tooltip('Delete'),
                 ]),
             ])
             ->bulkActions([
@@ -423,5 +455,10 @@ class ContentResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'gray';
     }
 }
