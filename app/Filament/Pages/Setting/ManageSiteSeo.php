@@ -8,6 +8,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\SettingsPage;
+use Filament\Support\Enums\IconPosition;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Contracts\Support\Htmlable;
 use Riodwanto\FilamentAceEditor\AceEditor;
@@ -43,36 +44,87 @@ class ManageSiteSeo extends SettingsPage
 
     public function form(Form $form): Form
     {
+        $seoGuideModal = Forms\Components\Actions::make([
+            Forms\Components\Actions\Action::make('view_seo_guide')
+                ->label('Guide')
+                ->icon('heroicon-o-information-circle')
+                ->iconPosition(IconPosition::Before)
+                ->color('gray')
+                ->modalHeading('Guide')
+                ->modalDescription('A comprehensive guide to using placeholders in your title formats')
+                ->modalIcon('heroicon-o-document-text')
+                ->modalWidth('4xl')
+                ->action(function () {
+                    // Just close the modal
+                })
+                ->modalContent(view('filament.components.seo-guide-modal'))
+                ->modalSubmitAction(false)
+                ->modalCancelAction(false),
+        ])->columnSpan(2);
+
         return $form
             ->schema([
                 Forms\Components\Tabs::make('Seo Settings')
                     ->tabs([
+
                         Forms\Components\Tabs\Tab::make('Basic SEO')
                             ->icon('heroicon-o-document-text')
                             ->schema([
+                                $seoGuideModal,
+
                                 Forms\Components\Section::make('Meta Information')
                                     ->description('Basic meta tags configuration')
                                     ->schema([
+                                        Forms\Components\Select::make('title_separator')
+                                            ->label('Title Separator')
+                                            ->options([
+                                                '|' => 'Pipe (|)',
+                                                '-' => 'Dash (-)',
+                                                '—' => 'Em Dash (—)',
+                                                '·' => 'Dot (·)',
+                                                ':' => 'Colon (:)',
+                                                '»' => 'Double Angle Quotation (»)',
+                                            ])
+                                            ->default('|')
+                                            ->helperText('This defines the character that will replace {separator} in title formats')
+                                            ->required(),
                                         Forms\Components\TextInput::make('meta_title_format')
-                                            ->label('Meta Title Format')
+                                            ->label('Default Page Title Format')
                                             ->required()
-                                            ->helperText('Use {page_title} and {site_name} as placeholders')
+                                            ->placeholder('{page_title} {separator} {site_name}')
+                                            ->helperText('Use {page_title}, {site_name}, and {separator} as placeholders. The {separator} will be replaced with your selected separator character.')
                                             ->maxLength(100),
-                                        Forms\Components\Textarea::make('meta_description')
-                                            ->label('Default Meta Description')
-                                            ->rows(2)
-                                            ->maxLength(160)
-                                            ->helperText('Recommended length: 150-160 characters'),
-                                        Forms\Components\TagsInput::make('meta_keywords')
-                                            ->label('Default Meta Keywords')
-                                            ->separator(',')
-                                            ->helperText('Enter keywords separated by commas'),
-                                        Forms\Components\TextInput::make('canonical_url')
-                                            ->label('Canonical URL')
-                                            ->prefix(function (Forms\Get $get) {
-                                                return url('/');
-                                            })
-                                            ->helperText('Leave empty to use current URL as canonical'),
+                                        // ...other fields
+                                    ]),
+
+                                Forms\Components\Section::make('Page Type Title Formats')
+                                    ->description('Configure title formats for different page types. Use {separator} placeholder to insert your selected separator character.')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('blog_title_format')
+                                            ->label('Blog Post Title Format')
+                                            ->placeholder('{post_title} {separator} {site_name}')
+                                            ->helperText('Available placeholders: {post_title}, {post_category}, {author_name}, {publish_date}, {separator}')
+                                            ->maxLength(100),
+                                        Forms\Components\TextInput::make('product_title_format')
+                                            ->label('Product Title Format')
+                                            ->placeholder('{product_name} {separator} {product_category} {separator} {site_name}')
+                                            ->helperText('Available placeholders: {product_name}, {product_category}, {product_brand}, {price}, {separator}')
+                                            ->maxLength(100),
+                                        Forms\Components\TextInput::make('category_title_format')
+                                            ->label('Category Title Format')
+                                            ->placeholder('{category_name} {separator} {site_name}')
+                                            ->helperText('Available placeholders: {category_name}, {parent_category}, {products_count}, {separator}')
+                                            ->maxLength(100),
+                                        Forms\Components\TextInput::make('search_title_format')
+                                            ->label('Search Results Title Format')
+                                            ->placeholder('Search results for "{search_term}" {separator} {site_name}')
+                                            ->helperText('Available placeholders: {search_term}, {results_count}, {separator}')
+                                            ->maxLength(100),
+                                        Forms\Components\TextInput::make('author_title_format')
+                                            ->label('Author Page Title Format')
+                                            ->placeholder('Posts by {author_name} {separator} {site_name}')
+                                            ->helperText('Available placeholders: {author_name}, {post_count}, {separator}')
+                                            ->maxLength(100),
                                     ]),
                                 Forms\Components\Section::make('Indexing Control')
                                     ->description('Control how search engines index your site')
