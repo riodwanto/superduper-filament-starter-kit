@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb27054fd1f24719b31af062a2276a5b",
+    "content-hash": "c0feca288e50df50c73c8a231943ff69",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2698,78 +2698,6 @@
                 "source": "https://github.com/jeffgreco13/filament-breezy/tree/v2.6.1"
             },
             "time": "2025-04-24T17:43:55+00:00"
-        },
-        {
-            "name": "josespinal/filament-record-navigation",
-            "version": "v2.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/josespinal/filament-record-navigation.git",
-                "reference": "d159125fbcbf7a41282d0c1bcd5af9947dccae59"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/josespinal/filament-record-navigation/zipball/d159125fbcbf7a41282d0c1bcd5af9947dccae59",
-                "reference": "d159125fbcbf7a41282d0c1bcd5af9947dccae59",
-                "shasum": ""
-            },
-            "require": {
-                "filament/support": "^3.0",
-                "illuminate/contracts": "^10.0||^11.0||^12.0",
-                "php": "^8.2",
-                "spatie/laravel-package-tools": "^1.16"
-            },
-            "require-dev": {
-                "larastan/larastan": "^2.9",
-                "laravel/pint": "^1.14",
-                "nunomaduro/collision": "^8.1.1||^7.10.0",
-                "orchestra/testbench": "^9.0.0||^8.22.0",
-                "pestphp/pest": "^2.34",
-                "pestphp/pest-plugin-arch": "^2.7",
-                "pestphp/pest-plugin-laravel": "^2.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "JoseEspinal\\RecordNavigation\\RecordNavigationServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "JoseEspinal\\RecordNavigation\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jose Espinal",
-                    "email": "jespinal@industria.com.do",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Record navigation from views",
-            "homepage": "https://github.com/josespinal/filament-record-navigation",
-            "keywords": [
-                "Jose Espinal",
-                "filament-record-navigation",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/josespinal/filament-record-navigation/issues",
-                "source": "https://github.com/josespinal/filament-record-navigation/tree/v2.2.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/Jose Espinal",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-04-13T18:47:44+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
