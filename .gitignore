@@ -6,7 +6,7 @@
 /storage/*.key
 /vendor
 .env
-.env.backup
+.env.backup.*
 .env.production
 .phpunit.result.cache
 Homestead.json
@@ -18,3 +18,4 @@ yarn-error.log
 /.idea
 /.vscode
 /-local
+setup.php.disabled
