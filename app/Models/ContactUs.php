@@ -125,6 +125,21 @@ class ContactUs extends Model
         return $this->searchWithLike($query, $searchTerm);
     }
 
+    public static function seedCreate(array $attributes = [])
+    {
+        // Temporarily disable event dispatcher
+        $dispatcher = self::getEventDispatcher();
+        self::unsetEventDispatcher();
+
+        // Create the model
+        $model = self::create($attributes);
+
+        // Restore the event dispatcher
+        self::setEventDispatcher($dispatcher);
+
+        return $model;
+    }
+
     /**
      * Fallback search using LIKE for when fulltext isn't available.
      *
