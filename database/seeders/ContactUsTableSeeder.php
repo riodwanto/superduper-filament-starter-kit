@@ -36,7 +36,7 @@ class ContactUsTableSeeder extends Seeder
         ];
 
         // Create weighted random status function
-        $getRandomStatus = function() use ($statusOptions) {
+        $getRandomStatus = function () use ($statusOptions) {
             $total = array_sum($statusOptions);
             $rand = mt_rand(1, $total);
 
@@ -73,7 +73,7 @@ class ContactUsTableSeeder extends Seeder
             'older' => ['days' => [-90, -30], 'weight' => 25]        // 25% from 1-3 months ago
         ];
 
-        $getRandomDate = function() use ($dateDistribution, $faker) {
+        $getRandomDate = function () use ($dateDistribution, $faker) {
             $total = array_sum(array_column($dateDistribution, 'weight'));
             $rand = mt_rand(1, $total);
 
@@ -81,7 +81,7 @@ class ContactUsTableSeeder extends Seeder
             foreach ($dateDistribution as $period) {
                 $runningTotal += $period['weight'];
                 if ($rand <= $runningTotal) {
-                    return $faker->dateTimeBetween($period['days'][0].' days', $period['days'][1].' days');
+                    return $faker->dateTimeBetween($period['days'][0] . ' days', $period['days'][1] . ' days');
                 }
             }
             return now(); // fallback
@@ -148,7 +148,7 @@ class ContactUsTableSeeder extends Seeder
         ];
 
         // Function to get realistic subject and message
-        $getInquiryContent = function() use ($faker, $inquiryTypes) {
+        $getInquiryContent = function () use ($faker, $inquiryTypes) {
             // Select inquiry type
             $type = $faker->randomElement(array_keys($inquiryTypes));
             $inquiry = $inquiryTypes[$type];
@@ -159,7 +159,7 @@ class ContactUsTableSeeder extends Seeder
 
             // Replace placeholders
             $message = $messageTemplate;
-            $message = str_replace('{name}', $faker->firstName.' '.$faker->lastName, $message);
+            $message = str_replace('{name}', $faker->firstName . ' ' . $faker->lastName, $message);
 
             // Handle type-specific replacements
             switch ($type) {
@@ -248,7 +248,7 @@ class ContactUsTableSeeder extends Seeder
                 'form_completion_time' => mt_rand(30, 300), // seconds
             ];
 
-            $contactUs = ContactUs::create([
+            $contactUs = ContactUs::seedCreate([
                 'firstname' => $faker->firstName(),
                 'lastname' => $faker->lastName(),
                 'email' => $faker->safeEmail(),
