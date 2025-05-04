@@ -31,8 +31,8 @@ return new class extends SettingsMigration
 
         // Twitter Card settings
         $this->migrator->add('sites_seo.twitter_card_type', 'summary_large_image');
-        $this->migrator->add('sites_seo.twitter_site', '@yourtwitterhandle');
-        $this->migrator->add('sites_seo.twitter_creator', '@yourtwitterhandle');
+        $this->migrator->add('sites_seo.twitter_site', '@yourtwitter');
+        $this->migrator->add('sites_seo.twitter_creator', '@yourtwitter');
         $this->migrator->add('sites_seo.twitter_title', '{page_title}');
         $this->migrator->add('sites_seo.twitter_description', '{meta_description}');
         $this->migrator->add('sites_seo.twitter_image', 'sites/twitter-image.png');
