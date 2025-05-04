@@ -1,15 +1,26 @@
 {
     "name": "riodwanto/superduper-filament-starter-kit",
-    "description": "A Filament💡 starting point to kickstart your next app. With Custom Theme, Mail Configuration, Filament Shield, Filament Exception, etc..",
+    "description": "A comprehensive Laravel Filament 3 💡 starter kit with pre-installed plugins, admin panel, user management, SEO tools, theme customization, and content management for rapid application development",
     "type": "project",
     "keywords": [
         "filament",
         "filamentphp",
         "laravel",
         "filament starter kit",
-        "starter kit",
-        "superduper",
-        "website"
+        "laravel starter kit",
+        "admin panel",
+        "dashboard",
+        "cms",
+        "user management",
+        "role-based access",
+        "seo",
+        "media management",
+        "theme customization",
+        "tall stack",
+        "livewire",
+        "alpinejs",
+        "tailwindcss",
+        "rapid development"
     ],
     "authors": [
         {

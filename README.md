@@ -10,32 +10,73 @@
     A starting point to create your next Filament 3 💡 app. With pre-installed plugins, pre-configured, and custom page. So you don't start all over again.
 </p>
 
-#### Features
+#### ✨ Features
 
-- 🛡 [Filament Shield](#plugins-used) for managing role access
-- 👨🏻‍🦱 customizable profile page from [Filament Breezy](#plugins-used)
-- 🌌 Managable media with [Filament Spatie Media](#plugins-used)
-- 🖼 Theme settings for changing panel color
-- 💌 Setting mail on the fly in Mail settings
-- 🅻 Lang Generator
-- ⚙️ Frontend Web Settings (Sites Name, Sites Scripts, etc..)
-- 🔎 SEO Settings
-- Etc..
+- 🛡️ **User & Access Management**
+  - [Filament Shield](#plugins-used) for comprehensive role-based access control
+  - 👥 Multiple user roles with granular permissions
+  - 🔐 Secure authentication workflows
+
+- 👤 **Profile & User Experience**
+  - 👨🏻‍🦱 Customizable profile page from [Filament Breezy](#plugins-used)
+  - 🌙 Dark/light mode switching
+  - 🎭 Personalized user dashboard
+
+- 🎨 **Theme & UI Customization**
+  - 🖼️ Theme settings for panel colors and layout preferences
+  - 🧩 Modular design for easy extension
+  - 🎚️ Responsive interface for all devices
+
+- 🌐 **Content Management**
+  - 📝 Blog module with categories and tags
+  - 🖼️ Banner management system
+  - 📅 Event scheduling capabilities
+
+- 📊 **Media Management**
+  - 🌌 Complete media library with [Filament Spatie Media](#plugins-used)
+  - 🖼️ Image optimization and thumbnails
+  - 📂 Easy upload and organization
+
+- 🌍 **Localization & Translation**
+  - 🅻 Powerful Lang Generator tool
+  - 🔄 Automated translation capabilities
+  - 🌐 Multi-language support for global applications
+
+- 📧 **Email & Notifications**
+  - 💌 Configure mail settings on the fly
+  - 📨 Customizable email templates
+  - 🔔 User notification system
+
+- 🔧 **System Configuration**
+  - ⚙️ Frontend web settings (Site Name, Scripts, etc.)
+  - 📝 Log viewer and error tracking
+  - 🧰 Developer-friendly tools
+
+- 🔍 **SEO & Analytics**
+  - 🔎 Comprehensive SEO settings and optimization
+  - 📈 Laravel Trend integration for data visualization
+  - 📊 Traffic and user analytics
+
+- 🛠️ **Developer Experience**
+  - ⚡ Optimized performance out of the box
+  - 📝 Code editor integration
+  - 🧪 Testing tools and infrastructure
 
 #### Latest update
 
-##### Version: v1.16
+##### Version: v1.17.0
 
-- Contact Us / Inbox Resource
-- Sites (Frontend Web) Settings
-- SEO Settings
-- Social Media Settings
+- Banner Module remake
+- Blog Module remake
+- UserStamp implementation
+- Contact Us / Inbox Resource enhancements
+- Sites SEO settings improvements
+- Laravel Trend integration
+- Removed deprecated packages
 - Fixings & Improvements
 - Etc
 
 [Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
-
-<a href="https://buymeacoffee.com/riodewanto" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 #### Getting Started
 
@@ -44,14 +85,13 @@ Create project with this composer command:
 ```bash
 composer create-project riodwanto/superduper-filament-starter-kit
 ```
+
 Setup your project easily using the one of setup scripts:
-    
+
 ```bash
-./bin/setup.sh
-# run chmod +x ./bin/setup.sh if you get permission denied
-# or
-./bin/setup.php
+php bin/setup.php
 ```
+
 Or manually:
 
 Setup your env:
