@@ -129,6 +129,11 @@ class AdminPanelProvider extends PanelProvider
                         'personal_info' => MyProfileExtended::class,
                     ]),
                 \Datlechin\FilamentMenuBuilder\FilamentMenuBuilderPlugin::make()
+                    ->addLocations([
+                        'header' => 'Header',
+                        'footer' => 'Footer',
+                        'footer-others' => 'Footer Others',
+                    ])
                     ->usingResource(MenuResource::class)
                     ->addMenuPanels([
                         \Datlechin\FilamentMenuBuilder\MenuPanel\StaticMenuPanel::make()
