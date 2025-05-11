@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\SuperDuper\BlogList;
+use App\Livewire\SuperDuper\BlogDetails;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,23 +19,22 @@ Route::get('/', function () {
     return view('components.superduper.pages.home');
 })->name('home');
 
-Route::get('/blog', function () {
-    return view('components.superduper.pages.coming-soon', ['page_type' => 'blog']);
-})->name('blog.index');
+Route::get('/blog', BlogList::class)->name('blog');
 
-Route::get('/blog/{blogId}', function ($blogId) {
-    return view('components.superduper.pages.coming-soon', ['page_type' => 'blog_post', 'id' => $blogId]);
-})->name('blog.show');
+Route::get('/blog/{slug}', BlogDetails::class)->name('blog.show');
 
 Route::get('/contact-us', function () {
     return view('components.superduper.pages.coming-soon', ['page_type' => 'contact']);
 })->name('contact-us');
 
-Route::get('/privacy-notice', function () {
+Route::get('/privacy-policy', function () {
     return view('components.superduper.pages.coming-soon', ['page_type' => 'privacy']);
-})->name('privacy-notice');
+})->name('privacy-policy');
 
-// A dedicated route for the generic coming soon page
+Route::get('/terms-conditions', function () {
+    return view('components.superduper.pages.coming-soon', ['page_type' => 'privacy']);
+})->name('terms-conditions');
+
 Route::get('/coming-soon', function () {
     return view('components.superduper.pages.coming-soon', ['page_type' => 'generic']);
 })->name('coming-soon');
