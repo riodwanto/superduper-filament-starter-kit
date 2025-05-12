@@ -49,9 +49,9 @@
                                     $menuId = 'submenu-' . ($index + 1);
                                 @endphp
 
-                                <li class="nav-item mb-3 lg:mb-0 lg:relative {{ $hasChildren ? 'nav-item-has-children' : '' }} uppercase">
+                                <li class="nav-item mb-3 lg:mb-0 lg:relative {{ $hasChildren ? 'nav-item-has-children' : '' }}">
                                     <a href="{{ $item->url }}"
-                                       class="nav-link-item flex items-center justify-between text-black hover:text-primary-600 dark:text-white dark:hover:text-primary-200 header-nav-link font-medium py-2 lg:px-3 lg:text-white lg:hover:bg-primary-600 lg:dark:hover:bg-primary-700 transition-colors {{ $hasChildren ? 'drop-trigger' : '' }}"
+                                       class="nav-link-item flex items-center justify-between hover:text-primary-600 dark:text-white dark:hover:text-primary-200 header-nav-link font-medium py-2 lg:px-3 !text-secondary-600 lg:hover:bg-primary-600 lg:dark:hover:bg-primary-700 transition-colors {{ $hasChildren ? 'drop-trigger' : '' }}"
                                        @if($item->target) target="{{ $item->target }}" @endif>
                                         <span>{{ $item->title }}</span>
                                         @if($hasChildren)

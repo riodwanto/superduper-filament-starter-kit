@@ -32,13 +32,13 @@
                             <div class="flex items-start py-4 transition-all duration-300 bg-white">
                                 <div class="mr-4 shrink-0">
                                     <div class="p-2 text-primary-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                         </svg>
                                     </div>
                                 </div>
                                 <div>
-                                    <h3 class="ml-4 text-xl font-semibold text-primary-800">
+                                    <h3 class="ml-2 text-xl font-semibold text-primary-800">
                                         Chat with us
                                     </h3>
                                     <p class="mt-1 ml-4 text-gray-600">
@@ -52,13 +52,13 @@
                             <div class="flex items-start py-4 transition-all duration-300 bg-white">
                                 <div class="mr-4 shrink-0">
                                     <div class="p-2 text-primary-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                         </svg>
                                     </div>
                                 </div>
                                 <div>
-                                    <h3 class="ml-4 text-xl font-semibold text-primary-800">
+                                    <h3 class="ml-2 text-xl font-semibold text-primary-800">
                                         Give us a call
                                     </h3>
                                     <p class="mt-1 ml-4 text-gray-600">
@@ -76,13 +76,13 @@
                             <div class="flex items-start py-4 transition-all duration-300 bg-white">
                                 <div class="mr-4 shrink-0">
                                     <div class="p-2 text-primary-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
                                     </div>
                                 </div>
                                 <div>
-                                    <h3 class="ml-4 text-xl font-semibold text-primary-800">
+                                    <h3 class="ml-2 text-xl font-semibold text-primary-800">
                                         Email Us
                                     </h3>
                                     <p class="mt-1 ml-4 text-gray-600">
@@ -104,7 +104,7 @@
                             <div class="p-6 mb-4 border border-green-200 rounded-lg bg-green-50">
                                 <div class="flex items-center mb-4">
                                     <div class="p-2 rounded-full shrink-0 bg-success">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                         </svg>
                                     </div>
