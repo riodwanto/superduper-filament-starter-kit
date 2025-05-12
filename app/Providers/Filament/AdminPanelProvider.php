@@ -132,7 +132,9 @@ class AdminPanelProvider extends PanelProvider
                     ->addLocations([
                         'header' => 'Header',
                         'footer' => 'Footer',
-                        'footer-others' => 'Footer Others',
+                        'footer-2' => 'Footer 2',
+                        'footer-3' => 'Footer 3',
+                        'footer-4' => 'Footer 4',
                     ])
                     ->usingResource(MenuResource::class)
                     ->addMenuPanels([
