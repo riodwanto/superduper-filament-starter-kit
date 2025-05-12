@@ -325,11 +325,6 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                SpatieMediaLibraryImageColumn::make('featured_image')
-                    ->label('Image')
-                    ->collection('featured')
-                    ->defaultImageUrl(fn(Post $record) => $record->getFeaturedImageUrl('thumbnail') ?? 'https://placehold.co/150x150/webp'),
-
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable()
@@ -339,7 +334,7 @@ class PostResource extends Resource
                     ->label('Featured')
                     ->boolean()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('author.name')
                     ->label('Author')
