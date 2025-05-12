@@ -64,17 +64,17 @@
 
 #### Latest update
 
-##### Version: v1.17.0
+##### Version: v1.18.0
 
-- Banner Module remake
-- Blog Module remake
-- UserStamp implementation
-- Contact Us / Inbox Resource enhancements
-- Sites SEO settings improvements
-- Laravel Trend integration
-- Removed deprecated packages
-- Fixings & Improvements
-- Etc
+- Front Site implementation with home and blog pages
+- Updated Contact Us page
+- Enhanced menu builder and configuration
+- Improved email templates
+- New middleware and log channels
+- Updated security headers service
+- Various styling and component improvements
+- Site settings logo functionality
+- Multiple UI/UX enhancements
 
 [Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
 
