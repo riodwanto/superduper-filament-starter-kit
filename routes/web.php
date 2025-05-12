@@ -2,6 +2,7 @@
 
 use App\Livewire\SuperDuper\BlogList;
 use App\Livewire\SuperDuper\BlogDetails;
+use App\Livewire\SuperDuper\Pages\ContactUs;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,9 +24,7 @@ Route::get('/blog', BlogList::class)->name('blog');
 
 Route::get('/blog/{slug}', BlogDetails::class)->name('blog.show');
 
-Route::get('/contact-us', function () {
-    return view('components.superduper.pages.coming-soon', ['page_type' => 'contact']);
-})->name('contact-us');
+Route::get('/contact-us', ContactUs::class)->name('contact-us');
 
 Route::get('/privacy-policy', function () {
     return view('components.superduper.pages.coming-soon', ['page_type' => 'privacy']);

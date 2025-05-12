@@ -142,6 +142,7 @@ class AdminPanelProvider extends PanelProvider
                             ->addMany([
                                 'Home' => url('/'),
                                 'Blog' => url('/blog'),
+                                'Contact Us' => url('/contact-us'),
                             ])
                             ->description('Default menus')
                             ->collapsed(true)
