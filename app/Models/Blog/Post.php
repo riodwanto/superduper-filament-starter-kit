@@ -294,11 +294,84 @@ class Post extends Model implements HasMedia
     }
 
     /**
-     * Get post URL
+     * Get post URL using slug
+     *
+     * @return string
      */
     public function getUrl()
     {
         return route('blog.show', ['slug' => $this->slug]);
+    }
+
+    /**
+     * Get formatted published date
+     */
+    public function getFormattedPublishedDateAttribute()
+    {
+        return $this->published_at->format('F j, Y');
+    }
+
+    /**
+     * Get canonical URL
+     */
+    public function getCanonicalUrl()
+    {
+        return route('blog.show', ['slug' => $this->slug]);
+    }
+
+    /**
+     * Get estimated reading time
+     */
+    public function getReadingTimeAttribute()
+    {
+        if ($this->attributes['reading_time'] ?? null) {
+            return $this->attributes['reading_time'];
+        }
+
+        // Calculate if not already set
+        $wordCount = str_word_count(strip_tags($this->content_html));
+        return ceil($wordCount / 200); // Average reading speed: 200 words per minute
+    }
+
+    /**
+     * Share URL generators for social media
+     */
+    public function getTwitterShareUrl()
+    {
+        $url = urlencode($this->getCanonicalUrl());
+        $title = urlencode($this->title);
+        return "https://twitter.com/intent/tweet?url={$url}&text={$title}";
+    }
+
+    public function getFacebookShareUrl()
+    {
+        $url = urlencode($this->getCanonicalUrl());
+        return "https://www.facebook.com/sharer/sharer.php?u={$url}";
+    }
+
+    public function getLinkedinShareUrl()
+    {
+        $url = urlencode($this->getCanonicalUrl());
+        // $title = urlencode($this->title);
+        return "https://www.linkedin.com/sharing/share-offsite/?url={$url}";
+    }
+
+    public function getWhatsappShareUrl()
+    {
+        $url = urlencode($this->getCanonicalUrl());
+        $title = urlencode($this->title);
+        return "https://api.whatsapp.com/send?text={$title}%20{$url}";
+    }
+
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
     /**

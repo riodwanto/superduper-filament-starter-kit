@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/banners/{banner}/impression', function (App\Models\Banner\Content $banner) {
+    $banner->trackImpression();
+    return response()->json(['success' => true]);
+});
+
+Route::post('/banners/{banner}/click', function (App\Models\Banner\Content $banner) {
+    $banner->trackClick();
+    return response()->json(['success' => true]);
+});

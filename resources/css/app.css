@@ -1,3 +1,95 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary-50: #EEEEFB;
+  --color-primary-100: #DCDCF7;
+  --color-primary-200: #B9B8EF;
+  --color-primary-300: #9795E6;
+  --color-primary-400: #7471DE;
+  --color-primary-500: #524ED5;
+  --color-primary-600: #413CAD;
+  --color-primary-700: #342F8A;
+  --color-primary-800: #2D2B8D;
+  --color-primary-900: #1E1C5A;
+
+  /* Secondary Colors */
+  --color-secondary-50: #FFFBEB;
+  --color-secondary-100: #FFF6D6;
+  --color-secondary-200: #FFEDAD;
+  --color-secondary-300: #FFE585;
+  --color-secondary-400: #FFDC5C;
+  --color-secondary-500: #FFD333;
+  --color-secondary-600: #FFC903;
+  --color-secondary-700: #E6B500;
+  --color-secondary-800: #BF9600;
+  --color-secondary-900: #997800;
+
+  /* Background Colors */
+  --color-background-white: #FFFFFF;
+  --color-background-wheat: #F9F6F0;
+  --color-background-light: #F5F1E8;
+  --color-background-subtle: #EDE7DB;
+
+  /* Accent Colors */
+  --color-success: #10B981;
+  --color-error: #EF4444;
+  --color-warning: #F59E0B;
+  --color-info: #3B82F6;
+}
+
+.header-scrolled {
+    @apply bg-primary-600 dark:bg-primary-900 shadow-md py-3 md:py-4;
+}
+
+.header-scrolled .header-nav-link {
+    @apply text-white hover:text-primary-100;
+}
+
+.header-scrolled .header-brand-text {
+    @apply text-white;
+}
+
+.header-scrolled .hamburger-line {
+    @apply bg-white;
+}
+
+.header-scrolled .mobile-menu-trigger .hamburger-line {
+    @apply bg-white;
+}
+
+.header-scrolled .mobile-menu-close {
+    @apply text-white;
+}
+/* Explicitly ensure transparent background on desktop */
+@media (min-width: 1024px) {
+    .menu-block {
+        background-color: transparent !important;
+    }
+
+    .menu-block .nav-link-item {
+        @apply text-white hover:text-primary-100;
+    }
+
+    /* Make sure dropdown menus have the right background */
+    .menu-block .sub-menu {
+        @apply bg-white dark:bg-primary-800;
+    }
+}
+
+/* For mobile only */
+@media (max-width: 1023px) {
+    .menu-block {
+        @apply bg-primary-600 dark:bg-primary-800;
+    }
+
+    .menu-block .nav-link-item {
+        @apply text-white border-b border-primary-800 pb-3 mb-2;
+    }
+
+    .menu-block .sub-menu {
+        @apply bg-background-light dark:bg-primary-700 rounded-md;
+    }
+}
