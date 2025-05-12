@@ -1,5 +1,12 @@
-{{-- resources/views/livewire/superduper/contact-form.blade.php --}}
-<div>
+<div x-data x-init="
+    $nextTick(() => {
+        window.addEventListener('successMessageShown', () => {
+            setTimeout(() => {
+                $wire.set('success', false);
+            }, 5000);
+        });
+    })
+">
     <x-superduper.components.breadcrumb title="Contact Us" />
 
     <div class="section-contact-info">
@@ -273,14 +280,5 @@
             </div>
         </div>
     </div>
-
-    @script
-    document.addEventListener('livewire:initialized', () => {
-        @this.on('successMessageShown', () => {
-            setTimeout(() => {
-                @this.set('success', false);
-            }, 8000);
-        });
-    });
-    @endscript
 </div>
+

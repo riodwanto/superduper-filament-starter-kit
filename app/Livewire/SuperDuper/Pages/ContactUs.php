@@ -86,7 +86,7 @@ class ContactUs extends Component
             $this->reset(['firstname', 'lastname', 'email', 'phone', 'company', 'employees', 'subject', 'message', 'company_website']);
             $this->success = true;
             $this->formSubmitted = true;
-            $this->dispatch('successMessageShown');
+            $this->dispatchBrowserEvent('successMessageShown');
             return;
         }
 
