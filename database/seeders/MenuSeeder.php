@@ -5,9 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Datlechin\FilamentMenuBuilder\Models\Menu;
-use Datlechin\FilamentMenuBuilder\Models\MenuItem;
-use Datlechin\FilamentMenuBuilder\Models\MenuLocation;
 
 class MenuSeeder extends Seeder
 {
@@ -304,6 +301,19 @@ class MenuSeeder extends Seeder
                 'url' => 'http://localhost:8000/contact-us',
                 'target' => '_self',
                 'order' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 16,
+                'menu_id' => 1,
+                'parent_id' => null,
+                'linkable_type' => null,
+                'linkable_id' => null,
+                'title' => 'Contact Us',
+                'url' => 'http://localhost:8000/contact-us',
+                'target' => '_self',
+                'order' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
