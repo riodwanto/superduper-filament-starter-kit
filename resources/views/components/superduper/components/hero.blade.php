@@ -1,19 +1,19 @@
 <div class="relative overflow-hidden bg-gradient-to-br from-primary-600 to-primary-800 dark:from-primary-800 dark:to-gray-900">
     <div class="absolute inset-0 bg-grid-white/[0.05] bg-[size:60px_60px]"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/5"></div>
-    
-    <div class="container relative z-10 py-20 mx-auto px-14 md:py-48">
+
+    <div class="container relative z-10 px-6 py-20 mx-auto md:px-14 md:py-48">
         <div class="grid items-center grid-cols-1 gap-12 md:grid-cols-2">
             <div>
                 <div class="inline-flex items-center px-3 py-1 mb-6 text-sm text-white rounded-full bg-white/10 backdrop-blur-sm">
                     <span class="flex w-2 h-2 mr-2 rounded-full bg-emerald-400"></span>
                     <span>Version 1.17.0 Now Available</span>
                 </div>
-                
+
                 <h1 class="mb-6 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">Build your Admin Panels Faster Than Ever</h1>
-                
+
                 <p class="mb-8 text-xl text-primary-100">SuperDuper is your all-in-one Filament 3 starter kit with pre-configured plugins, role-based access control, media management, and more.</p>
-                
+
                 <div class="flex flex-wrap gap-4">
                     <a href="#getting-started" class="px-6 py-3 font-medium transition bg-white rounded-lg text-primary-700 hover:bg-primary-50">Get Started</a>
                     <a href="https://github.com/riodwanto/superduper-filament-starter-kit" class="flex items-center px-6 py-3 text-white transition border border-white rounded-lg hover:bg-white/10">
@@ -23,7 +23,7 @@
                         View on GitHub
                     </a>
                 </div>
-                
+
                 <div class="flex items-center mt-6 text-sm text-primary-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -31,7 +31,7 @@
                     <span>MIT Licensed, free for personal and commercial use</span>
                 </div>
             </div>
-            
+
             <div class="relative">
                 <div class="relative hidden mb-4 md:block">
                     <div class="absolute inset-0 animate-pulse bg-gradient-to-tr from-primary-400/20 to-transparent rounded-xl"></div>
@@ -56,14 +56,14 @@
                                     <div class="w-1/2 h-2 mt-2 bg-gray-700 rounded-full"></div>
                                 </div>
                             </div>
-                            
+
                             <div class="space-y-3">
                                 <div class="h-2.5 bg-gray-700 rounded-full w-full"></div>
                                 <div class="h-2.5 bg-gray-700 rounded-full w-5/6"></div>
                                 <div class="h-2.5 bg-gray-700 rounded-full w-4/6"></div>
                                 <div class="h-2.5 bg-gray-700 rounded-full w-3/6"></div>
                             </div>
-                            
+
                             <div class="grid grid-cols-3 gap-4 mt-6">
                                 <div class="p-3 bg-gray-800 rounded-lg">
                                     <div class="h-2.5 bg-gray-700 rounded-full w-full mb-2"></div>
@@ -98,9 +98,9 @@
                 </code>
             </div>
         </div>
-        
+
     </div>
-    
+
     <div class="relative">
         <div class="absolute bottom-[-1px] left-0 right-0 w-full h-16 bg-gradient-to-r from-secondary-600 to-secondary-500 dark:from-secondary-600 dark:to-gray-900" style="clip-path: polygon(0 100%, 100% 0, 100% 100%, 0% 100%);"></div>
     </div>
