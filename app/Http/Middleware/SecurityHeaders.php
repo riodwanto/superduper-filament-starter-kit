@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Services\SecurityLogger;
 
 class SecurityHeaders
 {
@@ -33,17 +34,27 @@ class SecurityHeaders
         $response = $next($request);
 
         // Content Security Policy - Controls which resources the browser is allowed to load
-        $response->headers->set('Content-Security-Policy',
-            "default-src 'self'; " .
-            "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
-            "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
-            "img-src 'self' data:; " .
-            "font-src 'self' data: https://cdnjs.cloudflare.com; " .
-            "connect-src 'self'; " .
-            "media-src 'self'; " .
-            "object-src 'none'; " .
-            "frame-src 'self';"
-        );
+        $csp = "default-src 'self'; " .
+               "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
+               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
+               "img-src 'self' data:; " .
+               "font-src 'self' data: https://cdnjs.cloudflare.com; " .
+               "connect-src 'self'; " .
+               "media-src 'self'; " .
+               "object-src 'none'; " .
+               "frame-src 'self';";
+
+        // Check for CSP Report-Only header in request (for debugging)
+        if ($request->header('X-Enable-CSP-Report-Only') === 'true') {
+            $response->headers->set('Content-Security-Policy-Report-Only', $csp);
+
+            SecurityLogger::logSuspiciousActivity('CSP Report-Only mode enabled', [
+                'enabled_by' => 'request header',
+                'csp' => $csp
+            ]);
+        } else {
+            $response->headers->set('Content-Security-Policy', $csp);
+        }
 
         // XSS Protection - Enables XSS filtering built into browsers
         $response->headers->set('X-XSS-Protection', '1; mode=block');
@@ -68,6 +79,26 @@ class SecurityHeaders
             $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
         }
 
+        $this->logCspViolations($request);
+
         return $response;
+    }
+
+    /**
+     * Log any CSP violations reported by the browser
+     *
+     * @param Request $request
+     * @return void
+     */
+    protected function logCspViolations(Request $request): void
+    {
+        // Check if this is a CSP violation report
+        if ($request->is('csp-report') && $request->isMethod('POST')) {
+            $report = json_decode($request->getContent(), true);
+
+            if (isset($report['csp-report'])) {
+                SecurityLogger::logSecurityHeaderViolation('CSP', json_encode($report['csp-report']));
+            }
+        }
     }
 }
