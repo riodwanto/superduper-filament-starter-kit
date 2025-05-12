@@ -42,7 +42,7 @@
                                 <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
                                 <div class="w-3 h-3 bg-green-500 rounded-full"></div>
                             </div>
-                            <div class="mx-auto text-xs text-white/60">SuperDuper Admin Panel</div>
+                            <div class="mx-auto text-xs text-white/60">Admin Panel</div>
                         </div>
                         <div class="p-4">
                             <div class="flex items-center mb-6 space-x-4">

@@ -508,6 +508,11 @@
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
+    .lg\:sticky {
+        scrollbar-width: thin;
+        padding-top: 72px;
+    }
+
     @keyframes fadeIn {
         from { opacity: 0; }
         to   { opacity: 1; }

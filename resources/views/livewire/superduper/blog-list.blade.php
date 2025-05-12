@@ -430,6 +430,7 @@
     .lg\:sticky {
         position: sticky;
         scrollbar-width: thin;
+        padding-top: 72px;
     }
 
     .lg\:sticky::-webkit-scrollbar {
