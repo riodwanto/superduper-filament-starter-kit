@@ -96,7 +96,7 @@
 
                         <div class="flex flex-col gap-y-7">
                             <div class="text-xl font-semibold capitalize">
-                                Primary Pages
+                                Main
                             </div>
                             @php
                                 use Datlechin\FilamentMenuBuilder\Models\Menu;
@@ -126,7 +126,7 @@
                                 Sample Pages
                             </div>
                             @php
-                                $footerOthers = Menu::location('footer-others');
+                                $footerOthers = Menu::location('footer-2');
                             @endphp
                             <ul class="flex flex-col gap-y-[10px] capitalize">
                                 @if($footerOthers)
@@ -147,18 +147,20 @@
                             <div class="text-xl font-semibold capitalize">
                                 Resources
                             </div>
+                            @php
+                                $footerOthers = Menu::location('footer-3');
+                            @endphp
                             <ul class="flex flex-col gap-y-[10px] capitalize">
-                                    <a href="https://github.com/riodwanto/superduper-filament-starter-kit" class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">Documentation</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/riodwanto/superduper-filament-starter-kit/releases" class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">Release Notes</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/riodwanto/superduper-filament-starter-kit/issues" class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">Issue Tracker</a>
-                                </li>
-                                <li>
-                                    <a href="https://filamentphp.com" class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">Filament Docs</a>
-                                </li>
+                                @if($footerOthers)
+                                    @foreach($footerOthers->menuItems as $item)
+                                        <li>
+                                            <a href="{{ $item->url }}" @if($item->target) target="{{ $item->target }}" @endif
+                                                class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">
+                                                {{ $item->title }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
 
@@ -167,19 +169,20 @@
                             <div class="text-xl font-semibold capitalize">
                                 Community
                             </div>
-                            <ul class="space-y-2">
-                                <li>
-                                    <a href="https://github.com/riodwanto/superduper-filament-starter-kit/stargazers" class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">GitHub Stars</a>
-                                </li>
-                                <li>
-                                    <a href="https://filamentphp.com/plugins" class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">Filament Plugins</a>
-                                </li>
-                                <li>
-                                    <a href="https://buymeacoffee.com/riodewanto" class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">Support the Project</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/riodwanto/superduper-filament-starter-kit#license" class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">License</a>
-                                </li>
+                            @php
+                                $footerOthers = Menu::location('footer-4');
+                            @endphp
+                            <ul class="flex flex-col gap-y-[10px] capitalize">
+                                @if($footerOthers)
+                                    @foreach($footerOthers->menuItems as $item)
+                                        <li>
+                                            <a href="{{ $item->url }}" @if($item->target) target="{{ $item->target }}" @endif
+                                                class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">
+                                                {{ $item->title }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                     </div>
