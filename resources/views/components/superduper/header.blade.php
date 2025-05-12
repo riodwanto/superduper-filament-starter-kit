@@ -4,7 +4,7 @@
             <!-- Header Logo -->
             <a href="{{ route('home') }}" class="relative z-10 flex-shrink-0">
                 @php
-                    $brandLogo = $generalSettings->brand_logo ?? null;
+                    $brandLogo = $siteSettings->logo ?? null;
                     $brandName = $generalSettings->brand_name ?? $siteSettings->name ?? config('app.name', 'SuperDuper');
                 @endphp
 
