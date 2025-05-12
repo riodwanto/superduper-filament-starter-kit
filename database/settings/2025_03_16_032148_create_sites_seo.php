@@ -31,8 +31,8 @@ return new class extends SettingsMigration
 
         // Twitter Card settings
         $this->migrator->add('sites_seo.twitter_card_type', 'summary_large_image');
-        $this->migrator->add('sites_seo.twitter_site', '@superduperstarter');
-        $this->migrator->add('sites_seo.twitter_creator', '@superduperstarter');
+        $this->migrator->add('sites_seo.twitter_site', '@superduper');
+        $this->migrator->add('sites_seo.twitter_creator', '@superduper');
         $this->migrator->add('sites_seo.twitter_title', '{page_title} | Professional Developer Tools');
         $this->migrator->add('sites_seo.twitter_description', 'Crafted for developers who build exceptional applications. Our Filament Starter delivers tools for faster, better Laravel development.');
         $this->migrator->add('sites_seo.twitter_image', 'sites/twitter-card.png');

@@ -45,7 +45,7 @@ return new class extends SettingsMigration
 
         $this->migrator->add('mail.test_mode', false);
         $this->migrator->add('mail.log_channel', 'stack');
-        $this->migrator->add('mail.test_to_address', null);
+        $this->migrator->add('mail.test_to_address', '');
 
         $this->migrator->add('mail.providers', [
             'mailgun' => [
