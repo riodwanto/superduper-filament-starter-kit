@@ -33,16 +33,31 @@ class SecurityHeaders
     {
         $response = $next($request);
 
-        // Content Security Policy - Controls which resources the browser is allowed to load
-        $csp = "default-src 'self'; " .
-               "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
-               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
-               "img-src 'self' data:; " .
-               "font-src 'self' data: https://cdnjs.cloudflare.com; " .
-               "connect-src 'self'; " .
-               "media-src 'self'; " .
-               "object-src 'none'; " .
-               "frame-src 'self';";
+        if (app()->environment('local') && env('CSP_ENABLED', true) === false) {
+            return $this->addBasicSecurityHeaders($response);
+        }
+
+        if (app()->environment('production')) {
+            $csp = "default-src 'self'; " .
+                   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
+                   "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
+                   "img-src 'self' data:; " .
+                   "font-src 'self' data: https://cdnjs.cloudflare.com; " .
+                   "connect-src 'self'; " .
+                   "media-src 'self'; " .
+                   "object-src 'none'; " .
+                   "frame-src 'self';";
+        } else {
+            $csp = "default-src 'self'; " .
+                   "script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:* http://127.0.0.1:* http://[::1]:* https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
+                   "style-src 'self' 'unsafe-inline' http://localhost:* http://127.0.0.1:* http://[::1]:* https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
+                   "img-src 'self' data:; " .
+                   "font-src 'self' data: https://cdnjs.cloudflare.com; " .
+                   "connect-src 'self' ws://localhost:* ws://127.0.0.1:* ws://[::1]:* http://localhost:* http://127.0.0.1:* http://[::1]:*; " .
+                   "media-src 'self'; " .
+                   "object-src 'none'; " .
+                   "frame-src 'self';";
+        }
 
         // Check for CSP Report-Only header in request (for debugging)
         if ($request->header('X-Enable-CSP-Report-Only') === 'true') {
@@ -56,6 +71,17 @@ class SecurityHeaders
             $response->headers->set('Content-Security-Policy', $csp);
         }
 
+        return $this->addBasicSecurityHeaders($response);
+    }
+
+    /**
+     * Add basic security headers that are always included, even when CSP is disabled
+     *
+     * @param Response $response
+     * @return Response
+     */
+    protected function addBasicSecurityHeaders(Response $response): Response
+    {
         // XSS Protection - Enables XSS filtering built into browsers
         $response->headers->set('X-XSS-Protection', '1; mode=block');
 
@@ -78,8 +104,6 @@ class SecurityHeaders
         if (app()->environment('production') && request()->secure()) {
             $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
         }
-
-        $this->logCspViolations($request);
 
         return $response;
     }
