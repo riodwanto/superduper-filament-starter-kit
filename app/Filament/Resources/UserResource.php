@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Tables\Actions\ImpersonateTableAction;
 use App\Models\User;
 use App\Settings\MailSettings;
 use Exception;
@@ -184,6 +185,7 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                ImpersonateTableAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

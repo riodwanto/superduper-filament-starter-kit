@@ -35,18 +35,23 @@ class AppServiceProvider extends ServiceProvider
 
         // # \Opcodes\LogViewer
         LogViewer::auth(function ($request) {
-            $role = auth()?->user()?->roles?->first()->name;
+            $user = auth()->user();
+            $role = $user?->roles?->first()?->name;
             return $role == config('filament-shield.super_admin.name');
         });
 
-        // # Hooks
+        // # Filament Hooks
         FilamentView::registerRenderHook(
             PanelsRenderHook::FOOTER,
-            fn (): View => view('filament.components.panel-footer'),
+            fn(): View => view('filament.components.panel-footer'),
         );
         FilamentView::registerRenderHook(
             PanelsRenderHook::USER_MENU_BEFORE,
-            fn (): View => view('filament.components.button-website'),
+            fn(): View => view('filament.components.button-website'),
+        );
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::BODY_END,
+            fn() => view('filament.components.impersonate-banner')
         );
     }
 }

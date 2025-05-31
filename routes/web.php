@@ -4,6 +4,7 @@ use App\Livewire\SuperDuper\BlogList;
 use App\Livewire\SuperDuper\BlogDetails;
 use App\Livewire\SuperDuper\Pages\ContactUs;
 use Illuminate\Support\Facades\Route;
+use Lab404\Impersonate\Services\ImpersonateManager;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +46,16 @@ Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'
 Route::post('/blog-preview', function() {
     // Implementation pending
 })->name('blog.preview');
+
+Route::get('impersonate/leave', function() {
+    if(!app(ImpersonateManager::class)->isImpersonating()) {
+        return redirect('/');
+    }
+
+    app(ImpersonateManager::class)->leave();
+
+    return redirect(
+        session()->pull('impersonate.back_to')
+    );
+})->name('impersonate.leave')->middleware('web');
+

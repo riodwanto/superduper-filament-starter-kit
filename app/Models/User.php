@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
@@ -23,6 +24,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
     use InteractsWithMedia;
     use HasUuids, HasRoles;
     use HasApiTokens, HasFactory, Notifiable;
+    use Impersonate;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +62,18 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
     public function getFilamentName(): string
     {
         return $this->username;
+    }
+
+    public function canImpersonate()
+    {
+        return $this->isSuperAdmin();
+    }
+
+    public function canBeImpersonated()
+    {
+        // Let's prevent impersonating other users at our own company
+        // return !Str::endsWith($this->email, '@mycorp.com');
+        return true;
     }
 
     public function canAccessPanel(Panel $panel): bool

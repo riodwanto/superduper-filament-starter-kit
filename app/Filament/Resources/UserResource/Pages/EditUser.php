@@ -11,6 +11,7 @@ use Filament\Support\Enums\Alignment;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
+use App\Filament\Pages\Actions\ImpersonatePageAction;
 
 class EditUser extends EditRecord
 {
@@ -19,6 +20,7 @@ class EditUser extends EditRecord
     protected function getHeaderActions(): array
     {
         $actions = [
+            ImpersonatePageAction::make()->record($this->record),
             Actions\ActionGroup::make([
                 Actions\EditAction::make()
                     ->label('Change password')
