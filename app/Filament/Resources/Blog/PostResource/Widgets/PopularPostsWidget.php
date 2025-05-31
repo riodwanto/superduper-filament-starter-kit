@@ -4,9 +4,9 @@ namespace App\Filament\Resources\Blog\PostResource\Widgets;
 
 use App\Models\Blog\Post;
 use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class PopularPostsWidget extends BaseWidget
 {
@@ -16,9 +16,15 @@ class PopularPostsWidget extends BaseWidget
 
     protected function getTableQuery(): Builder
     {
-        return Post::published()
-            ->orderBy('view_count', 'desc')
-            ->limit(5);
+        $user = Auth::user();
+        $query = Post::published();
+        if ($user && $user->hasRole('author')) {
+            $query->where(function ($q) use ($user) {
+                $q->where('blog_author_id', $user->id)
+                  ->orWhere('created_by', $user->id);
+            });
+        }
+        return $query->orderBy('view_count', 'desc')->limit(5);
     }
 
     protected function getTableColumns(): array
