@@ -59,11 +59,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         'password' => 'hashed',
     ];
 
-    public function getFilamentName(): string
-    {
-        return $this->username;
-    }
-
     public function canImpersonate()
     {
         return $this->isSuperAdmin();
@@ -81,13 +76,17 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         // if ($panel->getId() === 'admin') {
         //     return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
         // }
-
         return true;
+    }
+
+    public function getFilamentName(): string
+    {
+        return "{$this->firstname} {$this->lastname}";
     }
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->getMedia('avatars')?->first()?->getUrl() ?? $this->getMedia('avatars')?->first()?->getUrl('thumb') ?? null;
+        return $this->getMedia('avatars')?->first()?->getUrl() ?? $this->getMedia('avatars')?->first()?->getUrl('thumb') ?? $this->avatar_url;
     }
 
     // Define an accessor for the 'name' attribute
@@ -106,5 +105,12 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         $this->addMediaConversion('thumb')
             ->fit(Fit::Contain, 300, 300)
             ->nonQueued();
+    }
+    public function getFallbackMediaUrl(string $collectionName = 'default', string $conversion = ''): string
+    {
+        if ($collectionName === 'avatars') {
+            return 'https://ui-avatars.com/api/?name=' . urlencode($this->name ?? $this->email ?? 'User');
+        }
+        return parent::getFallbackMediaUrl($collectionName, $conversion);
     }
 }
