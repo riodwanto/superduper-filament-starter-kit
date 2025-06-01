@@ -84,34 +84,37 @@ class PostResource extends Resource implements HasShieldPermissions
                                     ->maxLength(255)
                                     ->unique(Post::class, 'slug', ignoreRecord: true)
                                     ->helperText('URL-friendly version of the title - generated automatically')
-                                    ->suffixAction(
-                                        Forms\Components\Actions\Action::make('editSlug')
-                                            ->icon('heroicon-o-pencil-square')
-                                            ->modalHeading('Edit Slug')
-                                            ->modalDescription('Customize the URL slug for this post. Use lowercase letters, numbers, and hyphens only.')
-                                            ->modalIcon('heroicon-o-link')
-                                            ->modalSubmitActionLabel('Update Slug')
-                                            ->form([
-                                                Forms\Components\TextInput::make('new_slug')
-                                                    ->hiddenLabel()
-                                                    ->required()
-                                                    ->maxLength(255)
-                                                    ->live(debounce: 500)
-                                                    ->afterStateUpdated(function (string $state, Forms\Set $set) {
-                                                        $set('new_slug', Str::slug($state));
-                                                    })
-                                                    ->unique(Post::class, 'slug', ignoreRecord: true)
-                                                    ->helperText('The slug will be automatically formatted as you type.')
-                                            ])
-                                            ->action(function (array $data, Forms\Set $set) {
-                                                $set('slug', $data['new_slug']);
+                                    ->suffixAction(function (string $operation) {
+                                        if ($operation === 'edit') {
+                                            return Forms\Components\Actions\Action::make('editSlug')
+                                                ->icon('heroicon-o-pencil-square')
+                                                ->modalHeading('Edit Slug')
+                                                ->modalDescription('Customize the URL slug for this post. Use lowercase letters, numbers, and hyphens only.')
+                                                ->modalIcon('heroicon-o-link')
+                                                ->modalSubmitActionLabel('Update Slug')
+                                                ->form([
+                                                    Forms\Components\TextInput::make('new_slug')
+                                                        ->hiddenLabel()
+                                                        ->required()
+                                                        ->maxLength(255)
+                                                        ->live(debounce: 500)
+                                                        ->afterStateUpdated(function (string $state, Forms\Set $set) {
+                                                            $set('new_slug', Str::slug($state));
+                                                        })
+                                                        ->unique(Post::class, 'slug', ignoreRecord: true)
+                                                        ->helperText('The slug will be automatically formatted as you type.')
+                                                ])
+                                                ->action(function (array $data, Forms\Set $set) {
+                                                    $set('slug', $data['new_slug']);
 
-                                                Notification::make()
-                                                    ->title('Slug updated')
-                                                    ->success()
-                                                    ->send();
-                                            })
-                                    ),
+                                                    Notification::make()
+                                                        ->title('Slug updated')
+                                                        ->success()
+                                                        ->send();
+                                                });
+                                        }
+                                        return null;
+                                    }),
 
                                 Forms\Components\Textarea::make('content_overview')
                                     ->required()
@@ -453,19 +456,7 @@ class PostResource extends Resource implements HasShieldPermissions
                     ])
                     ->columnSpan(['lg' => 1]),
             ])
-            ->columns(3)
-            ->afterSave(function (Post $record, array $data) {
-                if ($record->status === PostStatus::PENDING) {
-                    $users = \App\Models\User::permission('approve_blog::post')->get();
-                    foreach ($users as $user) {
-                        Notification::make()
-                            ->title('Post submitted for approval')
-                            ->body('The post "' . $record->title . '" has been submitted for approval.')
-                            ->info()
-                            ->sendToDatabase($user);
-                    }
-                }
-            });
+            ->columns(3);
     }
 
     public static function table(Table $table): Table
