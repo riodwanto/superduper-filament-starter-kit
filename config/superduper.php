@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'impersonate' => [
         'back_to_session_key' => 'impersonate.back_to',
