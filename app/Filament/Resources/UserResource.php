@@ -190,11 +190,11 @@ class UserResource extends Resource
                     ->copyMessage('Email copied!')
                     ->copyMessageDuration(1500)
                     ->searchable(),
-                Tables\Columns\TextColumn::make('roles.name')->label('Role(s)')
-                    ->formatStateUsing(fn($state): string => Str::headline($state))
+                Tables\Columns\TextColumn::make('roles.name')->label(__('resource.user.roles'))
+                    ->formatStateUsing(fn($state): string => $state ? Str::headline($state) : __('resource.user.no_roles'))
                     ->colors(['info'])
                     ->badge()
-                    ->tooltip('User roles determine access and permissions.'),
+                    ->tooltip(__('resource.user.roles_tooltip')),
                 Tables\Columns\IconColumn::make('email_verified_at')
                     ->label('Verified')
                     ->boolean()
@@ -202,7 +202,7 @@ class UserResource extends Resource
                     ->falseIcon('fluentui-error-circle-24')
                     ->trueColor('success')
                     ->falseColor('danger')
-                    ->tooltip(fn(Model $record) => $record->email_verified_at ? 'Email is verified' : 'Email is not verified'),
+                    ->tooltip(fn(Model $record) => $record->email_verified_at ? __('resource.user.status.verified_tooltip') : __('resource.user.status.unverified_tooltip')),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Joined')
                     ->dateTime('M j, Y')

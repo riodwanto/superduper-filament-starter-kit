@@ -24,7 +24,7 @@ class EditUser extends EditRecord
             ImpersonatePageAction::make()->record($this->record),
             Actions\ActionGroup::make([
                 Actions\EditAction::make()
-                    ->label('Change password')
+                    ->label(__('resource.user.change_password'))
                     ->form([
                         Forms\Components\TextInput::make('password')
                             ->password()
@@ -52,7 +52,7 @@ class EditUser extends EditRecord
                     ->extraAttributes(["class" => "border-b"]),
 
                 Actions\CreateAction::make()
-                    ->label('Create new user')
+                    ->label(__('resource.user.create_new_user'))
                     ->url(fn(): string => static::$resource::getNavigationUrl() . '/create'),
             ])
             ->icon('heroicon-m-ellipsis-horizontal')
