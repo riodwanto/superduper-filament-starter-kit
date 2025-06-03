@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ContactUsResource\Pages;
 
 use App\Filament\Resources\ContactUsResource;
+use App\Filament\Resources\ContactUsResource\Widgets\ContactUsStatsWidget;
 use Filament\Resources\Pages\ListRecords;
 
 class ListContactUs extends ListRecords
@@ -13,6 +14,13 @@ class ListContactUs extends ListRecords
     {
         return [
 
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            ContactUsStatsWidget::class,
         ];
     }
 }
