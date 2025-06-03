@@ -30,7 +30,7 @@ class ContactUsResource extends Resource
 
     protected static ?string $slug = 'contact-us/inbox';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    // protected static ?string $recordTitleAttribute = 'firstname . " " . lastname';
 
     protected static ?string $navigationIcon = 'fluentui-mail-inbox-28';
 
@@ -346,6 +346,6 @@ class ContactUsResource extends Resource
 
     public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
     {
-        return $record->name;
+        return $record->firstname . ' ' . $record->lastname;
     }
 }
