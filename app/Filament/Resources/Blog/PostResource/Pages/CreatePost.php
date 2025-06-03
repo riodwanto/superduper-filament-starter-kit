@@ -10,9 +10,8 @@ class CreatePost extends CreateRecord
 {
     protected static string $resource = PostResource::class;
 
-    protected function afterSave(): void
+    protected function afterCreate(): void
     {
-        parent::afterSave();
         if ($this->record->status === \App\Enums\Blog\PostStatus::PENDING) {
             $users = \App\Models\User::permission('approve_blog::post')->get();
             foreach ($users as $user) {

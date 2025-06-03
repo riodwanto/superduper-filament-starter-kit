@@ -290,11 +290,10 @@ class EditPost extends EditRecord
 
     protected function afterSave(): void
     {
-        parent::afterSave();
-        if ($this->record->status === \App\Enums\Blog\PostStatus::PENDING) {
+        if ($this->record->status === PostStatus::PENDING) {
             $users = \App\Models\User::permission('approve_blog::post')->get();
             foreach ($users as $user) {
-                \Filament\Notifications\Notification::make()
+                Notification::make()
                     ->title('Post submitted for approval')
                     ->body('The post "' . $this->record->title . '" has been submitted for approval.')
                     ->info()
