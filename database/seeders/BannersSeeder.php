@@ -8,7 +8,7 @@ use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 use Symfony\Component\Uid\Ulid;
 
-class BannersTableSeeder extends Seeder
+class BannersSeeder extends Seeder
 {
     public function run()
     {

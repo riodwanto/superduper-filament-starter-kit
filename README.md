@@ -116,16 +116,16 @@ php artisan db:seed
 php artisan migrate:fresh --seed
 ```
 
-Run Permissions & Policies:
+Generate Shield permissions & policies:
 
 ```bash
 php artisan shield:generate --all
 ```
 
-One Liner:
+Bind permissions to roles:
 
 ```bash
-php artisan migrate && php artisan db:seed && php artisan shield:generate --all
+php artisan db:seed --class=PermissionsSeeder
 ```
 
 Generate key:

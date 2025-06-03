@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class ContactUsTableSeeder extends Seeder
+class ContactUsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

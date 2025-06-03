@@ -105,13 +105,4 @@ class PostPolicy
     {
         return $user->can('reorder_blog::post');
     }
-
-    /**
-     * Determine whether the user can approve the model.
-     */
-    public function approve(User $user, Post $post): bool
-    {
-        // Use permission instead of hardcoded roles
-        return $user->can('approve_blog::post');
-    }
 }

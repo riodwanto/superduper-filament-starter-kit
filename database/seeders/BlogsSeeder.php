@@ -12,7 +12,7 @@ use App\Models\Blog\Category;
 use App\Models\Blog\Post;
 use Database\Factories\HtmlProvider;
 
-class BlogsTableSeeder extends Seeder
+class BlogsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
