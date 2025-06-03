@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Artisan;
 
-class UsersTableSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     public function run()
     {

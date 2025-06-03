@@ -342,6 +342,20 @@ $tasks = [
 
         }
     ],
+    [
+        'command' => null,
+        'message' => '🛡️ Generating Shield components...',
+        'function' => function () {
+            return executeCommand('php artisan shield:generate --all', "🛡️ Running Shield component generation...", false, true);
+        }
+    ],
+    [
+        'command' => null,
+        'message' => '🌱 Seeding permissions to roles...',
+        'function' => function () {
+            return executeCommand('php artisan db:seed --class=PermissionsSeeder', '🌱 Seeding permissions to roles...', false, true);
+        }
+    ],
 ];
 
 // Run all tasks
@@ -358,7 +372,9 @@ $taskNames = [
     'Run database migrations',
     'Seed database',
     'Clear cache',
-    'NPM'
+    'NPM',
+    'Generate Shield components',
+    'Binds permissions to roles'
 ];
 
 foreach ($tasks as $index => $task) {
@@ -399,9 +415,6 @@ foreach ($taskResults as $taskKey => $result) {
 
 if ($allSuccess) {
     echo COLOR_GREEN . "\n🥳 All tasks completed successfully!" . COLOR_RESET . "\n";
-
-    echo COLOR_GREEN . "\n🛡️ Generating Shield components..." . COLOR_RESET . "\n";
-    executeCommand('php artisan shield:generate --all', "🛡️ Running Shield component generation...", false, true);
 
     if (confirm("\nWould you like to disable this setup script to prevent accidental execution in the future?")) {
         $disabledPath = $_SERVER['SCRIPT_FILENAME'] . '.disabled';
