@@ -557,3 +557,7 @@ body {
 .dark .fi-sidebar-item-active a > svg {
   @apply text-white;
 }
+
+.fi-fo-field-wrp-helper-text {
+    @apply overflow-hidden break-words text-sm text-gray-500 dark:text-gray-300;
+}
