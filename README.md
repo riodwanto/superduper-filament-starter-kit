@@ -122,7 +122,12 @@ Generate Shield permissions & policies:
 php artisan shield:generate --all
 ```
 
-Bind permissions to roles:
+One Liner:
+
+```bash
+php artisan migrate && php artisan db:seed && php artisan shield:generate --all
+
+[Important] Bind permissions to roles:
 
 ```bash
 php artisan db:seed --class=PermissionsSeeder
