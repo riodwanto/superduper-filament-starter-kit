@@ -32,7 +32,7 @@ body {
     @apply bg-white;
 }
 .fi-main {
-  @apply mt-0 mb-6 bg-white dark:bg-gray-900 shadow-none transition-all duration-300;
+  @apply mt-0 mb-0 bg-white dark:bg-gray-900 shadow-none transition-all duration-300;
 }
 
 .dark .fi-main {
@@ -51,7 +51,7 @@ body {
 }
 
 .dark .fi-sidebar {
-  background: linear-gradient(180deg, rgba(var(--primary-rgb), 0.1) 0%, rgba(15, 15, 20, 1) 100%);
+  background: linear-gradient(180deg, #181A20 0%, #23263A 100%);
 }
 
 .fi-sidebar.fi-sidebar-open {
@@ -71,12 +71,16 @@ body {
 }
 
 .fi-topbar nav {
-  @apply !ring-0 py-3 !border-none !shadow-none bg-white dark:bg-gray-900 sticky top-0 z-10;
+  @apply !ring-0 py-3 !border-none !shadow-none bg-white sticky top-0 z-10;
   border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
 }
 
-.dark .fi-topbar nav {
-  border-bottom: 1px solid rgba(var(--primary-rgb), 0.2);
+.fi-topbar,
+.fi-topbar input,
+.fi-topbar svg,
+.fi-topbar .fi-icon-btn svg,
+.fi-topbar .fi-btn svg {
+  @apply text-primary-400 dark:text-primary-300;
 }
 
 .fi-sidebar-nav-groups {
@@ -89,6 +93,10 @@ body {
 
 .fi-sidebar-group-label {
   @apply text-xs font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider px-4 mb-2;
+}
+
+.dark .fi-sidebar-group-label {
+  @apply text-primary-300;
 }
 
 /* SIDEBAR ITEMS */
@@ -108,16 +116,22 @@ body {
 
 .fi-sidebar-item a:focus,
 .fi-sidebar-item a:hover {
-  background: var(--hover-gradient);
+  background: rgba(var(--primary-rgb), 0.12); /* More visible solid color */
+  /* Or use a custom gradient for more pop: */
+  /* background: linear-gradient(90deg, #FFD33322 0%, #2D2B8D11 100%); */
   @apply shadow-sm transform transition-all duration-200 ease-out border-l-2 border-l-secondary-500;
   box-shadow: 0 3px 10px -2px rgba(var(--primary-rgb), 0.15), 0 1px 2px rgba(var(--secondary-rgb), 0.1);
 }
 
+.dark .fi-sidebar-item a {
+  @apply text-primary-200;
+  background: transparent;
+}
+
 .dark .fi-sidebar-item a:focus,
 .dark .fi-sidebar-item a:hover {
-  background: var(--dark-hover-gradient);
-  @apply border-l-secondary-600;
-  box-shadow: 0 3px 10px -2px rgba(var(--primary-rgb), 0.25), 0 1px 2px rgba(var(--secondary-rgb), 0.15);
+  background: linear-gradient(90deg, rgba(var(--secondary-rgb), 0.08), rgba(var(--primary-rgb), 0.18));
+  @apply text-primary-100 border-l-secondary-600;
 }
 
 .fi-sidebar-item a:hover > svg,
@@ -135,11 +149,13 @@ body {
 .fi-sidebar-item-active a {
   background: var(--primary-gradient);
   @apply text-white shadow-md border-l-0;
-  box-shadow: 0 4px 12px -2px rgba(var(--primary-rgb), 0.4), 0 2px 4px rgba(var(--secondary-rgb), 0.1);
+  box-shadow: 0 4px 12px -2px rgba(var(--primary-rgb), 0.6), 0 2px 4px rgba(var(--secondary-rgb), 0.15);
 }
 
 .dark .fi-sidebar-item-active a {
-  box-shadow: 0 4px 12px -2px rgba(var(--primary-rgb), 0.6), 0 2px 4px rgba(var(--secondary-rgb), 0.15);
+    background: linear-gradient(90deg, rgba(var(--secondary-rgb), 0.08), rgba(var(--primary-rgb), 0.18));
+    @apply text-primary-100 border-l-secondary-600;
+    box-shadow: none;
 }
 
 .fi-sidebar-item-active a > svg {
@@ -154,14 +170,22 @@ body {
 /* Active hover state */
 .fi-sidebar-item-active a:hover,
 .fi-sidebar-item-active a:focus {
-  filter: brightness(1.05);
-  @apply border-l-0;
-  box-shadow: 0 6px 16px -4px rgba(var(--primary-rgb), 0.5), 0 2px 6px rgba(var(--secondary-rgb), 0.15);
+  background: var(--primary-gradient);
+  @apply text-white shadow-md border-l-0;
+  box-shadow: 0 4px 12px -2px rgba(var(--primary-rgb), 0.4), 0 2px 4px rgba(var(--secondary-rgb), 0.1);
+  filter: none;
 }
 
+/* Prevent icon movement and keep text white for active sidebar item on hover/focus */
 .fi-sidebar-item-active a:hover > svg,
 .fi-sidebar-item-active a:focus > svg {
-  @apply text-primary-800 scale-110 translate-x-1;
+  @apply text-white scale-110; /* No translate-x, keep scale if you want */
+}
+
+.fi-sidebar-item-active a:hover > span,
+.fi-sidebar-item-active a:focus > span {
+  @apply text-white font-semibold; /* No color change, always white */
+  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
 }
 
 /* CONTENT SECTIONS */
@@ -228,7 +252,7 @@ body {
 .fi-input,
 .fi-select select {
   @apply rounded-lg border-gray-300 dark:border-gray-700 shadow-sm;
-  @apply focus:border-primary-500 focus:ring focus:ring-primary-200 dark:focus:ring-primary-900/30;
+  @apply focus:border-primary-500;
 }
 
 .fi-input-wrp:focus-within {
@@ -251,12 +275,12 @@ body {
 .fi-btn.fi-btn-color-primary {
   background: var(--primary-gradient);
   @apply text-white border-0;
-  box-shadow: 0 4px 10px -3px rgba(var(--primary-rgb), 0.5);
+  box-shadow: 0 2px 6px -2px rgba(var(--primary-rgb), 0.25);
 }
 
 .fi-btn.fi-btn-color-primary:hover {
   filter: brightness(1.05);
-  box-shadow: 0 6px 15px -3px rgba(var(--primary-rgb), 0.6);
+  box-shadow: 0 3px 8px -2px rgba(var(--primary-rgb), 0.18);
 }
 
 /* Secondary button styling */
@@ -269,6 +293,73 @@ body {
 .fi-btn.fi-btn-color-secondary:hover {
   filter: brightness(1.05);
   box-shadow: 0 6px 15px -3px rgba(var(--secondary-rgb), 0.6);
+}
+
+/* Success button styling */
+.fi-btn.fi-btn-color-success {
+  background: linear-gradient(145deg, #34D399, #10B981);
+  @apply text-white border-0;
+  box-shadow: 0 2px 6px -2px rgba(16, 185, 129, 0.18);
+}
+.fi-btn.fi-btn-color-success:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(16, 185, 129, 0.22);
+}
+
+/* Error button styling */
+.fi-btn.fi-btn-color-danger {
+  background: linear-gradient(145deg, #F87171, #EF4444);
+  @apply text-white border-0;
+  box-shadow: 0 2px 6px -2px rgba(239, 68, 68, 0.18);
+}
+.fi-btn.fi-btn-color-danger:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(239, 68, 68, 0.22);
+}
+
+/* Warning button styling */
+.fi-btn.fi-btn-color-warning {
+  background: linear-gradient(145deg, #FBBF24, #F59E0B);
+  @apply text-gray-900 border-0;
+  box-shadow: 0 2px 6px -2px rgba(245, 158, 11, 0.18);
+}
+.fi-btn.fi-btn-color-warning:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(245, 158, 11, 0.22);
+}
+
+/* Info button styling */
+.fi-btn.fi-btn-color-info {
+  background: linear-gradient(145deg, #60A5FA, #3B82F6);
+  @apply text-white border-0;
+  box-shadow: 0 2px 6px -2px rgba(59, 130, 246, 0.18);
+}
+.fi-btn.fi-btn-color-info:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(59, 130, 246, 0.22);
+}
+
+/* Gray button styling */
+.fi-btn.fi-btn-color-gray {
+  background: linear-gradient(145deg, #f4f4f5, #e5e7eb); /* subtle gray gradient */
+  @apply text-gray-900 border-0 shadow-sm;
+}
+
+.fi-btn.fi-btn-color-gray:hover {
+  filter: brightness(1.04);
+  background: linear-gradient(145deg, #e5e7eb, #f4f4f5);
+  @apply text-gray-900;
+}
+
+.dark .fi-btn.fi-btn-color-gray {
+  background: linear-gradient(145deg, #23263A 5%, #181A20 95%);
+  @apply text-white border-0 shadow-sm;
+}
+
+.dark .fi-btn.fi-btn-color-gray:hover {
+  filter: brightness(1.08);
+  background: linear-gradient(145deg, #23263A 10%, #23263A 90%);
+  @apply text-white;
 }
 
 /* DROPDOWN MENUS */
@@ -304,15 +395,15 @@ body {
 
 /* TABLES */
 .fi-ta-header-cell {
-  @apply bg-primary-50/50 dark:bg-primary-900/20 text-xs font-semibold text-primary-700 dark:text-primary-300 uppercase tracking-wider py-3;
+  /* @apply  ; */
 }
 
 .fi-ta-row {
-  @apply hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors duration-150;
+  @apply transition-colors duration-150;
 }
 
 .fi-ta-row:nth-child(even) {
-  @apply bg-gray-50/50 dark:bg-gray-800/10;
+  /* @apply ; */
 }
 
 /* BADGES */
@@ -363,12 +454,12 @@ body {
 
 /* Improved Tabs Hover */
 .fi-tabs-item:not(.fi-tabs-item-active):hover {
-  @apply text-primary-600 dark:text-primary-400 bg-primary-50/70 dark:bg-primary-900/30;
+    @apply border-t-2 border-t-secondary-500 text-primary-700 dark:text-primary-400 relative;
   box-shadow: inset 0 1px 0 rgba(var(--secondary-rgb), 0.3);
 }
 
 .fi-tabs-item-active {
-  @apply border-t-2 border-t-secondary-500 border-x border-x-gray-200 dark:border-x-gray-700 text-primary-700 dark:text-primary-400 bg-white dark:bg-gray-900 relative;
+  @apply border-t-2 border-t-secondary-500 text-primary-700 dark:text-primary-400 relative;
 }
 
 .fi-tabs-item-active::after {
@@ -454,11 +545,15 @@ body {
 /* Global navigation hover improvements */
 .fi-topbar button:hover,
 .fi-icon-btn:hover {
-  @apply bg-primary-50 dark:bg-primary-900/30;
-  box-shadow: 0 2px 5px -1px rgba(var(--primary-rgb), 0.15), 0 1px 2px rgba(var(--secondary-rgb), 0.1);
+  /* @apply bg-primary-50 dark:bg-primary-900/30; */
 }
 
 /* Breadcrumb item hover */
 .fi-breadcrumbs-item:not(:last-child):hover a {
   @apply text-secondary-600 dark:text-secondary-500;
+}
+
+.dark .fi-sidebar-item-active a > span,
+.dark .fi-sidebar-item-active a > svg {
+  @apply text-white;
 }
