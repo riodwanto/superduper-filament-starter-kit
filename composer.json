@@ -42,6 +42,7 @@
         "flowframe/laravel-trend": "^0.4.0",
         "guzzlehttp/guzzle": "^7.2",
         "jeffgreco13/filament-breezy": "^2.2",
+        "lab404/laravel-impersonate": "^1.7",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",

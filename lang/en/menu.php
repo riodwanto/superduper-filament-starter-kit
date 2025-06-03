@@ -13,4 +13,8 @@ return [
     'nav_group.content' => 'Content',
     'nav_group.sites' => 'Sites',
     'nav_group.settings' => 'Settings',
+    'nav_group.systems' => 'Systems',
+
+
+    'nav_group.item.log_viewer' => 'Log Viewer',
 ];

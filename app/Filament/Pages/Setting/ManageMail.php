@@ -562,7 +562,7 @@ class ManageMail extends SettingsPage
 
     public static function getNavigationGroup(): ?string
     {
-        return __("menu.nav_group.settings");
+        return __("menu.nav_group.systems");
     }
 
     public static function getNavigationLabel(): string

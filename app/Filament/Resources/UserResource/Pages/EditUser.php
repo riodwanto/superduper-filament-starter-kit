@@ -11,6 +11,8 @@ use Filament\Support\Enums\Alignment;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
+use App\Filament\Pages\Actions\ImpersonatePageAction;
+use Illuminate\Support\Facades\Blade;
 
 class EditUser extends EditRecord
 {
@@ -19,9 +21,10 @@ class EditUser extends EditRecord
     protected function getHeaderActions(): array
     {
         $actions = [
+            ImpersonatePageAction::make()->record($this->record),
             Actions\ActionGroup::make([
                 Actions\EditAction::make()
-                    ->label('Change password')
+                    ->label(__('resource.user.change_password'))
                     ->form([
                         Forms\Components\TextInput::make('password')
                             ->password()
@@ -49,7 +52,7 @@ class EditUser extends EditRecord
                     ->extraAttributes(["class" => "border-b"]),
 
                 Actions\CreateAction::make()
-                    ->label('Create new user')
+                    ->label(__('resource.user.create_new_user'))
                     ->url(fn(): string => static::$resource::getNavigationUrl() . '/create'),
             ])
             ->icon('heroicon-m-ellipsis-horizontal')
@@ -83,11 +86,14 @@ class EditUser extends EditRecord
     public function getBadgeStatus(): string|Htmlable
     {
         if (empty($this->record->email_verified_at)) {
-            $badge = "<span class='inline-flex items-center px-2 py-1 text-xs font-semibold rounded-md text-danger-700 bg-danger-50 ring-1 ring-inset ring-danger-600/20'>Unverified</span>";
+            $icon = Blade::render('<x-fluentui-error-circle-24 class="w-5 h-5 text-danger-600" title="Unverified" />');
+            $badge = "<span class='inline-flex items-center' title='Unverified'>"
+                . $icon . "</span>";
         } else {
-            $badge = "<span class='inline-flex items-center px-2 py-1 text-xs font-semibold rounded-md text-success-700 bg-success-50 ring-1 ring-inset ring-success-600/20'>Verified</span>";
+            $icon = Blade::render('<x-fluentui-checkmark-starburst-24 class="w-5 h-5 text-success-600" title="Verified" />');
+            $badge = "<span class='inline-flex items-center' title='Verified'>"
+                . $icon . "</span>";
         }
-
-        return $badge;
+        return new HtmlString($badge);
     }
 }

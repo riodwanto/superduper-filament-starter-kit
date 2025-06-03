@@ -27,6 +27,8 @@ class ManageSiteScript extends SettingsPage
      */
     public ?array $data = [];
 
+    protected static ?string $cluster = \App\Filament\Clusters\SitesSettings::class;
+
     public function mount(): void
     {
         $this->fillForm();

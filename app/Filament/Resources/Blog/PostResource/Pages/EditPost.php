@@ -287,4 +287,18 @@ class EditPost extends EditRecord
             $this->record->scheduled_at = now()->addDay()->startOfHour();
         }
     }
+
+    protected function afterSave(): void
+    {
+        if ($this->record->status === PostStatus::PENDING) {
+            $users = \App\Models\User::permission('approve_blog::post')->get();
+            foreach ($users as $user) {
+                Notification::make()
+                    ->title('Post submitted for approval')
+                    ->body('The post "' . $this->record->title . '" has been submitted for approval.')
+                    ->info()
+                    ->sendToDatabase($user);
+            }
+        }
+    }
 }

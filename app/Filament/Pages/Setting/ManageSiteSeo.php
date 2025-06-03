@@ -33,6 +33,8 @@ class ManageSiteSeo extends SettingsPage
      */
     public ?array $data = [];
 
+    protected static ?string $cluster = \App\Filament\Clusters\SitesSettings::class;
+
     public function mount(): void
     {
         $this->fillForm();
@@ -646,14 +648,5 @@ class ManageSiteSeo extends SettingsPage
     public function getSubheading(): string|Htmlable|null
     {
         return 'Manage your website\'s search engine optimization';
-    }
-
-    public function getBreadcrumbs(): array
-    {
-        return [
-            route('filament.admin.pages.dashboard') => 'Dashboard',
-            route('filament.admin.pages.manage-site-seo') => 'Settings',
-            null => 'SEO Settings',
-        ];
     }
 }

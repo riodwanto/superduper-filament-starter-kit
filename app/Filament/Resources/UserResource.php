@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Tables\Actions\ImpersonateTableAction;
 use App\Models\User;
 use App\Settings\MailSettings;
 use Exception;
@@ -45,15 +46,24 @@ class UserResource extends Resource
                             ->avatar()
                             ->collection('avatars')
                             ->alignCenter()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->image()
+                            ->imagePreviewHeight('80')
+                            ->imageCropAspectRatio('1:1')
+                            ->imageResizeMode('cover')
+                            ->imageResizeTargetWidth('256')
+                            ->imageResizeTargetHeight('256')
+                            ->maxSize(1024)
+                            ->maxFiles(1)
+                            ->helperText(fn () => new HtmlString('<div class="text-center text-gray-300">'.__('resource.user.avatar_helper').'</div>')),
 
                         Forms\Components\Actions::make([
                             Action::make('resend_verification')
                                 ->label(__('resource.user.actions.resend_verification'))
                                 ->color('info')
-                                ->action(fn(MailSettings $settings, Model $record) => static::doResendEmailVerification($settings, $record)),
+                                ->action(fn(MailSettings $settings, Model $record) => static::doResendEmailVerification($settings, $record))
+                                ->hidden(fn($record) => $record?->email_verified_at !== null),
                         ])
-                            // ->hidden(fn (User $user) => $user->email_verified_at != null)
                             ->hiddenOn('create')
                             ->fullWidth(),
 
@@ -76,19 +86,24 @@ class UserResource extends Resource
                             ->compact()
                             ->hidden(fn(string $operation): bool => $operation === 'edit'),
 
-                        Forms\Components\Section::make()
-                            ->schema([
-                                Forms\Components\Placeholder::make('email_verified_at')
-                                    ->label(__('resource.general.email_verified_at'))
-                                    ->content(fn(User $record): ?string => new HtmlString("$record->email_verified_at")),
-                                Forms\Components\Placeholder::make('created_at')
-                                    ->label(__('resource.general.created_at'))
-                                    ->content(fn(User $record): ?string => $record->created_at?->diffForHumans()),
-                                Forms\Components\Placeholder::make('updated_at')
-                                    ->label(__('resource.general.updated_at'))
-                                    ->content(fn(User $record): ?string => $record->updated_at?->diffForHumans()),
-                            ])
-                            ->compact()
+                        Forms\Components\Placeholder::make('user_info')
+                            ->hiddenLabel()
+                            ->content(function (?User $record): HtmlString {
+                                if (!$record) {
+                                    return new HtmlString('<span class="text-sm text-gray-500">Save to see user details! 😊</span>');
+                                }
+                                $name = trim(($record->firstname ?? '') . ' ' . ($record->lastname ?? ''));
+                                $joined = $record->created_at?->format('M j, Y \a\t g:i A') ?? 'just now';
+                                $updated = $record->updated_at?->diffForHumans() ?? 'never';
+                                $updatedExact = $record->updated_at?->format('M j, Y \a\t g:i A') ?? '';
+                                if ($record->email_verified_at) {
+                                    $verified = $record->email_verified_at->format('M j, Y \a\t g:i A');
+                                    $sentence = "<span class='font-semibold'>$name</span> joined $joined and has been <span class='font-semibold' title='Verified on $verified'>verified</span> since then. Last updated <span class='font-semibold' title='Updated on $updatedExact'>$updated</span>.";
+                                } else {
+                                    $sentence = "<span class='font-semibold'>$name</span> joined $joined and hasn't verified their email yet. Last updated <span class='font-semibold' title='Updated on $updatedExact'>$updated</span>.";
+                                }
+                                return new HtmlString($sentence);
+                            })
                             ->hidden(fn(string $operation): bool => $operation === 'create'),
                     ])
                     ->columnSpan(1),
@@ -118,7 +133,9 @@ class UserResource extends Resource
                                         return $userId
                                             ? ['unique:users,email,' . $userId]
                                             : ['unique:users,email'];
-                                    }),
+                                    })
+                                    ->disabled(fn(string $operation) => $operation === 'edit')
+                                    ->helperText(fn () => new HtmlString('<div class="text-gray-300">'.__('resource.user.email_edit_warning').'</div>')),
 
                                 Forms\Components\TextInput::make('firstname')
                                     ->required()
@@ -141,7 +158,8 @@ class UserResource extends Resource
                                     ->preload()
                                     ->searchable()
                                     ->optionsLimit(5)
-                                    ->columnSpanFull(),
+                                    ->columnSpanFull()
+                                    ->helperText(__('resource.user.roles_tooltip')),
                             ])
                     ])
                     ->columnSpan([
@@ -158,25 +176,41 @@ class UserResource extends Resource
             ->columns([
                 SpatieMediaLibraryImageColumn::make('media')->label('Avatar')
                     ->collection('avatars')
-                    ->wrap(),
+                    ->wrap()
+                    ->circular()
+                    ->extraAttributes(['alt' => __('resource.user.avatar_alt')]),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Full Name')
+                    ->getStateUsing(fn(Model $record) => $record->firstname . ' ' . $record->lastname)
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('username')->label('Username')
-                    ->description(fn(Model $record) => $record->firstname . ' ' . $record->lastname)
                     ->searchable(),
-                Tables\Columns\TextColumn::make('roles.name')->label('Role')
-                    ->formatStateUsing(fn($state): string => Str::headline($state))
-                    ->colors(['info'])
-                    ->badge(),
                 Tables\Columns\TextColumn::make('email')
+                    ->copyable()
+                    ->copyMessage('Email copied!')
+                    ->copyMessageDuration(1500)
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')->label('Verified at')
-                    ->dateTime()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('roles.name')->label(__('resource.user.roles'))
+                    ->formatStateUsing(fn($state): string => $state ? Str::headline($state) : __('resource.user.no_roles'))
+                    ->colors(['info'])
+                    ->badge()
+                    ->tooltip(__('resource.user.roles_tooltip')),
+                Tables\Columns\IconColumn::make('email_verified_at')
+                    ->label('Verified')
+                    ->boolean()
+                    ->trueIcon('fluentui-checkmark-starburst-24')
+                    ->falseIcon('fluentui-error-circle-24')
+                    ->trueColor('success')
+                    ->falseColor('danger')
+                    ->tooltip(fn(Model $record) => $record->email_verified_at ? __('resource.user.status.verified_tooltip') : __('resource.user.status.unverified_tooltip')),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Joined')
+                    ->dateTime('M j, Y')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Last Update')
+                    ->dateTime('M j, Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -184,8 +218,11 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    ImpersonateTableAction::make()->tooltip('Impersonate this user'),
+                    Tables\Actions\EditAction::make()->tooltip('Edit user'),
+                    Tables\Actions\DeleteAction::make()->tooltip('Delete user'),
+                ])->label('Actions')->icon('heroicon-m-ellipsis-horizontal'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

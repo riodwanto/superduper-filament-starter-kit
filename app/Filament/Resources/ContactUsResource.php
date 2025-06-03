@@ -12,6 +12,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\DatePicker as FilamentDatePicker;
 
 class ContactUsResource extends Resource
 {
@@ -26,7 +30,7 @@ class ContactUsResource extends Resource
 
     protected static ?string $slug = 'contact-us/inbox';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    // protected static ?string $recordTitleAttribute = 'firstname . " " . lastname';
 
     protected static ?string $navigationIcon = 'fluentui-mail-inbox-28';
 
@@ -119,44 +123,38 @@ class ContactUsResource extends Resource
                 Tables\Columns\Layout\Split::make([
                     Tables\Columns\Layout\Stack::make([
                         Tables\Columns\TextColumn::make('name')
+                            ->searchable()
                             ->weight('bold')
-                            ->toggleable()
-                            ->searchable(['firstname', 'lastname'])
+                            ->description(fn($record) => $record->email)
+                            ->icon('heroicon-o-user')
                             ->limit(20)
-                            ->sortable(),
-                        Tables\Columns\TextColumn::make('email')
-                            ->searchable(),
+                            ->alignLeft(),
                         Tables\Columns\TextColumn::make('phone')
                             ->searchable()
+                            ->copyable()
                             ->toggleable()
-                            ->toggledHiddenByDefault(),
-                    ]),
+                            ->toggledHiddenByDefault()
+                            ->alignLeft(),
+                    ])->space(1),
                     Tables\Columns\Layout\Stack::make([
                         Tables\Columns\TextColumn::make('subject')
+                            ->searchable()
                             ->limit(30)
-                            ->searchable(),
+                            ->alignLeft(),
                         Tables\Columns\TextColumn::make('company')
                             ->searchable()
-                            ->toggleable(),
+                            ->toggleable()
+                            ->alignLeft(),
                         Tables\Columns\TextColumn::make('employees')
                             ->formatStateUsing(fn(?string $state): ?string => $state ?? '')
-                            ->searchable()
                             ->toggleable()
-                            ->toggledHiddenByDefault(),
-                    ]),
+                            ->toggledHiddenByDefault()
+                            ->alignLeft(),
+                    ])->space(1),
                     Tables\Columns\Layout\Stack::make([
-                        Tables\Columns\TextColumn::make('created_at')
-                            ->sortable()
-                            ->searchable()
-                            ->toggleable()
-                            ->dateTime()
-                            ->label('Sent at'),
                         Tables\Columns\TextColumn::make('status')
-                            ->formatStateUsing(fn(string $state): string => ucfirst($state))
-                            ->sortable()
-                            ->searchable()
-                            ->toggleable()
                             ->badge()
+                            ->formatStateUsing(fn(string $state): string => ucfirst($state))
                             ->color(fn(string $state): string => match ($state) {
                                 'new' => 'danger',
                                 'read' => 'warning',
@@ -164,8 +162,13 @@ class ContactUsResource extends Resource
                                 'pending' => 'info',
                                 'closed' => 'gray',
                                 default => '',
-                            }),
-                    ]),
+                            })
+                            ->alignLeft(),
+                        Tables\Columns\TextColumn::make('created_at')
+                            ->dateTime('M j, Y H:i')
+                            ->label('Sent at')
+                            ->alignLeft(),
+                    ])->alignment('center')->space(1),
                 ])
             ])
             ->recordClasses(fn(ContactUs $record) => match ($record->status) {
@@ -177,7 +180,9 @@ class ContactUsResource extends Resource
             })
             ->filters([
                 TrashedFilter::make(),
+
                 SelectFilter::make('status')
+                    ->label('Status')
                     ->options([
                         'new' => 'New',
                         'read' => 'Read',
@@ -185,7 +190,42 @@ class ContactUsResource extends Resource
                         'responded' => 'Responded',
                         'closed' => 'Closed',
                     ]),
-            ])
+
+                Filter::make('created_at')
+                    ->form([
+                        FilamentDatePicker::make('from')->label('From'),
+                        FilamentDatePicker::make('until')->label('Until'),
+                    ])
+                    ->query(function ($query, $data) {
+                        return $query
+                            ->when($data['from'], fn($q, $date) => $q->whereDate('created_at', '>=', $date))
+                            ->when($data['until'], fn($q, $date) => $q->whereDate('created_at', '<=', $date));
+                    })
+                    ->label('Received Date'),
+
+                SelectFilter::make('company')
+                    ->label('Company')
+                    ->searchable()
+                    ->options(
+                        fn () => ContactUs::query()
+                            ->distinct()
+                            ->pluck('company', 'company')
+                            ->filter()
+                            ->toArray()
+                    ),
+
+                SelectFilter::make('employees')
+                    ->label('Employees')
+                    ->options([
+                        '1-10' => '1-10',
+                        '11-50' => '11-50',
+                        '51-200' => '51-200',
+                        '201-500' => '201-500',
+                        '501-1000' => '501-1000',
+                    ]),
+            ], layout: FiltersLayout::AboveContentCollapsible)
+            ->filtersFormColumns(2)
+            ->filtersFormWidth(MaxWidth::ThreeExtraLarge)
             ->bulkActions([
                 TablesActions\BulkActionGroup::make([
                     TablesActions\DeleteBulkAction::make(),
@@ -215,10 +255,12 @@ class ContactUsResource extends Resource
             ])
             ->actions([
                 ReplyAction::make()
-                    ->visible(
-                        fn(ContactUs $record): bool =>
-                        empty($record->reply_message) || empty($record->reply_subject)
-                    ),
+                    ->hiddenLabel()
+                    ->button()
+                    ->size('xs')
+                    ->tooltip('Reply to this message')
+                    ->color(fn(ContactUs $record): string => (empty($record->reply_message) || empty($record->reply_subject)) ? 'success' : 'gray')
+                    ->disabled(fn(ContactUs $record): bool => !empty($record->reply_message) || !empty($record->reply_subject)),
                 TablesActions\ActionGroup::make([
                     TablesActions\ViewAction::make('view')
                         ->mutateRecordDataUsing(function (array $data, ContactUs $record): array {
@@ -284,6 +326,11 @@ class ContactUsResource extends Resource
         return static::getModel()::where('status', 'new')->count();
     }
 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'gray';
+    }
+
     public static function getNavigationLabel(): string
     {
         return 'Inbox';
@@ -299,6 +346,6 @@ class ContactUsResource extends Resource
 
     public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
     {
-        return $record->name;
+        return $record->firstname . ' ' . $record->lastname;
     }
 }

@@ -64,17 +64,19 @@
 
 #### Latest update
 
-##### Version: v1.18.0
+##### Version: v1.19.0
 
-- Front Site implementation with home and blog pages
-- Updated Contact Us page
-- Enhanced menu builder and configuration
-- Improved email templates
-- New middleware and log channels
-- Updated security headers service
-- Various styling and component improvements
-- Site settings logo functionality
-- Multiple UI/UX enhancements
+- User impersonation feature for admins
+- Contact Us stats dashboard widget
+- Blog module improvements (stats, author filtering, status tracking)
+- Enhanced menu builder with more locations and configuration
+- Clustered site settings and new site editor page
+- Improved site logo functionality
+- Updated panel footer and various UI/UX enhancements
+- Improved security headers, new middleware, and log channels
+- Enhanced afterSave hooks and visibility suffix actions
+- Updated translations and language generator improvements
+- Various bug fixes and styling improvements
 
 [Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
 

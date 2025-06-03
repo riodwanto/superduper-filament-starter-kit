@@ -56,14 +56,14 @@ class AdminPanelProvider extends PanelProvider
                     ->label(__('menu.nav_group.sites'))
                     ->collapsed(),
                 Navigation\NavigationGroup::make()
-                    ->label(__('menu.nav_group.settings'))
+                    ->label(__('menu.nav_group.systems'))
                     ->collapsed(),
                 Navigation\NavigationGroup::make()
                     ->label(__('menu.nav_group.activities'))
                     ->collapsed(),
             ])
             ->navigationItems([
-                Navigation\NavigationItem::make('Log Viewer') // !! To-Do: lang
+                Navigation\NavigationItem::make(__('menu.nav_group.item.log_viewer'))
                     ->visible(fn(): bool => auth()->user()->can('access_log_viewer'))
                     ->url(config('app.url') . '/' . config('log-viewer.route_path'), shouldOpenInNewTab: true)
                     ->icon('fluentui-document-bullet-list-multiple-20-o')
@@ -83,6 +83,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\FilamentInfoWidget::class,
             ])
+            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

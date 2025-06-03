@@ -18,4 +18,5 @@ yarn-error.log
 /.idea
 /.vscode
 /-local
+/docs
 setup.php.disabled

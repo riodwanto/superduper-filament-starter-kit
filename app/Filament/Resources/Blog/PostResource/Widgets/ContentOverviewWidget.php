@@ -7,6 +7,7 @@ use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ContentOverviewWidget extends ChartWidget
 {
@@ -22,34 +23,38 @@ class ContentOverviewWidget extends ChartWidget
 
     protected function getData(): array
     {
+        $user = Auth::user();
+        $postQuery = Post::query();
+        if ($user && $user->hasRole('author')) {
+            $postQuery->where(function ($q) use ($user) {
+                $q->where('blog_author_id', $user->id)
+                  ->orWhere('created_by', $user->id);
+            });
+        }
         // Generate data for the last 30 days
-        $data = Trend::model(Post::class)
+        $data = Trend::query($postQuery)
             ->between(
                 start: now()->subDays(30),
                 end: now(),
             )
             ->perDay()
             ->count();
-
         // Generate view count data
-        $viewData = Post::selectRaw('DATE(updated_at) as date, SUM(view_count) as total')
+        $viewData = (clone $postQuery)
+            ->selectRaw('DATE(updated_at) as date, SUM(view_count) as total')
             ->where('updated_at', '>=', now()->subDays(30))
             ->groupBy('date')
             ->get()
             ->mapWithKeys(fn($item) => [
                 Carbon::parse($item->date)->format('Y-m-d') => $item->total
             ]);
-
         // Combine the data sets
-        $labels = $data->map(fn(TrendValue $value) => Carbon::parse($value->date)->format('M d'));
-
-        $postCounts = $data->map(fn(TrendValue $value) => $value->aggregate);
-
-        $viewCounts = $data->map(function (TrendValue $value) use ($viewData) {
+        $labels = $data->map(fn($value) => Carbon::parse($value->date)->format('M d'));
+        $postCounts = $data->map(fn($value) => $value->aggregate);
+        $viewCounts = $data->map(function ($value) use ($viewData) {
             $date = Carbon::parse($value->date)->format('Y-m-d');
             return $viewData[$date] ?? 0;
         });
-
         return [
             'datasets' => [
                 [
@@ -60,7 +65,7 @@ class ContentOverviewWidget extends ChartWidget
                 ],
                 [
                     'label' => 'Views (÷10)',
-                    'data' => $viewCounts->map(fn($count) => round($count / 10)), // Scale down for better visualization
+                    'data' => $viewCounts->map(fn($count) => round($count / 10)),
                     'backgroundColor' => 'rgba(16, 185, 129, 0.5)',
                     'borderColor' => 'rgb(16, 185, 129)',
                 ],
