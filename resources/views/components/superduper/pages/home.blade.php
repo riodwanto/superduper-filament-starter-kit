@@ -22,7 +22,7 @@
                     
                     <!-- Blog Showcase -->
                     <div class="mb-16">
-                        <livewire:superduper.blog-section-slider
+                        <livewire:super-duper.blog-section-slider
                             :limit="6"
                             :featured-only="false"
                             :category-slug="null"
