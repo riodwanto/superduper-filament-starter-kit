@@ -19,6 +19,14 @@ return new class extends SettingsMigration
             "danger" => "#EF4444",
             "info" => "#3B82F6",
             "warning" => "#F59E0B",
+            "text" => "#232B32",
+            "secondary_text" => "#7B8794",
+            "white" => "#FFFFFF",
+            "border" => "#C3CBD6",
+            "disable" => "#E9EEF5",
+            "background" => "#F5F5F5",
+            "yellow" => "#FFC903",
+            "grad" => "#E3F0FF",
         ]);
     }
 };
