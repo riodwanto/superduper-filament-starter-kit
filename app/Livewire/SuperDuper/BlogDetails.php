@@ -177,6 +177,20 @@ class BlogDetails extends Component
 
     public function render()
     {
-        return view('livewire.superduper.blog-details')->layout('components.superduper.main');
+        return view('livewire.superduper.blog-details')->layout('components.superduper.main', [
+            'pageType' => 'blog_post',
+            'postTitle' => $this->post->title,
+            'postCategory' => $this->post->category->name ?? '',
+            'authorName' => $this->post->author->name ?? '',
+            'publishDate' => $this->post->published_at,
+            'pageDescription' => $this->post->meta_description ?: $this->post->content_overview,
+            'metaKeywords' => $this->post->tags->count() > 0
+                ? $this->post->tags->pluck('name')->implode(', ')
+                : '',
+            'canonicalUrl' => $this->post->getCanonicalUrl(),
+            'ogImage' => $this->post->hasFeaturedImage()
+                ? $this->post->getFeaturedImageUrl('large')
+                : null,
+        ]);
     }
 }
