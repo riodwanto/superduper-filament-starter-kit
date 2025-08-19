@@ -2,10 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-*,
-::before,
-::after {
+/* Critical CSS - Above the fold styles */
+@layer base {
+    /* Optimize font loading */
+    html {
+        font-display: swap;
+    }
 
+    /* Prevent layout shift */
+    img, video, iframe {
+        height: auto;
+        max-width: 100%;
+    }
+
+    /* Optimize focus indicators */
+    *:focus-visible {
+        outline: 2px solid theme('colors.primary.600');
+        outline-offset: 2px;
+    }
+}
+
+@layer components {
+    /* Optimize common components */
+    .btn {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors duration-200 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
+
+    .btn-primary {
+        @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+    }
+
+    .btn-secondary {
+        @apply bg-secondary-600 text-black hover:bg-secondary-700 focus:ring-secondary-500;
+    }
 }
 
 :root {
