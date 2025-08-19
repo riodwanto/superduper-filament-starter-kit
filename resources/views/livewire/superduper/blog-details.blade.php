@@ -7,6 +7,20 @@
         @endpush
     @endif
 
+    {{-- Preview Banner --}}
+    @if($isPreview)
+        <div class="fixed top-0 left-0 right-0 z-50 px-4 py-2 font-semibold text-center text-white bg-orange-500 shadow-lg">
+            <div class="flex items-center justify-center gap-2">
+                <i class="fa-solid fa-eye"></i>
+                <span>Preview Mode - This is how your blog post will look when published</span>
+                <button onclick="window.close()" class="px-3 py-1 ml-4 transition-colors rounded bg-white/20 hover:bg-white/30">
+                    <i class="mr-1 fa-solid fa-times"></i> Close Preview
+                </button>
+            </div>
+        </div>
+        <div class="h-12"></div> {{-- Spacer for fixed banner --}}
+    @endif
+
     {{-- Breadcrumb --}}
     <x-superduper.components.breadcrumb
         title="{{ $post->title }}"

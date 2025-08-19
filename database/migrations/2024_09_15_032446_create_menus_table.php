@@ -29,7 +29,7 @@ return new class extends Migration
             $table->integer('order')->default(0);
             $table->timestamps();
 
-            $table->foreign('parent_id')->references('id')->on('menus')->onDelete('set null');
+            $table->foreign('parent_id')->references('id')->on('menu_items')->onDelete('set null');
         });
 
         Schema::create(config('filament-menu-builder.tables.menu_locations'), function (Blueprint $table) {

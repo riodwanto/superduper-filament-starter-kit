@@ -142,46 +142,62 @@
                             </ul>
                         </div>
 
-                        {{-- # TODO: Create Menu Module --}}
                         <div class="flex flex-col gap-y-6">
                             <div class="text-xl font-semibold capitalize">
                                 Resources
                             </div>
                             @php
-                                $footerOthers = Menu::location('footer-3');
+                                $footerResources = Menu::location('footer-3');
                             @endphp
                             <ul class="flex flex-col gap-y-[10px] capitalize">
-                                @if($footerOthers)
-                                    @foreach($footerOthers->menuItems as $item)
+                                @if($footerResources)
+                                    @foreach($footerResources->menuItems as $item)
                                         <li>
                                             <a href="{{ $item->url }}" @if($item->target) target="{{ $item->target }}" @endif
-                                                class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">
+                                                class="transition-all duration-300 ease-linear hover:opacity-100 underline-offset-4 opacity-80 hover:underline"
+                                                aria-label="{{ $item->title }}">
                                                 {{ $item->title }}
                                             </a>
                                         </li>
                                     @endforeach
+                                @else
+                                    <li>
+                                        <a href="{{ route('blog') }}"
+                                           class="transition-all duration-300 ease-linear hover:opacity-100 underline-offset-4 opacity-80 hover:underline"
+                                           aria-label="Blog">
+                                            Blog
+                                        </a>
+                                    </li>
                                 @endif
                             </ul>
                         </div>
 
-                        {{-- # TODO: Create Menu Module --}}
                         <div class="flex flex-col gap-y-6">
                             <div class="text-xl font-semibold capitalize">
                                 Community
                             </div>
                             @php
-                                $footerOthers = Menu::location('footer-4');
+                                $footerCommunity = Menu::location('footer-4');
                             @endphp
                             <ul class="flex flex-col gap-y-[10px] capitalize">
-                                @if($footerOthers)
-                                    @foreach($footerOthers->menuItems as $item)
+                                @if($footerCommunity)
+                                    @foreach($footerCommunity->menuItems as $item)
                                         <li>
                                             <a href="{{ $item->url }}" @if($item->target) target="{{ $item->target }}" @endif
-                                                class="transition-all duration-300 ease-linear hover:opcity-100 underline-offset-4 opacity-80 hover:underline">
+                                                class="transition-all duration-300 ease-linear hover:opacity-100 underline-offset-4 opacity-80 hover:underline"
+                                                aria-label="{{ $item->title }}">
                                                 {{ $item->title }}
                                             </a>
                                         </li>
                                     @endforeach
+                                @else
+                                    <li>
+                                        <a href="{{ route('contact-us') }}"
+                                           class="transition-all duration-300 ease-linear hover:opacity-100 underline-offset-4 opacity-80 hover:underline"
+                                           aria-label="Contact Us">
+                                            Contact Us
+                                        </a>
+                                    </li>
                                 @endif
                             </ul>
                         </div>

@@ -1,5 +1,5 @@
 @php
-    $heroBanners = \App\Models\Banner\Content::whereHas('category', function($query) {
+    $banners = \App\Models\Banner\Content::whereHas('category', function($query) {
             $query->where('slug', 'home-banner');
         })
         ->active()
@@ -9,74 +9,66 @@
         ->get();
 @endphp
 
-<section class="section-hero">
+<section title="" class="w-full">
     <div class="relative z-10 overflow-hidden">
-        <div class="pb-[60px] pt-28 md:pb-20 md:pt-36 lg:pb-[100px] lg:pt-[150px] xxl:pb-[120px] xxl:pt-[185px]">
-            <div class="container-default">
 
-                @if($heroBanners->isNotEmpty())
+        @if($banners->isNotEmpty())
 
-                    <div class="swiper hero-slider">
-                        <div class="swiper-wrapper">
-                            @foreach($heroBanners as $banner)
-                                <div class="swiper-slide" data-banner-id="{{ $banner->id }}">
-                                    <div class="grid gap-10 items-center lg:grid-cols-2 lg:gap-[74px] xxl:grid-cols-[1fr_minmax(0,_0.8fr)]">
-                                        <!-- Hero Content Block -->
-                                        <div class="text-center jos xl:text-left" data-jos_animation="fade-left">
-                                            <h1 class="mb-6 font-ClashDisplay font-medium leading-[1.06] lg:text-[60px] text-color-oil xl:text-7xl xxl:text-[90px]">
-                                                {{ $banner->title }}
-                                            </h1>
-                                            <p class="mb-8 text-color-oil lg:mb-[50px]">
-                                                {!! nl2br(e($banner->description)) !!}
-                                            </p>
+            <div class="h-[667px] swiper hero-slider">
+                <div class="swiper-wrapper">
+                    @foreach($banners as $banner)
+                        <div class="swiper-slide" data-banner-id="{{ $banner->id }}">
 
-                                            @if($banner->click_url)
-                                                <div class="flex flex-wrap justify-center gap-6 xl:justify-start">
-                                                    <a href="{{ $banner->click_url }}"
-                                                       target="{{ $banner->click_url_target ?? '_self' }}"
-                                                       class="inline-block btn is-outline-denim is-transparent is-large is-rounded btn-animation group banner-click-tracking"
-                                                       onclick="trackBannerClick('{{ $banner->id }}')">
-                                                        <span>{{ $banner->options['button_text'] ?? 'Learn More' }}</span>
-                                                    </a>
-                                                </div>
-                                            @endif
+                            <div class="absolute top-0 left-0 w-full h-full mx-auto jos lg:mx-0" data-jos_animation="fade-right">
+                                @if($banner->hasImage())
+                                    <img src="{{ $banner->getImageUrl('large') }}"
+                                            srcset="{{ $banner->getImageUrl('medium') }} 768w, {{ $banner->getImageUrl('large') }} 1200w"
+                                            alt="{{ $banner->title }}"
+                                            loading="{{ $loop->first ? 'eager' : 'lazy' }}"
+                                            class="object-cover object-center w-full h-full banner-image" />
+                                @else
+                                    <img src="https://placehold.co/200x527"
+                                            alt="Placeholder Image"
+                                            loading="{{ $loop->first ? 'eager' : 'lazy' }}"
+                                            class="object-cover object-center w-full h-full" />
+                                @endif
+                            </div>
+
+                            <div class="flex items-center justify-start w-full h-full gap-10 c-container">
+                                <div class="absolute top-0 left-0 w-full h-full mx-auto opacity-50 bg-gradient-to-r from-white via-white to-transparent jos lg:mx-0" data-jos_animation="fade-right"></div>
+
+                                <div class="z-20 text-center jos xl:text-left" data-jos_animation="fade-left">
+                                    <h1 class="max-w-lg mb-6 text-4xl font-bold leading-snug">
+                                        {{ $banner->title }}
+                                    </h1>
+                                    <p class="max-w-md mb-8 text-base text-gray-800">
+                                        {!! nl2br(e($banner->description)) !!}
+                                    </p>
+
+                                    @if($banner->click_url)
+                                        <div class="flex flex-wrap justify-center gap-6 xl:justify-start">
+                                            <a href="{{ $banner->click_url }}"
+                                                target="{{ $banner->click_url_target ?? '_self' }}"
+                                                class="px-10 py-2 text-base font-bold transition-all duration-300 ease-in-out transform bg-white border-2 rounded-full text-primary-600 border-primary-600 bg-gradient-to-r from-btn-gradient-secondary-start via-btn-gradient-secondary-middle to-btn-gradient-secondary-end hover:scale-105 hover:shadow-xl hover:bg-primary-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-primary-300"
+                                                onclick="trackBannerClick('{{ $banner->id }}')">
+                                                <span>{{ $banner->options['button_text'] ?? 'Contact Us' }}</span>
+                                            </a>
                                         </div>
-                                        <!-- Hero Content Block -->
-
-                                        <!-- Hero Image Block -->
-                                        <div class="jos mx-auto lg:mx-0 max-w-full sm:max-w-[80%] md:max-w-[70%] lg:max-w-full" data-jos_animation="fade-right">
-                                            @if($banner->hasImage())
-                                                <img src="{{ $banner->getImageUrl('large') }}"
-                                                     srcset="{{ $banner->getImageUrl('medium') }} 768w, {{ $banner->getImageUrl('large') }} 1200w"
-                                                     alt="{{ $banner->title }}"
-                                                     width="526"
-                                                     height="527"
-                                                     loading="{{ $loop->first ? 'eager' : 'lazy' }}"
-                                                     class="w-full h-auto banner-image" />
-                                            @else
-                                                <img src="https://placehold.co/526x527"
-                                                     alt="Placeholder Image"
-                                                     width="526"
-                                                     height="527"
-                                                     loading="{{ $loop->first ? 'eager' : 'lazy' }}"
-                                                     class="w-full h-auto banner-image" />
-                                            @endif
-                                        </div>
-                                        <!-- Hero Image Block -->
-                                    </div>
+                                    @endif
                                 </div>
-                            @endforeach
+
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
+                </div>
 
-                    @if($heroBanners->count() > 1)
-                        <div class="mb-16 swiper-pagination hero-slider-pagination"></div>
-                    @endif
-
+                @if($banners->count() > 1)
+                    <div class="swiper-pagination hero-banner-slider-pagination"></div>
                 @endif
-
             </div>
-        </div>
+
+        @endif
+
     </div>
 </section>
 
@@ -85,11 +77,11 @@
     const heroSlider = new Swiper('.hero-slider', {
         slidesPerView: 1,
         spaceBetween: 0,
-        loop: {{ $heroBanners->count() > 1 ? 'true' : 'false' }},
-        autoplay: {
-            delay: 2500,
-            disableOnInteraction: false,
-        },
+        loop: {{ $banners->count() > 1 ? 'true' : 'false' }},
+        // autoplay: {
+        //     delay: 2500,
+        //     disableOnInteraction: false,
+        // },
         effect: 'fade',
         fadeEffect: {
             crossFade: true
@@ -97,7 +89,7 @@
         speed: 1000,
         navigation: false,
         pagination: {
-            el: '.hero-slider-pagination',
+            el: '.hero-banner-slider-pagination',
             clickable: true,
         },
         on: {

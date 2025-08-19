@@ -372,7 +372,7 @@ class ManageMail extends SettingsPage
                                             ->columnSpan(2),
                                         Forms\Components\Textarea::make('footer_text')
                                             ->label('Email Footer Text')
-                                            ->default('© ' . date('Y') . ' SuperDuper Starter. All rights reserved.')
+                                            ->default('© ' . date('Y') . ' SuperDuper Starter Kit. All rights reserved.')
                                             ->rows(2)
                                             ->columnSpan(2),
                                     ])
@@ -388,7 +388,7 @@ class ManageMail extends SettingsPage
                                                     'secondary-color' => $get('secondary_color') ?? '#FFC903',
                                                     'logo-path' => $get('logo_path'),
                                                     'theme-name' => $get('template_theme') ?? 'default',
-                                                    'footer-text' => $get('footer_text') ?? ('© ' . date('Y') . ' SuperDuper Starter. All rights reserved.'),
+                                                    'footer-text' => $get('footer_text') ?? ('© ' . date('Y') . ' SuperDuper Starter Kit. All rights reserved.'),
                                                 ];
                                             })
                                             ->columnSpan('full'),
@@ -437,9 +437,9 @@ class ManageMail extends SettingsPage
     {
         $stringDefaults = [
             'logo_path' => 'sites/email-logo.png',
-            'reply_to_address' => $data['from_address'] ?? 'noreply@superduperstarter.com',
-            'reply_to_name' => $data['from_name'] ?? 'SuperDuper Filament Starter',
-            'footer_text' => '© ' . date('Y') . ' SuperDuper Starter. All rights reserved.',
+            'reply_to_address' => $data['from_address'] ?? 'noreply@superduperstarterkit.com',
+            'reply_to_name' => $data['from_name'] ?? 'SuperDuper Starter Kit',
+            'footer_text' => '© ' . date('Y') . ' SuperDuper Starter Kit. All rights reserved.',
             'template_theme' => 'default',
             'primary_color' => '#2D2B8D',
             'secondary_color' => '#FFC903',
@@ -522,13 +522,13 @@ class ManageMail extends SettingsPage
             }
 
             $mailData = [
-                'title' => 'Email Testing from SuperDuper Filament Starter',
+                'title' => 'Email Testing from SuperDuper Starter Kit',
                 'body' => 'This is a test email to verify your email configuration settings are working correctly.',
                 'theme' => [
                     'logo' => $data['logo_path'] ?? 'sites/logo.png',
                     'primaryColor' => $data['primary_color'] ?? '#2D2B8D',
                     'secondaryColor' => $data['secondary_color'] ?? '#FFC903',
-                    'footer' => $data['footer_text'] ?? ('© ' . date('Y') . ' SuperDuper Starter. All rights reserved.'),
+                    'footer' => $data['footer_text'] ?? ('© ' . date('Y') . ' SuperDuper Starter Kit. All rights reserved.'),
                     'theme' => $data['template_theme'] ?? 'default',
                 ],
                 'include_sample_attachment' => $data['include_sample_attachment'] ?? false,

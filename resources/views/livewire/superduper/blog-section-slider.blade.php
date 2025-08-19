@@ -209,6 +209,14 @@
     transition: none !important;
 }
 
+@media (max-width: 639px) {
+    /* Hide navigation arrows on mobile - users can swipe */
+    .articles-slider-prev,
+    .articles-slider-next {
+        display: none;
+    }
+}
+
 @media (min-width: 1024px) {
     .articles-slider .swiper-slide {
         width: calc((100% - 48px) / 3) !important;

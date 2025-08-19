@@ -131,54 +131,73 @@
                                 </p>
                             </div>
 
-                            <form wire:submit.prevent="submit" class="flex flex-col gap-4">
-                                <!-- First name and Last name -->
-                                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                    <div>
-                                        <label for="firstname" class="block mb-1 text-sm font-medium text-gray-700">First name</label>
-                                        <input type="text" wire:model.blur="firstname" id="firstname"
-                                            placeholder="John"
-                                            class="w-full px-4 py-2 bg-background-light rounded-md placeholder:text-gray-400 focus:outline-none transition-all
-                                            @error('firstname')
-                                                border border-error focus:border-error focus:ring-1 focus:ring-error/20
-                                            @else
-                                                border border-gray-300 focus:border-primary-600 focus:ring-1 focus:ring-primary-600
-                                            @enderror" />
-                                        @error('firstname')
-                                            <span class="block mt-1 text-sm text-error">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div>
-                                        <label for="lastname" class="block mb-1 text-sm font-medium text-gray-700">Last name</label>
-                                        <input type="text" wire:model.blur="lastname" id="lastname"
-                                            placeholder="Doe"
-                                            class="w-full px-4 py-2 bg-background-light rounded-md placeholder:text-gray-400 focus:outline-none transition-all
-                                            @error('lastname')
-                                                border border-error focus:border-error focus:ring-1 focus:ring-error/20
-                                            @else
-                                                border border-gray-300 focus:border-primary-600 focus:ring-1 focus:ring-primary-600
-                                            @enderror" />
-                                        @error('lastname')
-                                            <span class="block mt-1 text-sm text-error">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
+                            <form wire:submit.prevent="submit" class="flex flex-col gap-4" novalidate>
+                                <fieldset>
+                                    <legend class="sr-only">Contact Information</legend>
 
-                                <!-- Email address -->
-                                <div>
-                                    <label for="email" class="block mb-1 text-sm font-medium text-gray-700">Email address</label>
-                                    <input type="email" wire:model.blur="email" id="email"
-                                        placeholder="your@email.com"
-                                        class="w-full px-4 py-2 bg-background-light rounded-md placeholder:text-gray-400 focus:outline-none transition-all
+                                    <!-- First name and Last name -->
+                                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                        <div>
+                                            <label for="firstname" class="block mb-1 text-sm font-medium text-gray-700">
+                                                First name <span class="text-error" aria-label="required">*</span>
+                                            </label>
+                                            <input type="text" wire:model.blur="firstname" id="firstname"
+                                                placeholder="John"
+                                                required
+                                                aria-describedby="@error('firstname') firstname-error @enderror"
+                                                aria-invalid="@error('firstname') true @else false @enderror"
+                                                class="w-full px-4 py-2 bg-background-light rounded-md placeholder:text-gray-400 focus:outline-none transition-all
+                                                @error('firstname')
+                                                    border border-error focus:border-error focus:ring-1 focus:ring-error/20
+                                                @else
+                                                    border border-gray-300 focus:border-primary-600 focus:ring-1 focus:ring-primary-600
+                                                @enderror" />
+                                            @error('firstname')
+                                                <span id="firstname-error" class="block mt-1 text-sm text-error" role="alert">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div>
+                                            <label for="lastname" class="block mb-1 text-sm font-medium text-gray-700">
+                                                Last name <span class="text-error" aria-label="required">*</span>
+                                            </label>
+                                            <input type="text" wire:model.blur="lastname" id="lastname"
+                                                placeholder="Doe"
+                                                required
+                                                aria-describedby="@error('lastname') lastname-error @enderror"
+                                                aria-invalid="@error('lastname') true @else false @enderror"
+                                                class="w-full px-4 py-2 bg-background-light rounded-md placeholder:text-gray-400 focus:outline-none transition-all
+                                                @error('lastname')
+                                                    border border-error focus:border-error focus:ring-1 focus:ring-error/20
+                                                @else
+                                                    border border-gray-300 focus:border-primary-600 focus:ring-1 focus:ring-primary-600
+                                                @enderror" />
+                                            @error('lastname')
+                                                <span id="lastname-error" class="block mt-1 text-sm text-error" role="alert">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Email address -->
+                                    <div>
+                                        <label for="email" class="block mb-1 text-sm font-medium text-gray-700">
+                                            Email address <span class="text-error" aria-label="required">*</span>
+                                        </label>
+                                        <input type="email" wire:model.blur="email" id="email"
+                                            placeholder="your@email.com"
+                                            required
+                                            aria-describedby="@error('email') email-error @enderror"
+                                            aria-invalid="@error('email') true @else false @enderror"
+                                            class="w-full px-4 py-2 bg-background-light rounded-md placeholder:text-gray-400 focus:outline-none transition-all
+                                            @error('email')
+                                                border border-error focus:border-error focus:ring-1 focus:ring-error/20
+                                            @else
+                                                border border-gray-300 focus:border-primary-600 focus:ring-1 focus:ring-primary-600
+                                            @enderror" />
                                         @error('email')
-                                            border border-error focus:border-error focus:ring-1 focus:ring-error/20
-                                        @else
-                                            border border-gray-300 focus:border-primary-600 focus:ring-1 focus:ring-primary-600
-                                        @enderror" />
-                                    @error('email')
-                                        <span class="block mt-1 text-sm text-error">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                            <span id="email-error" class="block mt-1 text-sm text-error" role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </fieldset>
 
                                 <!-- Phone number -->
                                 <div>
@@ -226,18 +245,24 @@
 
                                 <!-- Message -->
                                 <div>
-                                    <label for="message" class="block mb-1 text-sm font-medium text-gray-700">Message</label>
+                                    <label for="message" class="block mb-1 text-sm font-medium text-gray-700">
+                                        Message <span class="text-error" aria-label="required">*</span>
+                                    </label>
                                     <textarea wire:model.blur="message" id="message"
                                         placeholder="Write your message here..."
                                         rows="5"
+                                        required
+                                        aria-describedby="@error('message') message-error @enderror message-help"
+                                        aria-invalid="@error('message') true @else false @enderror"
                                         class="w-full px-4 py-2 bg-background-light rounded-md placeholder:text-gray-400 focus:outline-none transition-all
                                         @error('message')
                                             border border-error focus:border-error focus:ring-1 focus:ring-error/20
                                         @else
                                             border border-gray-300 focus:border-primary-600 focus:ring-1 focus:ring-primary-600
                                         @enderror"></textarea>
+                                    <div id="message-help" class="mt-1 text-xs text-gray-500">Please provide details about your inquiry</div>
                                     @error('message')
-                                        <span class="block mt-1 text-sm text-error">{{ $message }}</span>
+                                        <span id="message-error" class="block mt-1 text-sm text-error" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -247,7 +272,8 @@
                                         class="relative w-full px-6 py-3 font-medium text-white transition-colors duration-200 rounded-md bg-primary-800 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2"
                                         wire:loading.attr="disabled"
                                         wire:loading.class="cursor-wait opacity-90"
-                                        wire:target="submit">
+                                        wire:target="submit"
+                                        aria-describedby="submit-help">
 
                                         <!-- Normal state -->
                                         <span wire:loading.remove wire:target="submit">
@@ -256,12 +282,16 @@
 
                                         <!-- Loading state -->
                                         <span wire:loading wire:target="submit" class="inline-flex items-center justify-center">
-                                            <svg class="w-5 h-5 mr-2 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <svg class="w-5 h-5 mr-2 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
+                                            <span class="sr-only">Sending message...</span>
                                         </span>
                                     </button>
+                                    <div id="submit-help" class="mt-2 text-xs text-gray-500">
+                                        <span class="text-error">*</span> Required fields
+                                    </div>
                                 </div>
                                 <div aria-hidden="true" style="position:absolute; left:-9999px;"><input type="text" wire:model="company_website" name="company_website" tabindex="-1" autocomplete="off"></div>
                             </form>

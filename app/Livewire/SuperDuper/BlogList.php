@@ -215,8 +215,12 @@ class BlogList extends Component
 
         return view('livewire.superduper.blog-list', [
             'posts' => $posts,
-        ])->layout(
-            'components.superduper.main',
-        );
+        ])->layout('components.superduper.main', [
+            'page_type' => 'blog',
+            'categoryName' => 'Blog',
+            'pageTitle' => 'Blog',
+            'pageDescription' => 'Discover our latest insights, tips, and updates...',
+            'metaKeywords' => 'blog, articles, insights, technology news'
+        ]);
     }
 }

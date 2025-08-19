@@ -34,18 +34,42 @@ class BlogDetails extends Component
 
     protected function loadPost()
     {
-        $this->post = Post::with([
-            'category',
-            'author',
-            'tags',
-            'media'
-        ])
-        ->where('slug', $this->slug)
-        ->published()
-        ->firstOrFail();
+        // Check if this is a preview request
+        $isPreview = request()->has('preview') && request()->has('token');
 
-        // Track view
-        $this->post->trackView();
+        if ($isPreview) {
+            // Load post without published restriction for preview
+            $this->post = Post::with([
+                'category',
+                'author',
+                'tags',
+                'media'
+            ])
+            ->where('slug', $this->slug)
+            ->firstOrFail();
+
+            // Verify preview token
+            $expectedToken = hash('sha256', $this->post->id . config('app.key'));
+            if (request('token') !== $expectedToken) {
+                abort(403, 'Invalid preview token');
+            }
+
+            // Don't track views for preview
+        } else {
+            // Normal published post loading
+            $this->post = Post::with([
+                'category',
+                'author',
+                'tags',
+                'media'
+            ])
+            ->where('slug', $this->slug)
+            ->published()
+            ->firstOrFail();
+
+            // Track view for published posts only
+            $this->post->trackView();
+        }
 
         // Load related/navigation posts
         $this->relatedPosts = $this->post->getRelatedPosts(3);
@@ -177,6 +201,30 @@ class BlogDetails extends Component
 
     public function render()
     {
-        return view('livewire.superduper.blog-details')->layout('components.superduper.main');
+        return view('livewire.superduper.blog-details', [
+            'post' => $this->post,
+            'previousPost' => $this->previousPost,
+            'nextPost' => $this->nextPost,
+            'relatedPosts' => $this->relatedPosts,
+            'recentPosts' => $this->recentPosts,
+            'categories' => $this->categories,
+            'popularTags' => $this->popularTags,
+            'schemaData' => $this->generateSchemaData(),
+            'isPreview' => $this->isPreview,
+        ])->layout('components.superduper.main', [
+            'pageType' => 'blog_post',
+            'postTitle' => $this->post->title,
+            'postCategory' => $this->post->category->name ?? '',
+            'authorName' => $this->post->author->name ?? '',
+            'publishDate' => $this->post->published_at,
+            'pageDescription' => $this->post->meta_description ?: $this->post->content_overview,
+            'metaKeywords' => $this->post->tags->count() > 0
+                ? $this->post->tags->pluck('name')->implode(', ')
+                : '',
+            'canonicalUrl' => $this->post->getCanonicalUrl(),
+            'ogImage' => $this->post->hasFeaturedImage()
+                ? $this->post->getFeaturedImageUrl('large')
+                : null,
+        ]);
     }
 }

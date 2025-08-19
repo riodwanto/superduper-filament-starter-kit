@@ -4,14 +4,14 @@
         secondaryColor: @js($attributes->get('secondary-color', '#FFC903')),
         logoPath: @js($attributes->get('logo-path')),
         themeName: @js($attributes->get('theme-name', 'default')),
-        footerText: @js($attributes->get('footer-text', '© ' . date('Y') . ' SuperDuper Starter. All rights reserved.')),
+        footerText: @js($attributes->get('footer-text', '© ' . date('Y') . ' SuperDuper Filament Starter. All rights reserved.')),
     }"
     x-init="
         $watch('$store.form.data.primary_color', value => { primaryColor = value || '#2D2B8D' });
         $watch('$store.form.data.secondary_color', value => { secondaryColor = value || '#FFC903' });
         $watch('$store.form.data.logo_path', value => { logoPath = value });
         $watch('$store.form.data.template_theme', value => { themeName = value || 'default' });
-        $watch('$store.form.data.footer_text', value => { footerText = value || '© ' + new Date().getFullYear() + ' SuperDuper Starter. All rights reserved.' });
+        $watch('$store.form.data.footer_text', value => { footerText = value || '© ' + new Date().getFullYear() + ' SuperDuper Filament Starter. All rights reserved.' });
     "
 >
     <div class="p-4 overflow-hidden border border-gray-200 rounded-lg bg-gray-50">
@@ -23,7 +23,7 @@
                     </div>
                 </template>
                 <template x-if="!logoPath">
-                    <div class="text-xl font-bold">SuperDuper Starter</div>
+                    <div class="text-xl font-bold">SuperDuper Filament Starter</div>
                 </template>
             </div>
         </div>
