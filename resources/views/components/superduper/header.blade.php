@@ -1,8 +1,8 @@
-<header class="fixed z-50 w-full py-4 transition-all duration-300 bg-transparent md:py-6">
+<header class="fixed z-50 w-full py-4 transition-all duration-300 bg-transparent md:py-6" role="banner">
     <div class="px-4 mx-auto container-default">
         <div class="flex items-center justify-between gap-x-4 md:gap-x-8">
             <!-- Header Logo -->
-            <a href="{{ route('home') }}" class="relative z-10 flex-shrink-0">
+            <a href="{{ route('home') }}" class="relative z-10 flex-shrink-0" aria-label="Go to homepage">
                 @php
                     $brandLogo = $siteSettings->logo ?? null;
                     $brandName = $generalSettings->brand_name ?? $siteSettings->name ?? config('app.name', 'SuperDuper');
@@ -10,7 +10,7 @@
 
                 @if($brandLogo)
                     <img src="{{ Storage::url($brandLogo) }}"
-                         alt="{{ $brandName }}"
+                         alt="{{ $brandName }} logo"
                          class="w-auto h-10 md:h-12"
                     />
                 @else
@@ -22,18 +22,25 @@
 
             <!-- Header Navigation -->
             <div class="menu-block-wrapper lg:static">
-                <div class="fixed inset-0 z-40 menu-overlay bg-primary-900/70 backdrop-blur-sm lg:hidden" style="display: none;"></div>
-                <nav class="menu-block fixed top-0 right-0 bottom-0 w-[280px] text-secondary-600 md:w-[320px] bg-primary-600 dark:bg-primary-800 z-50 shadow-2xl overflow-y-auto transform translate-x-full transition-transform duration-300 lg:static lg:translate-x-0 lg:w-auto lg:bg-transparent lg:shadow-none lg:overflow-visible lg:dark:bg-transparent" id="append-menu-header">
+                <div class="fixed inset-0 z-40 menu-overlay bg-primary-900/70 backdrop-blur-sm lg:hidden" style="display: none;" aria-hidden="true"></div>
+                <nav class="menu-block fixed top-0 right-0 bottom-0 w-[280px] text-secondary-600 md:w-[320px] bg-primary-600 dark:bg-primary-800 z-50 shadow-2xl overflow-y-auto transform translate-x-full transition-transform duration-300 lg:static lg:translate-x-0 lg:w-auto lg:bg-transparent lg:shadow-none lg:overflow-visible lg:dark:bg-transparent"
+                     id="append-menu-header"
+                     role="navigation"
+                     aria-label="Main navigation">
                     <!-- Mobile Menu Header -->
                     <div class="flex items-center justify-between p-4 lg:hidden">
-                        <div class="flex items-center go-back text-primary-800 dark:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <button class="flex items-center go-back text-primary-800 dark:text-white"
+                                aria-label="Go back to previous menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                             </svg>
                             <span>Back</span>
-                        </div>
-                        <div class="font-medium current-menu-title text-primary-800 dark:text-white"></div>
-                        <div class="text-2xl cursor-pointer mobile-menu-close text-primary-800 dark:text-white">&times;</div>
+                        </button>
+                        <div class="font-medium current-menu-title text-primary-800 dark:text-white" aria-live="polite"></div>
+                        <button class="text-2xl cursor-pointer mobile-menu-close text-primary-800 dark:text-white"
+                                aria-label="Close navigation menu">
+                            &times;
+                        </button>
                     </div>
 
                     @php
@@ -123,10 +130,14 @@
                 </a>
 
                 <div class="block lg:hidden">
-                    <button id="openBtn" class="flex flex-col items-center justify-center w-10 h-10 rounded-md hamburger-menu mobile-menu-trigger focus:outline-none focus:ring-2 focus:ring-primary-600">
-                        <span class="block w-6 h-0.5 bg-white dark:bg-white mb-1.5 transition-transform hamburger-line"></span>
-                        <span class="block w-6 h-0.5 bg-white dark:bg-white mb-1.5 transition-opacity hamburger-line"></span>
-                        <span class="block w-6 h-0.5 bg-white dark:bg-white transition-transform hamburger-line"></span>
+                    <button id="openBtn"
+                            class="flex flex-col items-center justify-center w-10 h-10 rounded-md hamburger-menu mobile-menu-trigger focus:outline-none focus:ring-2 focus:ring-primary-600"
+                            aria-label="Open navigation menu"
+                            aria-expanded="false"
+                            aria-controls="append-menu-header">
+                        <span class="block w-6 h-0.5 bg-white dark:bg-white mb-1.5 transition-transform hamburger-line" aria-hidden="true"></span>
+                        <span class="block w-6 h-0.5 bg-white dark:bg-white mb-1.5 transition-opacity hamburger-line" aria-hidden="true"></span>
+                        <span class="block w-6 h-0.5 bg-white dark:bg-white transition-transform hamburger-line" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
