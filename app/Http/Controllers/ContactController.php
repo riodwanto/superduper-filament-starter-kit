@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
-    // TODO
-    // - Multi Language for success & error
-
     /**
      * Handle the contact form submission.
      *
@@ -34,7 +31,7 @@ class ContactController extends Controller
                 'company' => $validated['company'] ?? null,
                 'employees' => $validated['employees'] ?? null,
                 'title' => $validated['title'] ?? null,
-                'subject' => $validated['subject'] ?? 'Contact Inquiry',
+                'subject' => $validated['subject'] ?? __('contact.default_subject'),
                 'message' => $validated['message'],
                 'status' => 'new',
                 'ip_address' => $request->ip(),
@@ -56,7 +53,7 @@ class ContactController extends Controller
                 'email' => $contact->email
             ]);
 
-            return back()->with('success', 'Your message has been sent successfully. We will get back to you soon!');
+            return back()->with('success', __('contact.success_message'));
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -65,7 +62,7 @@ class ContactController extends Controller
                 'trace' => $e->getTraceAsString()
             ]);
 
-            return back()->withInput()->with('error', 'Something went wrong. Please try again later.');
+            return back()->withInput()->with('error', __('contact.error_message'));
         }
     }
 }
