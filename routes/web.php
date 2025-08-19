@@ -47,11 +47,6 @@ Route::get('/coming-soon', function () {
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])
     ->name('contact.submit');
 
-// TODO: Create actual blog preview component
-Route::post('/blog-preview', function() {
-    // Implementation pending
-})->name('blog.preview');
-
 Route::get('impersonate/leave', function() {
     if(!app(ImpersonateManager::class)->isImpersonating()) {
         return redirect('/');
@@ -63,4 +58,8 @@ Route::get('impersonate/leave', function() {
         session()->pull('impersonate.back_to')
     );
 })->name('impersonate.leave')->middleware('web');
+
+// SEO Routes
+Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+Route::get('/robots.txt', [App\Http\Controllers\SitemapController::class, 'robots'])->name('robots');
 
