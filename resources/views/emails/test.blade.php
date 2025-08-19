@@ -256,9 +256,9 @@
                     <div class="header">
                         <div class="logo">
                             @if(isset($theme['logo']) && $theme['logo'])
-                                <img src="{{ asset('storage/' . $theme['logo']) }}?t={{ time() }}" alt="SuperDuper Starter" />
+                                <img src="{{ asset('storage/' . $theme['logo']) }}?t={{ time() }}" alt="SuperDuper Filament Starter" />
                             @else
-                                <div style="font-size: 28px; color: {{ $currentTheme == 'minimal' ? ($theme['primaryColor'] ?? '#2D2B8D') : 'white' }}; font-weight: bold;">SuperDuper Starter</div>
+                                <div style="font-size: 28px; color: {{ $currentTheme == 'minimal' ? ($theme['primaryColor'] ?? '#2D2B8D') : 'white' }}; font-weight: bold;">SuperDuper Filament Starter</div>
                             @endif
                         </div>
                     </div>
@@ -284,7 +284,7 @@
                                 <li>The "{{ ucfirst($currentTheme) }}" theme is being displayed correctly</li>
                             </ul>
 
-                            <a href="{{ url('/admin/settings/manage-mail') }}" class="button">Return to Mail Settings</a>
+                            <a href="{{ url('/admin/manage-mail') }}" class="button">Return to Mail Settings</a>
                         </div>
 
                         <div class="disclaimer">
@@ -293,7 +293,7 @@
                     </div>
 
                     <div class="footer">
-                        <p>{{ $footerText ?? ('© ' . date('Y') . ' SuperDuper Starter. All rights reserved.') }}</p>
+                        <p>{{ $footerText ?? ('© ' . date('Y') . ' SuperDuper Filament Starter. All rights reserved.') }}</p>
                     </div>
                 </div>
             </td>

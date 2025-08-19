@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+::before,
+::after {
+
+}
+
 :root {
   /* Primary Colors */
   --color-primary-50: #EEEEFB;
@@ -41,7 +47,7 @@
 }
 
 .header-scrolled {
-    @apply bg-primary-600 dark:bg-primary-900 shadow-md py-3 md:py-4;
+    @apply bg-white dark:bg-primary-900 shadow-md py-3 md:py-4;
 }
 
 .header-scrolled .header-nav-link {
@@ -90,6 +96,34 @@
     }
 
     .menu-block .sub-menu {
-        @apply bg-background-light dark:bg-primary-700 rounded-md;
+        @apply bg-gray-100 dark:bg-primary-700 rounded-md;
     }
+}
+
+/* SwiperJs */
+.hero-banner-slider-pagination {
+    @apply xl:flex xl:items-center xl:absolute xl:!bottom-32 xl:!left-36 xl:z-30;
+}
+
+.hero-banner-slider-pagination .swiper-pagination-bullet {
+    @apply bg-gray-600 bg-opacity-50 w-2 h-2 rounded-full opacity-100 transition-all ease-in-out duration-300;
+}
+
+.hero-banner-slider-pagination .swiper-pagination-bullet-active {
+	@apply bg-primary-600 w-8 h-2 rounded-full transition-all ease-in-out duration-300;
+}
+
+
+/* Testimoni Swiper */
+.testimonials-slider-pagination .swiper-pagination-bullet {
+    @apply bg-primary-200 bg-opacity-50 w-2 h-2 rounded-full opacity-100 transition-all ease-in-out duration-300;
+}
+
+.testimonials-slider-pagination .swiper-pagination-bullet-active {
+    @apply bg-primary-600 w-6 h-2 rounded-full transition-all ease-in-out duration-300;
+}
+
+/* Global */
+.c-container {
+    @apply px-8 md:px-24 xl:px-36;
 }

@@ -1,14 +1,52 @@
+@props([
+    // === Core Page Props ===
+    'pageType' => 'standard',          // Maps to $page_type in your switch statement
+    'pageTitle' => '',                 // Used in default case and meta tags
+    'pageDescription' => '',           // Used in description meta tags
+    'metaKeywords' => '',              // Used in keywords meta tag
+
+    // === Blog Post Props ===
+    'postTitle' => '',                 // For blog_post page type
+    'postCategory' => '',              // For blog_post page type
+    'authorName' => '',                // For blog_post and author page types
+    'publishDate' => null,             // For blog_post page type
+
+    // === Product Props ===
+    'productName' => '',               // For product page type
+    'productCategory' => '',           // For product page type
+    'productBrand' => '',              // For product page type
+    'productPrice' => '',              // For product page type
+
+    // === Category Props ===
+    'categoryName' => '',              // For category page type
+    'parentCategory' => '',            // For category page type
+    'productsCount' => '',             // For category page type
+
+    // === Search Props ===
+    'searchTerm' => '',                // For search page type
+    'resultsCount' => '',              // For search page type
+
+    // === Author Props ===
+    'postCount' => '',                 // For author page type
+
+    // === Optional SEO Props ===
+    'canonicalUrl' => null,            // Override canonical URL
+    'ogImage' => null,                 // Override OG image
+    'twitterImage' => null,            // Override Twitter image
+    'noIndex' => false,                // Add noindex meta tag
+])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr" class="scroll-smooth">
 
 <head>
     @php
+        $page_type = $pageType;
         $favicon = $generalSettings->site_favicon;
         $brandLogo = $generalSettings->brand_logo;
         $siteName = $generalSettings->brand_name ?? $siteSettings->name ?? config('app.name', 'SuperDuper Starter Kit');
 
         $separator = $seoSettings->title_separator ?? '|';
-        $page_type = $page_type ?? 'standard';
 
         $_main_variables = [
             '{site_name}' => $siteName,
@@ -22,7 +60,7 @@
                     '{post_title}' => $postTitle ?? '',
                     '{post_category}' => $postCategory ?? '',
                     '{author_name}' => $authorName ?? '',
-                    '{publish_date}' => isset($publishDate) ? $publishDate->format('Y') : '',
+                    '{publish_date}' => $publishDate ? $publishDate->format('Y') : '',
                 ]);
                 break;
 
@@ -86,7 +124,7 @@
         }
     @endphp
 
-    @if (!$generalSettings->search_engine_indexing)
+    @if($noIndex || !$generalSettings->search_engine_indexing)
         <meta name="robots" content="noindex">
     @endif
 
@@ -96,13 +134,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="{{ $seoSettings->canonical_url ?? url()->current() }}" />
+    <link rel="canonical" href="{{ $canonicalUrl ?? $seoSettings->canonical_url ?? url()->current() }}" />
 
     <!-- SEO Meta Tags -->
     <meta name="keywords"
-        content="{{ $metaKeywords ?? $seoSettings->meta_keywords ?? 'starter kit, development, templates, components, web solutions, digital transformation' }}" />
+        content="{{ $metaKeywords ?? $seoSettings->meta_keywords ?? '' }}" />
     <meta name="description"
-        content="{{ $pageDescription ?? $seoSettings->meta_description ?? $siteSettings->description ?? 'SuperDuper Starter Kit provides everything you need to jumpstart your web project with pre-built components, layouts, and tools that enhance development efficiency and productivity.' }}">
+        content="{{ $pageDescription ?? $seoSettings->meta_description ?? $siteSettings->description ?? '' }}">
 
     <!-- Mobile Optimization Meta Tags -->
     <meta name="format-detection" content="telephone=no">
@@ -128,7 +166,7 @@
     <meta name="twitter:description"
         content="{{ $seoSettings->twitter_description ?? $pageDescription ?? $seoSettings->meta_description }}" />
     <meta name="twitter:image"
-        content="{{ $seoSettings->twitter_image ?? ($brandLogo ? Storage::url($brandLogo) : asset('storage/images/logo.png')) }}">
+        content="{{ $twitterImage ?? $seoSettings->twitter_image ?? ($brandLogo ? Storage::url($brandLogo) : asset('storage/images/logo.png')) }}">
     <meta name="twitter:url" content="{{ url()->current() }}">
 
     <!-- Open Graph (Facebook, LinkedIn) -->
@@ -139,7 +177,7 @@
         content="{{ $seoSettings->og_description ?? $pageDescription ?? $seoSettings->meta_description }}" />
     <meta property="og:url" content="{{ url()->current() }}" />
     <meta property="og:image"
-        content="{{ $seoSettings->og_image ?? ($brandLogo ? Storage::url($brandLogo) : asset('storage/images/logo.png')) }}" />
+        content="{{ $ogImage ?? $seoSettings->og_image ?? ($brandLogo ? Storage::url($brandLogo) : asset('storage/images/logo.png')) }}" />
     <meta property="og:image:width" content="1500">
     <meta property="og:image:height" content="1500">
     <meta property="og:image:type" content="image/jpeg" />

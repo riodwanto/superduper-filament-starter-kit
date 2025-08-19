@@ -8,6 +8,11 @@
   --transition-speed: 0.2s;
   --primary-rgb: 45, 43, 141; /* #2D2B8D */
   --secondary-rgb: 255, 201, 3; /* #FFC903 */
+  --gray-rgb: 195, 203, 214;        /* #C3CBD6 */
+  --success-rgb: 22, 198, 12;       /* #16C60C */
+  --danger-rgb: 215, 38, 61;        /* #D7263D */
+  --info-rgb: 59, 130, 246;         /* #3B82F6 */
+  --warning-rgb: 255, 201, 3;       /* #FFC903 */
   --primary-gradient: linear-gradient(145deg, #524ED5, #2D2B8D);
   --secondary-gradient: linear-gradient(145deg, #FFD333, #FFC903);
   --hover-gradient: linear-gradient(145deg, rgba(var(--primary-rgb), 0.08), rgba(var(--secondary-rgb), 0.08));
@@ -42,6 +47,17 @@ body {
 /* Logo */
 .fi-logo {
   @apply !h-10 transition-all duration-300 hover:scale-105;
+}
+
+.fi-sidebar-header > div[x-show] {
+    flex: 1 !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.fi-sidebar-header > div[x-show] a {
+    display: flex !important;
+    justify-content: center !important;
 }
 
 /* SIDEBAR */
@@ -89,6 +105,10 @@ body {
 
 .fi-sidebar-group {
   @apply space-y-1.5;
+}
+
+.fi-sidebar-group-items {
+    @apply gap-y-2;
 }
 
 .fi-sidebar-group-label {

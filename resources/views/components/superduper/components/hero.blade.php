@@ -7,7 +7,7 @@
             <div>
                 <div class="inline-flex items-center px-3 py-1 mb-6 text-sm text-white rounded-full bg-white/10 backdrop-blur-sm">
                     <span class="flex w-2 h-2 mr-2 rounded-full bg-emerald-400"></span>
-                    <span>Version 1.17.0 Now Available</span>
+                    <span>Version {{ env('APP_VERSION', '1.0.0') }} Now Available</span>
                 </div>
 
                 <h1 class="mb-6 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">Build your Admin Panels Faster Than Ever</h1>
