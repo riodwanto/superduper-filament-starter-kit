@@ -223,18 +223,10 @@ class EditPost extends EditRecord
             ])
                 ->label('Post Actions')
                 ->icon('heroicon-m-cog-6-tooth')
-                ->color('primary'), // Make dropdown wider
-        ];
-    }
+                ->color('primary'),
 
-    // Add view actions as a separate action group
-    protected function getActions(): array
-    {
-        return [
+            // View actions group
             Actions\ActionGroup::make([
-                Actions\ViewAction::make()
-                    ->label('View Details'),
-
                 Actions\Action::make('view_on_site')
                     ->label('View on Website')
                     ->url(fn() => $this->record->getUrl())
@@ -242,9 +234,32 @@ class EditPost extends EditRecord
                     ->visible(fn() => $this->record->status === PostStatus::PUBLISHED)
                     ->openUrlInNewTab(),
 
-                Actions\Action::make('preview')
+                Actions\Action::make('preview_seo')
+                    ->label('Preview SEO')
+                    ->icon('heroicon-o-magnifying-glass')
+                    ->color('info')
+                    ->modalHeading('SEO Preview')
+                    ->modalDescription('See how your post will appear in search engines and social media')
+                    ->modalContent(function () {
+                        $title = $this->record->meta_title ?: $this->record->title;
+                        $description = $this->record->meta_description ?: $this->record->content_overview;
+                        $url = url('/blog/' . $this->record->slug);
+                        $featuredImage = $this->record->getFirstMediaUrl('featured');
+
+                        return view('filament.modals.seo-preview', [
+                            'title' => $title,
+                            'description' => $description,
+                            'url' => $url,
+                            'featuredImage' => $featuredImage,
+                            'siteName' => config('app.name'),
+                        ]);
+                    })
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Close'),
+
+                Actions\Action::make('preview_draft')
                     ->label('Preview Draft')
-                    ->url(fn() => route('blog.preview', ['id' => $this->record->id, 'token' => hash('sha256', $this->record->id . config('app.key'))]))
+                    ->url(fn() => route('blog.show', ['slug' => $this->record->slug]) . '?preview=1&token=' . hash('sha256', $this->record->id . config('app.key')))
                     ->icon('heroicon-o-eye')
                     ->openUrlInNewTab(),
             ])
@@ -253,6 +268,7 @@ class EditPost extends EditRecord
                 ->color('gray'),
         ];
     }
+
 
     protected function getRedirectUrl(): ?string
     {
