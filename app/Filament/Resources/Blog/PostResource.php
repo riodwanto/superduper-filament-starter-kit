@@ -451,6 +451,25 @@ class PostResource extends Resource implements HasShieldPermissions
                                                 ->success()
                                                 ->send();
                                         }),
+
+                                    Forms\Components\Actions\Action::make('previewPost')
+                                        ->label('Preview Post')
+                                        ->icon('heroicon-m-eye')
+                                        ->color('info')
+                                        ->action(function (Get $get) {
+                                            $previewUrl = route('blog.preview', [
+                                                'title' => $get('title'),
+                                                'content' => $get('content_raw'),
+                                                'excerpt' => $get('content_overview'),
+                                                'meta_description' => $get('meta_description') ?: $get('content_overview'),
+                                                'slug' => $get('slug'),
+                                                'featured_image' => '', // You can add featured image URL logic here
+                                            ]);
+
+                                            return redirect()->to($previewUrl);
+                                        })
+                                        ->openUrlInNewTab()
+                                        ->visible(fn (Get $get): bool => !empty($get('title')) && !empty($get('content_raw'))),
                                 ])->columnSpanFull(),
                             ]),
                     ])
