@@ -4,9 +4,13 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\Banner\Category as BannerCategory;
+use App\Models\Banner\Content as BannerContent;
 use App\Models\Blog\Category as BlogPostCategory;
 use App\Models\Blog\Post as BlogPost;
 use App\Policies\ActivityPolicy;
+use App\Policies\Banner\CategoryPolicy as BannerCategoryPolicy;
+use App\Policies\Banner\ContentPolicy as BannerContentPolicy;
 use App\Policies\Blog\CategoryPolicy as BlogPostCategoryPolicy;
 use App\Policies\Blog\PostPolicy as BlogPostPolicy;
 use App\Policies\ExceptionPolicy;
@@ -23,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Activity::class => ActivityPolicy::class,
+        BannerCategory::class => BannerCategoryPolicy::class,
+        BannerContent::class => BannerContentPolicy::class,
         BlogPostCategory::class => BlogPostCategoryPolicy::class,
         BlogPost::class => BlogPostPolicy::class,
         Exception::class => ExceptionPolicy::class,
