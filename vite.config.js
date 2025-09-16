@@ -16,48 +16,32 @@ export default defineConfig({
         }),
     ],
     build: {
-        // Code splitting for better caching
         rollupOptions: {
             output: {
                 manualChunks: {
-                    // Separate vendor chunks for better caching
                     vendor: ['axios'],
-                    // Separate Alpine.js if used
-                    alpine: ['alpinejs'],
                 },
-                // Optimize chunk file names
+                // Cache-busting hashed filenames for production assets
                 chunkFileNames: 'assets/js/[name]-[hash].js',
                 entryFileNames: 'assets/js/[name]-[hash].js',
                 assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
             },
         },
-        // Enable CSS code splitting
-        cssCodeSplit: true,
-        // Optimize for production
-        minify: 'terser',
+        cssCodeSplit: true,  // Split CSS for better caching
+        minify: 'terser',   // Minify JavaScript in production
         terserOptions: {
             compress: {
-                drop_console: true, // Remove console.log in production
-                drop_debugger: true,
+                drop_console: true,  // Remove console logs in production
+                drop_debugger: true, // Remove debugger statements
             },
         },
-        // Generate source maps for debugging (disable in production if needed)
-        sourcemap: false,
-        // Set chunk size warning limit
-        chunkSizeWarningLimit: 1000,
+        sourcemap: false,           // Disable source maps in production
+        chunkSizeWarningLimit: 1000, // Warn if chunks exceed 1MB
     },
-    // Optimize dependencies
     optimizeDeps: {
-        include: ['axios'],
+        include: ['axios'],  // Pre-bundle axios for faster development
     },
-    // CSS optimization
     css: {
-        devSourcemap: process.env.NODE_ENV === 'development',
+        devSourcemap: process.env.NODE_ENV === 'development',  // Enable sourcemaps in development
     },
-    // Server configuration for development only
-    server: process.env.NODE_ENV === 'development' ? {
-        hmr: {
-            host: 'localhost',
-        },
-    } : {},
 });
