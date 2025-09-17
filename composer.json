@@ -34,6 +34,7 @@
         "bezhansalleh/filament-exceptions": "^2.1",
         "bezhansalleh/filament-shield": "^3.2",
         "codeat3/blade-fluentui-system-icons": "^1.32",
+        "codeat3/blade-phosphor-icons": "^2.0",
         "datlechin/filament-menu-builder": "0.7.0",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
