@@ -50,8 +50,7 @@
         "opcodesio/log-viewer": "^3.11",
         "riodwanto/filament-ace-editor": "^1.0",
         "stichoza/google-translate-php": "^5.2",
-        "tomatophp/filament-media-manager": "^1.1",
-        "z3d0x/filament-logger": "^0.7.2"
+        "tomatophp/filament-media-manager": "^1.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
