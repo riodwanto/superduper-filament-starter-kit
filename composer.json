@@ -36,6 +36,7 @@
         "codeat3/blade-fluentui-system-icons": "^1.32",
         "codeat3/blade-phosphor-icons": "^2.0",
         "datlechin/filament-menu-builder": "0.7.0",
+        "eightynine/filament-docs": "^3.0",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "filament/spatie-laravel-settings-plugin": "^3.2",
