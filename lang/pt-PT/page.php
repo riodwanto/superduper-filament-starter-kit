@@ -27,7 +27,7 @@ return [
             'gray' => 'Cinzento',
             'success' => 'Sucesso',
             'danger' => 'Perigo',
-            'info' => 'Informações',
+            'info' => 'Info',
             'warning' => 'Aviso',
         ],
     ],
