@@ -30,7 +30,7 @@ return [
     'user.status.verified_tooltip' => 'O email é verificado',
     'user.status.unverified_tooltip' => 'O e -mail não é verificado',
     'user.save_to_see_details' => 'Salvar para ver os detalhes do usuário! 😊',
-    'user.no_roles' => 'Nenhuma função atribuída',
+    'user.no_roles' => 'Não há funções atribuídas',
     'user.status_tooltip' => 'Status de verificação',
     'user.notifications.verify_sent.title' => 'Verificação de email enviada',
     'user.notifications.verify_warning' => [

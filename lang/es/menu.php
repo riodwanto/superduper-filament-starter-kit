@@ -6,6 +6,7 @@ return [
     'nav_group.banner' => 'Bandera',
     'nav_group.blog' => 'Blog',
     'nav_group.content' => 'Contenido',
+    'nav_group.documentation' => 'Documentación',
     'nav_group.sites' => 'Sitios',
     'nav_group.settings' => 'Ajustes',
     'nav_group.systems' => 'Sistemas',

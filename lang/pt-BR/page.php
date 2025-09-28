@@ -13,7 +13,7 @@ return [
             ],
             'theme' => [
                 'title' => 'Tema',
-                'description' => 'Alterar tema padrão.',
+                'description' => 'Alterar o tema padrão.',
             ],
         ],
         'fields' => [
@@ -27,7 +27,7 @@ return [
             'gray' => 'Cinza',
             'success' => 'Sucesso',
             'danger' => 'Perigo',
-            'info' => 'Informações',
+            'info' => 'Info',
             'warning' => 'Aviso',
         ],
     ],
