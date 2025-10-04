@@ -8,6 +8,9 @@ export default defineConfig({
                 "resources/css/app.css",
                 "resources/js/app.js",
                 "resources/css/filament/admin/theme.css",
+
+                // Themes
+                // ....
             ],
             refresh: [
                 ...refreshPaths,
@@ -18,30 +21,43 @@ export default defineConfig({
     build: {
         rollupOptions: {
             output: {
-                manualChunks: {
-                    vendor: ['axios'],
+                chunkFileNames: 'js/[name]-[hash].js',
+                entryFileNames: 'js/[name]-[hash].js',
+                assetFileNames: (assetInfo) => {
+                    const info = assetInfo.name.split('.');
+                    const ext = info[info.length - 1];
+                    
+                    if (ext === 'css') {
+                        return 'css/[name]-[hash].[ext]';
+                    }
+                    
+                    if (['woff', 'woff2', 'ttf', 'eot'].includes(ext)) {
+                        return 'fonts/[name]-[hash].[ext]';
+                    }
+                    
+                    if (['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'ico'].includes(ext)) {
+                        return 'images/[name]-[hash].[ext]';
+                    }
+                    
+                    return 'assets/[name]-[hash].[ext]';
                 },
-                // Cache-busting hashed filenames for production assets
-                chunkFileNames: 'assets/js/[name]-[hash].js',
-                entryFileNames: 'assets/js/[name]-[hash].js',
-                assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
             },
         },
-        cssCodeSplit: true,  // Split CSS for better caching
-        minify: 'terser',   // Minify JavaScript in production
+        cssCodeSplit: true,
+        minify: 'terser',
         terserOptions: {
             compress: {
-                drop_console: true,  // Remove console logs in production
-                drop_debugger: true, // Remove debugger statements
+                drop_console: process.env.NODE_ENV === 'production',
+                drop_debugger: process.env.NODE_ENV === 'production',
             },
         },
-        sourcemap: false,           // Disable source maps in production
-        chunkSizeWarningLimit: 1000, // Warn if chunks exceed 1MB
+        sourcemap: process.env.NODE_ENV !== 'production',
+        chunkSizeWarningLimit: 600,
     },
     optimizeDeps: {
-        include: ['axios'],  // Pre-bundle axios for faster development
+        include: ['axios'],
     },
     css: {
-        devSourcemap: process.env.NODE_ENV === 'development',  // Enable sourcemaps in development
+        devSourcemap: process.env.NODE_ENV !== 'production',
     },
 });
