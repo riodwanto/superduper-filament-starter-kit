@@ -22,8 +22,8 @@ class BlogSectionSlider extends Component
 
         // Get all active categories
         $this->categories = Category::active()
+            ->has('posts')
             ->withCount('posts')
-            ->having('posts_count', '>', 0)
             ->orderBy('name')
             ->get();
 
