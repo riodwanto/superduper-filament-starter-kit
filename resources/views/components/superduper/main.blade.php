@@ -1,280 +1,361 @@
+{{-- 
+    SuperDuper Filament Starter Kit - Main Layout
+    
+    This is the main layout wrapper for all pages. It handles:
+    - SEO meta tags generation
+    - Dynamic title formatting based on page types
+    - Schema.org structured data
+    - Asset loading (CSS/JS)
+    - Cookie consent
+    - Maintenance mode
+--}}
+
 @props([
     // === Core Page Props ===
-    'pageType' => 'standard',          // Maps to $page_type in your switch statement
-    'pageTitle' => '',                 // Used in default case and meta tags
-    'pageDescription' => '',           // Used in description meta tags
-    'metaKeywords' => '',              // Used in keywords meta tag
+    'pageType' => 'standard',          // Page type: standard|blog_post|product|category|search|author
+    'pageTitle' => null,                // Main page title
+    'pageDescription' => null,          // Page meta description
+    'metaKeywords' => null,             // SEO keywords
 
     // === Blog Post Props ===
-    'postTitle' => '',                 // For blog_post page type
-    'postCategory' => '',              // For blog_post page type
-    'authorName' => '',                // For blog_post and author page types
-    'publishDate' => null,             // For blog_post page type
+    'postTitle' => null,                // Blog post title
+    'postCategory' => null,             // Blog post category
+    'authorName' => null,               // Author name (used in blog_post and author types)
+    'publishDate' => null,              // Publication date
 
     // === Product Props ===
-    'productName' => '',               // For product page type
-    'productCategory' => '',           // For product page type
-    'productBrand' => '',              // For product page type
-    'productPrice' => '',              // For product page type
+    'productName' => null,              // Product name
+    'productCategory' => null,          // Product category
+    'productBrand' => null,             // Product brand
+    'productPrice' => null,             // Product price
 
     // === Category Props ===
-    'categoryName' => '',              // For category page type
-    'parentCategory' => '',            // For category page type
-    'productsCount' => '',             // For category page type
+    'categoryName' => null,             // Category name
+    'parentCategory' => null,           // Parent category
+    'productsCount' => null,            // Number of products in category
 
     // === Search Props ===
-    'searchTerm' => '',                // For search page type
-    'resultsCount' => '',              // For search page type
+    'searchTerm' => null,               // Search query term
+    'resultsCount' => null,             // Number of search results
 
     // === Author Props ===
-    'postCount' => '',                 // For author page type
+    'postCount' => null,                // Number of posts by author
 
-    // === Optional SEO Props ===
-    'canonicalUrl' => null,            // Override canonical URL
-    'ogImage' => null,                 // Override OG image
-    'twitterImage' => null,            // Override Twitter image
-    'noIndex' => false,                // Add noindex meta tag
+    // === SEO Override Props ===
+    'canonicalUrl' => null,             // Custom canonical URL
+    'ogImage' => null,                  // Custom Open Graph image
+    'twitterImage' => null,             // Custom Twitter Card image
+    'noIndex' => false,                 // Set to true to prevent indexing
 ])
+
+@php
+    //==========================================================================
+    // INITIALIZATION SECTION
+    //==========================================================================
+    $page_type = $pageType;
+    $favicon = $generalSettings->site_favicon ?? null;
+    $brandLogo = $generalSettings->brand_logo ?? null;
+    $siteName = $generalSettings->brand_name 
+        ?? $siteSettings->name 
+        ?? config('app.name', 'SuperDuper Starter Kit');
+    
+    //==========================================================================
+    // TITLE GENERATION SECTION
+    //==========================================================================
+    $separator = $seoSettings->title_separator ?? '|';
+    
+    // Base variables available to all title formats
+    $_main_variables = [
+        '{site_name}' => $siteName,
+        '{separator}' => $separator,
+    ];
+    
+    // Define title formats and variables based on page type
+    $titleConfig = match($page_type) {
+        'blog_post' => [
+            'format' => $seoSettings->blog_title_format ?? '{post_title} {separator} {site_name}',
+            'variables' => [
+                '{post_title}' => $postTitle ?? '',
+                '{post_category}' => $postCategory ?? '',
+                '{author_name}' => $authorName ?? '',
+                '{publish_date}' => $publishDate ? $publishDate->format('Y') : '',
+            ]
+        ],
+        'product' => [
+            'format' => $seoSettings->product_title_format ?? '{product_name} {separator} {product_category} {separator} {site_name}',
+            'variables' => [
+                '{product_name}' => $productName ?? '',
+                '{product_category}' => $productCategory ?? '',
+                '{product_brand}' => $productBrand ?? '',
+                '{price}' => $productPrice ?? '',
+            ]
+        ],
+        'category' => [
+            'format' => $seoSettings->category_title_format ?? '{category_name} {separator} {site_name}',
+            'variables' => [
+                '{category_name}' => $categoryName ?? '',
+                '{parent_category}' => $parentCategory ?? '',
+                '{products_count}' => $productsCount ?? '',
+            ]
+        ],
+        'search' => [
+            'format' => $seoSettings->search_title_format ?? 'Search results for "{search_term}" {separator} {site_name}',
+            'variables' => [
+                '{search_term}' => $searchTerm ?? '',
+                '{results_count}' => $resultsCount ?? '',
+            ]
+        ],
+        'author' => [
+            'format' => $seoSettings->author_title_format ?? 'Posts by {author_name} {separator} {site_name}',
+            'variables' => [
+                '{author_name}' => $authorName ?? '',
+                '{post_count}' => $postCount ?? '',
+            ]
+        ],
+        default => [
+            'format' => $seoSettings->meta_title_format ?? '{page_title} {separator} {site_name}',
+            'variables' => [
+                '{page_title}' => $pageTitle ?? '',
+            ]
+        ]
+    };
+    
+    // Merge variables and generate title
+    $titleFormat = $titleConfig['format'];
+    $variables = array_merge($_main_variables, $titleConfig['variables']);
+    
+    // Process the title
+    $title = str_replace(
+        array_keys($variables),
+        array_values($variables),
+        $titleFormat
+    );
+    
+    // Clean up title (remove duplicate separators and trim)
+    $separatorPattern = '/\s*' . preg_quote($separator, '/') . '\s*' . preg_quote($separator, '/') . '\s*/';
+    $title = preg_replace($separatorPattern, " $separator ", $title);
+    $title = trim($title, " $separator");
+    
+    // Fallback to site name if title is empty
+    $title = !empty(trim($title)) ? $title : $siteName;
+    
+    //==========================================================================
+    // META CONTENT PREPARATION
+    //==========================================================================
+    $metaDescription = $pageDescription 
+        ?? $seoSettings->meta_description 
+        ?? $siteSettings->description 
+        ?? '';
+    
+    $metaKeywordsContent = $metaKeywords 
+        ?? $seoSettings->meta_keywords 
+        ?? '';
+    
+    $canonicalUrlFinal = $canonicalUrl 
+        ?? $seoSettings->canonical_url 
+        ?? url()->current();
+    
+    //==========================================================================
+    // IMAGE URLS PREPARATION
+    //==========================================================================
+    $defaultImage = $brandLogo 
+        ? Storage::url($brandLogo) 
+        : asset('storage/images/logo.png');
+    
+    $ogImageUrl = $ogImage 
+        ?? $seoSettings->og_image 
+        ?? $defaultImage;
+    
+    $twitterImageUrl = $twitterImage 
+        ?? $seoSettings->twitter_image 
+        ?? $defaultImage;
+    
+    $faviconUrl = $favicon 
+        ? Storage::url($favicon) 
+        : asset('superduper/img/favicon.png');
+    
+    //==========================================================================
+    // SCHEMA.ORG DATA PREPARATION
+    //==========================================================================
+    $schemaLogo = $seoSettings->schema_logo ?? $defaultImage;
+    $schemaType = $seoSettings->schema_type ?? 'Organization';
+    $schemaName = $seoSettings->schema_name ?? $siteName;
+    $schemaDescription = $seoSettings->schema_description 
+        ?? $siteSettings->description 
+        ?? 'SuperDuper Starter Kit provides everything you need to jumpstart your web project with pre-built components, layouts, and tools that enhance development efficiency and productivity.';
+    
+    // Parse company address for schema
+    $addressParts = $siteSettings->company_address 
+        ? explode(',', $siteSettings->company_address) 
+        : ['', '', 'ID'];
+    
+    $schemaAddress = [
+        'locality' => trim($addressParts[0] ?? ''),
+        'region' => trim($addressParts[1] ?? ''),
+        'country' => trim($addressParts[2] ?? 'ID'),
+    ];
+@endphp
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr" class="scroll-smooth">
 
 <head>
-    @php
-        $page_type = $pageType;
-        $favicon = $generalSettings->site_favicon;
-        $brandLogo = $generalSettings->brand_logo;
-        $siteName = $generalSettings->brand_name ?? $siteSettings->name ?? config('app.name', 'SuperDuper Starter Kit');
-
-        $separator = $seoSettings->title_separator ?? '|';
-
-        $_main_variables = [
-            '{site_name}' => $siteName,
-            '{separator}' => $separator,
-        ];
-
-        switch ($page_type) {
-            case 'blog_post':
-                $titleFormat = $seoSettings->blog_title_format ?? '{post_title} {separator} {site_name}';
-                $variables = array_merge($_main_variables, [
-                    '{post_title}' => $postTitle ?? '',
-                    '{post_category}' => $postCategory ?? '',
-                    '{author_name}' => $authorName ?? '',
-                    '{publish_date}' => $publishDate ? $publishDate->format('Y') : '',
-                ]);
-                break;
-
-            case 'product':
-                $titleFormat = $seoSettings->product_title_format ?? '{product_name} {separator} {product_category} {separator} {site_name}';
-                $variables = array_merge($_main_variables, [
-                    '{product_name}' => $productName ?? '',
-                    '{product_category}' => $productCategory ?? '',
-                    '{product_brand}' => $productBrand ?? '',
-                    '{price}' => $productPrice ?? '',
-                ]);
-                break;
-
-            case 'category':
-                $titleFormat = $seoSettings->category_title_format ?? '{category_name} {separator} {site_name}';
-                $variables = array_merge($_main_variables, [
-                    '{category_name}' => $categoryName ?? '',
-                    '{parent_category}' => $parentCategory ?? '',
-                    '{products_count}' => $productsCount ?? '',
-                ]);
-                break;
-
-            case 'search':
-                $titleFormat = $seoSettings->search_title_format ?? 'Search results for "{search_term}" {separator} {site_name}';
-                $variables = array_merge($_main_variables, [
-                    '{search_term}' => $searchTerm ?? '',
-                    '{results_count}' => $resultsCount ?? '',
-                ]);
-                break;
-
-            case 'author':
-                $titleFormat = $seoSettings->author_title_format ?? 'Posts by {author_name} {separator} {site_name}';
-                $variables = array_merge($_main_variables, [
-                    '{author_name}' => $authorName ?? '',
-                    '{post_count}' => $postCount ?? '',
-                ]);
-                break;
-
-            default:
-                $titleFormat = $seoSettings->meta_title_format ?? '{page_title} {separator} {site_name}';
-                $variables = array_merge($_main_variables, [
-                    '{page_title}' => $pageTitle ?? '',
-                ]);
-        }
-
-        // Process the format by replacing placeholders
-        $title = str_replace(
-            array_keys($variables),
-            array_values($variables),
-            $titleFormat
-        );
-
-        // Clean up the title (remove double separators, eliminate leading/trailing separators)
-        $title = preg_replace('/\s*' . preg_quote($separator) . '\s*' . preg_quote($separator) . '\s*/', " $separator ", $title);
-        $title = trim($title);
-        $title = trim($title, " $separator");
-
-        // Fallback if empty
-        if (empty(trim($title))) {
-            $title = $siteName;
-        }
-    @endphp
-
-    @if($noIndex || !$generalSettings->search_engine_indexing)
-        <meta name="robots" content="noindex">
-    @endif
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="application-name" content="{{ $siteName }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="{{ $canonicalUrl ?? $seoSettings->canonical_url ?? url()->current() }}" />
+    {{-- ===== ROBOTS & INDEXING ===== --}}
+    @php
+        $indexing = ($noIndex || !($seoSettings->robots_indexing ?? true)) ? 'noindex' : 'index';
+        $following = ($seoSettings->robots_following ?? true) ? 'follow' : 'nofollow';
+    @endphp
+    <meta name="robots" content="{{ $indexing }}, {{ $following }}">
 
-    <!-- SEO Meta Tags -->
-    <meta name="keywords"
-        content="{{ $metaKeywords ?? $seoSettings->meta_keywords ?? '' }}" />
-    <meta name="description"
-        content="{{ $pageDescription ?? $seoSettings->meta_description ?? $siteSettings->description ?? '' }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="application-name" content="{{ $siteName }}">
 
-    <!-- Mobile Optimization Meta Tags -->
+    {{-- ===== SEO META TAGS ===== --}}
+    <link rel="canonical" href="{{ $canonicalUrlFinal }}" />
+    <meta name="keywords" content="{{ $metaKeywordsContent }}" />
+    <meta name="description" content="{{ $metaDescription }}">
+
+    {{-- ===== MOBILE OPTIMIZATION ===== --}}
     <meta name="format-detection" content="telephone=no">
     <meta name="theme-color" content="#512B0F">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- Schema.org markup (Google) -->
+    {{-- ===== SCHEMA.ORG MARKUP (Google) ===== --}}
     <meta itemprop="name" content="{{ $title }}" />
     <meta itemprop="url" content="{{ url()->current() }}">
-    <meta itemprop="description"
-        content="{{ $pageDescription ?? $seoSettings->meta_description ?? $siteSettings->description }}">
-    <meta itemprop="thumbnailUrl"
-        content="{{ $brandLogo ? Storage::url($brandLogo) : asset('storage/images/logo.png') }}">
-    <meta itemprop="image"
-        content="{{ $seoSettings->schema_logo ?? ($brandLogo ? Storage::url($brandLogo) : asset('storage/images/logo.png')) }}">
+    <meta itemprop="description" content="{{ $metaDescription }}">
+    <meta itemprop="thumbnailUrl" content="{{ $defaultImage }}">
+    <meta itemprop="image" content="{{ $schemaLogo }}">
 
-    <!-- Twitter Card -->
+    {{-- ===== TWITTER CARD ===== --}}
     <meta name="twitter:card" content="{{ $seoSettings->twitter_card_type ?? 'summary' }}">
     <meta name="twitter:site" content="{{ $seoSettings->twitter_site ?? '@superduperkit' }}" />
     <meta name="twitter:creator" content="{{ $seoSettings->twitter_creator ?? '@superduperkit' }}" />
     <meta name="twitter:title" content="{{ $seoSettings->twitter_title ?? $title }}">
-    <meta name="twitter:description"
-        content="{{ $seoSettings->twitter_description ?? $pageDescription ?? $seoSettings->meta_description }}" />
-    <meta name="twitter:image"
-        content="{{ $twitterImage ?? $seoSettings->twitter_image ?? ($brandLogo ? Storage::url($brandLogo) : asset('storage/images/logo.png')) }}">
+    <meta name="twitter:description" content="{{ $seoSettings->twitter_description ?? $metaDescription }}" />
+    <meta name="twitter:image" content="{{ $twitterImageUrl }}">
     <meta name="twitter:url" content="{{ url()->current() }}">
 
-    <!-- Open Graph (Facebook, LinkedIn) -->
+    {{-- ===== OPEN GRAPH (Facebook, LinkedIn) ===== --}}
     <meta property="og:site_name" content="{{ $seoSettings->og_site_name ?? $siteName }}" />
     <meta property="og:title" content="{{ $seoSettings->og_title ?? $title }}" />
     <meta property="og:type" content="{{ $seoSettings->og_type ?? 'website' }}" />
-    <meta property="og:description"
-        content="{{ $seoSettings->og_description ?? $pageDescription ?? $seoSettings->meta_description }}" />
+    <meta property="og:description" content="{{ $seoSettings->og_description ?? $metaDescription }}" />
     <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:image"
-        content="{{ $ogImage ?? $seoSettings->og_image ?? ($brandLogo ? Storage::url($brandLogo) : asset('storage/images/logo.png')) }}" />
+    <meta property="og:image" content="{{ $ogImageUrl }}" />
     <meta property="og:image:width" content="1500">
     <meta property="og:image:height" content="1500">
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="{{ $siteName }}" />
 
-    <!-- Verification codes -->
+    {{-- ===== VERIFICATION CODES ===== --}}
     @if(!empty($seoSettings->verification_codes))
         @foreach($seoSettings->verification_codes as $verificationCode)
             {!! $verificationCode !!}
         @endforeach
     @endif
 
-    <!-- Additional meta tags -->
+    {{-- ===== ADDITIONAL META TAGS ===== --}}
     @if($seoSettings->head_additional_meta)
         {!! $seoSettings->head_additional_meta !!}
     @endif
 
+    {{-- ===== YIELD FOR ADDITIONAL META ===== --}}
     @yield('meta')
 
+    {{-- ===== PAGE TITLE ===== --}}
     <title>{{ $title }}</title>
 
-    <!-- Favicon from settings -->
-    <link rel="shortcut icon" href="{{ $favicon ? Storage::url($favicon) : asset('superduper/img/favicon.png') }}"
-        type="image/x-icon">
+    {{-- ===== FAVICON ===== --}}
+    <link rel="shortcut icon" href="{{ $faviconUrl }}" type="image/x-icon">
 
-    <!-- Theme CSS via Vite -->
-    @vite([
-        'resources/css/app.css',
-    ])
+    {{-- ===== STYLES SECTION ===== --}}
+    {{-- Vite Compiled CSS --}}
+    @vite(['resources/css/app.css'])
 
-    <!-- Icon Font -->
-    <link rel="preload" href="{{ asset('superduper/fonts/iconfonts/font-awesome/stylesheet.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    {{-- Icon Font (Async Loading) --}}
+    <link rel="preload" 
+          href="{{ asset('superduper/fonts/iconfonts/font-awesome/stylesheet.css') }}" 
+          as="style" 
+          onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ asset('superduper/fonts/iconfonts/font-awesome/stylesheet.css') }}">
     </noscript>
-    <!-- Site font -->
+
+    {{-- Site Font --}}
     <link rel="stylesheet" href="{{ asset('superduper/fonts/webfonts/public-sans/stylesheet.css') }}" />
 
-    <!-- Vendor CSS -->
+    {{-- Vendor CSS --}}
     <link rel="stylesheet" href="{{ asset('superduper/css/vendors/swiper-bundle.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('superduper/css/vendors/jos.css') }}" />
 
+    {{-- Main Theme CSS --}}
     <link rel="stylesheet" href="{{ asset('superduper/css/style.min.css') }}" />
 
+    {{-- Alpine.js Cloak --}}
     <style>
-        [x-cloak] {
-            display: none !important;
-        }
+        [x-cloak] { display: none !important; }
     </style>
 
+    {{-- Stack for Additional CSS --}}
     @stack('css')
 
-    <!-- Custom CSS -->
+    {{-- Custom CSS from Settings --}}
     @if(isset($scriptSettings->custom_css))
         <style>
             {!! $scriptSettings->custom_css !!}
         </style>
     @endif
 
+    {{-- Livewire Styles --}}
     @livewireStyles
 
-    <!-- Header scripts -->
+    {{-- Header Scripts from Settings --}}
     @if(isset($scriptSettings->header_scripts))
         {!! $scriptSettings->header_scripts !!}
     @endif
 
-    <!--  structured data (JSON-LD) -->
+    {{-- ===== STRUCTURED DATA (JSON-LD) ===== --}}
     <script type="application/ld+json">
-        {
-        "@context": "https://schema.org",
-        "@type": "{{ $seoSettings->schema_type ?? '' }}",
-        "name": "{{ $seoSettings->schema_name ?? $siteName }}",
-        "url": "{{ url('/') }}",
-        "logo": "{{ $seoSettings->schema_logo ?? ($brandLogo ? Storage::url($brandLogo) : asset('superduper/img/favicon.png')) }}",
-        "description": "{{ $seoSettings->schema_description ?? $siteSettings->description ?? 'SuperDuper Starter Kit provides everything you need to jumpstart your web project with pre-built components, layouts, and tools that enhance development efficiency and productivity.' }}",
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "{{ explode(',', $siteSettings->company_address)[0] ?? '' }}",
-            "addressRegion": "{{ explode(',', $siteSettings->company_address)[1] ?? '' }}",
-            "addressCountry": "{{ explode(',', $siteSettings->company_address)[2] ?? 'ID' }}"
-        },
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "{{ $siteSettings->company_phone ?? '' }}",
-            "contactType": "customer service",
-            "email": "{{ $siteSettings->company_email ?? '' }}"
-        }
-        }
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => $schemaType,
+        'name' => $schemaName,
+        'url' => url('/'),
+        'logo' => $schemaLogo,
+        'description' => $schemaDescription,
+    
+        // only add address if available
+        'address' => $siteSettings->company_address ? [
+            '@type' => 'PostalAddress',
+            'addressLocality' => $schemaAddress['locality'] ?? '',
+            'addressRegion' => $schemaAddress['region'] ?? '',
+            'addressCountry' => $schemaAddress['country'] ?? '',
+        ] : null,
+    
+        // only add contactPoint if available
+        'contactPoint' => ($siteSettings->company_phone || $siteSettings->company_email) ? [
+            '@type' => 'ContactPoint',
+            'telephone' => $siteSettings->company_phone ?? '',
+            'email' => $siteSettings->company_email ?? '',
+            'contactType' => 'customer service',
+        ] : null,
+    ], JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE) !!}
     </script>
+        
 </head>
 
 <body>
-    <!-- Body start scripts -->
+    {{-- ===== BODY START SCRIPTS ===== --}}
     @if(isset($scriptSettings->body_start_scripts))
         {!! $scriptSettings->body_start_scripts !!}
     @endif
 
+    {{-- ===== MAINTENANCE MODE CHECK ===== --}}
     @if(isset($siteSettings->is_maintenance) && $siteSettings->is_maintenance)
         <div class="maintenance-mode">
             <div class="container">
@@ -283,63 +364,56 @@
             </div>
         </div>
     @else
+        {{-- ===== HEADER COMPONENT ===== --}}
         <x-superduper.header />
 
-        <main>
+        {{-- ===== MAIN CONTENT AREA ===== --}}
+        <main id="main-content">
             {{ $slot }}
         </main>
 
+        {{-- ===== FOOTER COMPONENT ===== --}}
         <x-superduper.footer />
 
-        <!-- Cookie Consent -->
-        @if(isset($scriptSettings->cookie_consent_enabled) && $scriptSettings->cookie_consent_enabled)
-            <div class="cookie-consent js-cookie-consent" style="display: none;">
-                <div class="container">
-                    <span class="cookie-consent__message">
-                        {!! $scriptSettings->cookie_consent_text ?? 'We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.' !!}
-                        @if(isset($scriptSettings->cookie_consent_policy_url) && $scriptSettings->cookie_consent_policy_url)
-                            <a href="{{ $scriptSettings->cookie_consent_policy_url }}">Learn more</a>
-                        @endif
-                    </span>
-                    <button class="cookie-consent__agree">
-                        {{ $scriptSettings->cookie_consent_button_text ?? 'Accept' }}
-                    </button>
-                </div>
-            </div>
-        @endif
+        {{-- ===== COOKIE CONSENT ===== --}}
+        <x-superduper.components.cookie-consent :siteSettings="$siteSettings" />
     @endif
 
-    <!-- Vite compiled JS -->
-    @vite([
-        'resources/js/app.js',
-    ])
+    {{-- ===== SCRIPTS SECTION ===== --}}
+    {{-- Vite Compiled JS --}}
+    @vite(['resources/js/app.js'])
 
-    <!--Vendor js-->
+    {{-- Vendor JavaScript --}}
     <script src="{{ asset('superduper/js/vendors/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('superduper/js/vendors/fslightbox.js') }}"></script>
     <script src="{{ asset('superduper/js/vendors/jos.min.js') }}"></script>
 
+    {{-- Main Theme JavaScript --}}
     <script src="{{ asset('superduper/js/main.js') }}"></script>
 
+    {{-- Livewire Scripts --}}
     @livewireScripts
 
-    <!-- Custom JS -->
+    {{-- Custom JavaScript from Settings --}}
     @if(isset($scriptSettings->custom_js))
         <script>
-            {!! $scriptSettings->custom_js !!}
+            document.addEventListener('DOMContentLoaded', function() {
+                {!! $scriptSettings->custom_js !!}
+            });
         </script>
     @endif
 
-    <!-- Footer scripts -->
+    {{-- Footer Scripts from Settings --}}
     @if(isset($scriptSettings->footer_scripts))
         {!! $scriptSettings->footer_scripts !!}
     @endif
 
-    <!-- Body end scripts -->
+    {{-- Body End Scripts from Settings --}}
     @if(isset($scriptSettings->body_end_scripts))
         {!! $scriptSettings->body_end_scripts !!}
     @endif
 
+    {{-- Stack for Additional JavaScript --}}
     @stack('js')
 </body>
 
