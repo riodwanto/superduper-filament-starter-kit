@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Superduper;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
-class GenerateLang extends Command
+class LangTranslateCommand extends Command
 {
     protected $signature = 'superduper:lang-translate {from} {to*} {--file=} {--json}';
     protected $description = 'Translate language files from one language to another using Google Translate';
