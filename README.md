@@ -82,7 +82,7 @@
 
     ```bash
     php artisan superduper:setup
-    php artisan superduper:install
+    php artisan superduper:permissions
     ```
 
   * 🐞 Various bug fixes and styling improvements
@@ -116,7 +116,7 @@ php artisan superduper:setup
 Or use quick install with defaults:
 
 ```bash
-php artisan superduper:install
+php artisan superduper:setup --default
 ```
 
 Start your development server:
