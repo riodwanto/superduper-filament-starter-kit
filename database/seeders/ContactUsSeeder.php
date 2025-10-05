@@ -298,6 +298,6 @@ class ContactUsSeeder extends Seeder
             }
         }
 
-        $this->command->info("Created {$recordCount} realistic contact requests with weighted statuses and detailed metadata.");
+        $this->command->info("  Created {$recordCount} realistic contact requests with weighted statuses and detailed metadata.");
     }
 }

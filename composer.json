@@ -1,9 +1,11 @@
 {
     "name": "riodwanto/superduper-filament-starter-kit",
     "description": "A comprehensive Laravel Filament 3 💡 starter kit with pre-installed plugins, admin panel, user management, SEO tools, theme customization, and content management for rapid application development",
+    "version": "1.21.0",
     "type": "project",
     "keywords": [
         "filament",
+        "filament 3",
         "filamentphp",
         "laravel",
         "filament starter kit",

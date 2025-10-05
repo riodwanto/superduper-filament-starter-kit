@@ -10,6 +10,9 @@ return [
         'is_globally_searchable' => false,
         'show_model_path' => true,
         'is_scoped_to_tenant' => true,
+        'tabs' => [
+            'custom_permissions' => true,
+        ],
     ],
 
     'auth_provider_model' => [
@@ -20,7 +23,7 @@ return [
         'enabled' => true,
         'name' => 'super_admin',
         'define_via_gate' => false,
-        'intercept_gate' => 'before', // after
+        'intercept_gate' => 'before',
     ],
 
     'panel_user' => [
@@ -46,6 +49,11 @@ return [
 
         'page' => 'page',
         'widget' => 'widget',
+    ],
+
+    'custom_permissions' => [
+        'view_log::opcodes' => 'Access Log Viewer', // # \Opcodes\LogViewer
+        // -- Add more custom permissions here if needed
     ],
 
     'entities' => [
