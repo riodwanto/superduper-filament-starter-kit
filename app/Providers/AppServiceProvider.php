@@ -39,9 +39,7 @@ class AppServiceProvider extends ServiceProvider
 
         // # \Opcodes\LogViewer
         LogViewer::auth(function ($request) {
-            $user = auth()->user();
-            $role = $user?->roles?->first()?->name;
-            return $role == config('filament-shield.super_admin.name');
+            return auth()->user()->can('view_log::opcodes');
         });
 
         // # Filament Hooks

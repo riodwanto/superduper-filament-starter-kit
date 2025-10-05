@@ -16,6 +16,16 @@ class PermissionsSeeder extends Seeder
         // Reset cached permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // Create custom permissions from config
+        $customPermissions = config('filament-shield.custom_permissions', []);
+
+        foreach ($customPermissions as $key => $label) {
+            Permission::firstOrCreate(
+                ['name' => $key],
+                ['guard_name' => 'web']
+            );
+        }
+
         // Get all permissions
         $allPermissions = Permission::pluck('name')->toArray();
 
