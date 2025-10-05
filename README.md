@@ -10,88 +10,120 @@
     A starting point to create your next Filament 3 💡 app. With pre-installed plugins, pre-configured, and custom page. So you don't start all over again.
 </p>
 
-#### ✨ Features
+---
 
-- 🛡️ **User & Access Management**
-  - [Filament Shield](#plugins-used) for comprehensive role-based access control
-  - 👥 Multiple user roles with granular permissions
-  - 🔐 Secure authentication workflows
+### ✨ Features
 
-- 👤 **Profile & User Experience**
-  - 👨🏻‍🦱 Customizable profile page from [Filament Breezy](#plugins-used)
-  - 🌙 Dark/light mode switching
-  - 🎭 Personalized user dashboard
+* 🛡️ **User & Access Management**
 
-- 🎨 **Theme & UI Customization**
-  - 🖼️ Theme settings for panel colors and layout preferences
-  - 🧩 Modular design for easy extension
-  - 🎚️ Responsive interface for all devices
+  * [Filament Shield](#plugins-used) for comprehensive role-based access control
+  * 👥 Multiple user roles with granular permissions
+  * 🔐 Secure authentication workflows
+  * 🧑‍💼 **User impersonation** feature for admins
 
-- 🌐 **Content Management**
-  - 📝 Blog module with categories and tags
-  - 🖼️ Banner management system
-  - 📅 Event scheduling capabilities
+* 👤 **Profile & User Experience**
 
-- 📊 **Media Management**
-  - 🌌 Complete media library with [Filament Spatie Media](#plugins-used)
-  - 🖼️ Image optimization and thumbnails
-  - 📂 Easy upload and organization
+  * 👨🏻‍🦱 Customizable profile page from [Filament Breezy](#plugins-used)
+  * 🌙 Dark/light mode switching
+  * 🎭 Personalized user dashboard
+  * 🧩 Updated panel footer and various UI/UX enhancements
 
-- 🌍 **Localization & Translation**
-  - 🅻 Powerful Lang Generator tool
-  - 🔄 Automated translation capabilities
-  - 🌐 Multi-language support for global applications
+* 🎨 **Theme & UI Customization**
 
-- 📧 **Email & Notifications**
-  - 💌 Configure mail settings on the fly
-  - 📨 Customizable email templates
-  - 🔔 User notification system
+  * 🖼️ Theme settings for panel colors and layout preferences
+  * 🧩 Modular design for easy extension
+  * 🎚️ Responsive interface for all devices
+  * 🪶 Improved site logo functionality
 
-- 🔧 **System Configuration**
-  - ⚙️ Frontend web settings (Site Name, Scripts, etc.)
-  - 📝 Log viewer and error tracking
-  - 🧰 Developer-friendly tools
+* 🌐 **Content Management**
 
-- 🔍 **SEO & Analytics**
-  - 🔎 Comprehensive SEO settings and optimization
-  - 📈 Laravel Trend integration for data visualization
-  - 📊 Traffic and user analytics
+  * 📝 **Blog module improvements** — stats, author filtering, and status tracking
+  * 🖼️ Banner management system
+  * 📅 Event scheduling capabilities
 
-- 🛠️ **Developer Experience**
-  - ⚡ Optimized performance out of the box
-  - 📝 Code editor integration
-  - 🧪 Testing tools and infrastructure
+* 📊 **Media & Menu Management**
 
-#### Latest update
+  * 🌌 Complete media library with [Filament Spatie Media](#plugins-used)
+  * 🖼️ Image optimization and thumbnails
+  * 📂 Easy upload and organization
+  * 📋 **Enhanced menu builder** — more locations and configuration options
 
-##### Version: v1.19.0
+* ⚙️ **System & Site Configuration**
 
-- User impersonation feature for admins
-- Contact Us stats dashboard widget
-- Blog module improvements (stats, author filtering, status tracking)
-- Enhanced menu builder with more locations and configuration
-- Clustered site settings and new site editor page
-- Improved site logo functionality
-- Updated panel footer and various UI/UX enhancements
-- Improved security headers, new middleware, and log channels
-- Enhanced afterSave hooks and visibility suffix actions
-- Updated translations and language generator improvements
-- Various bug fixes and styling improvements
+  * 🧭 **Clustered site settings** and new site editor page
+  * 🧰 Developer-friendly tools and utilities
+  * 🧾 Improved security headers, new middleware, and log channels
+
+* 🌍 **Localization & Translation**
+
+  * 🅻 Powerful Lang Generator tool
+  * 🔄 **Updated translation system** and generator improvements
+  * 🌐 Multi-language support for global applications
+
+* 📧 **Email & Notifications**
+
+  * 💌 Configure mail settings on the fly
+  * 📨 Customizable email templates
+  * 🔔 User notification system
+
+* 🧠 **Analytics & Insights**
+
+  * 📈 Laravel Trend integration for data visualization
+  * 📊 Traffic and user analytics
+  * 📬 **Contact Us stats** dashboard widget
+
+* 🛠️ **Developer Experience**
+
+  * ⚡ Optimized performance out of the box
+  * 📝 Code editor integration
+  * 📚 **Docs Plugin integration**
+  * 🧪 Enhanced `afterSave` hooks and visibility suffix actions
+  * 🚀 **New `superduper` commands:**
+
+    ```bash
+    php artisan superduper:setup
+    php artisan superduper:install
+    ```
+
+  * 🐞 Various bug fixes and styling improvements
 
 [Version Releases](https://github.com/riodwanto/superduper-filament-starter-kit/releases)
 
+---
+
 #### Getting Started
 
-Create project with this composer command:
+Create project with composer:
 
 ```bash
 composer create-project riodwanto/superduper-filament-starter-kit
+
+cd superduper-filament-starter-kit
 ```
 
-Setup your project easily using the one of setup scripts:
+Install dependencies:
 
 ```bash
-php bin/setup.php
+composer install && npm install
+```
+
+Setup your project easily using:
+
+```bash
+php artisan superduper:setup
+```
+
+Or use quick install with defaults:
+
+```bash
+php artisan superduper:install
+```
+
+Start your development server:
+
+```bash
+php artisan serve
+npm run dev
 ```
 
 Or manually:
@@ -99,7 +131,6 @@ Or manually:
 Setup your env:
 
 ```bash
-cd superduper-filament-starter-kit
 cp .env.example .env
 ```
 
@@ -126,6 +157,7 @@ One Liner:
 
 ```bash
 php artisan migrate && php artisan db:seed && php artisan shield:generate --all
+```
 
 [Important] Bind permissions to roles:
 
@@ -206,13 +238,13 @@ This is what the translation process looks like.
 
 ##### Usage example
 
-- Single output
+* Single output
 
 ```bash
 php artisan superduper:lang-translate en fr
 ```
 
-- Multiple output
+* Multiple output
 
 ```bash
 php artisan superduper:lang-translate en es ar fr pt-PT pt-BR zh-CN zh-TW
@@ -223,7 +255,7 @@ php artisan superduper:lang-translate en es ar fr pt-PT pt-BR zh-CN zh-TW
 ```bash
 php artisan superduper:lang-translate en fr --json
 ```
-
+  
 #### Plugins
 
 These are [Filament Plugins](https://filamentphp.com/plugins) use for this project.
@@ -245,12 +277,12 @@ These are [Filament Plugins](https://filamentphp.com/plugins) use for this proje
 
 Other recommendations for your starter, in my personal opinion:
 
-- [Rupadana - API Resources](https://filamentphp.com/plugins/rupadana-api-service) : Generate API for your Resources.
-- [Bezhan Salleh - Language Switch](https://filamentphp.com/plugins/bezhansalleh-language-switch) : Zero config Language Switcher plugin for Filament Panels.
-- [Kenepa - Resource Lock](https://filamentphp.com/plugins/kenepa-resource-lock) : Resource locking when other user begins editing a resource.
-- [Ralph J. Smit - Components](https://filamentphp.com/plugins/ralphjsmit-components) : A collection of handy components.
-- [Tapp Network - Laravel Auditing](https://filamentphp.com/plugins/tapp-network-laravel-auditing) : Resource locking when other user begins editing a resource.
-- [Shuvro Roy - Spatie Laravel Health](https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health) : Health monitoring for Filament.
+* [Rupadana - API Resources](https://filamentphp.com/plugins/rupadana-api-service) : Generate API for your Resources.
+* [Bezhan Salleh - Language Switch](https://filamentphp.com/plugins/bezhansalleh-language-switch) : Zero config Language Switcher plugin for Filament Panels.
+* [Kenepa - Resource Lock](https://filamentphp.com/plugins/kenepa-resource-lock) : Resource locking when other user begins editing a resource.
+* [Ralph J. Smit - Components](https://filamentphp.com/plugins/ralphjsmit-components) : A collection of handy components.
+* [Tapp Network - Laravel Auditing](https://filamentphp.com/plugins/tapp-network-laravel-auditing) : Resource locking when other user begins editing a resource.
+* [Shuvro Roy - Spatie Laravel Health](https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health) : Health monitoring for Filament.
 
 <a href="https://buymeacoffee.com/riodewanto" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
