@@ -10,13 +10,11 @@ use Illuminate\Support\Facades\Process;
 class SetupCommand extends Command
 {
     protected $signature = 'superduper:setup
-                            {--default : Use default values without prompting}
-                            {--fresh : Run fresh migrations}
-                            {--env-backup : Always backup .env file}
-                            {--skip-npm : Skip npm installation}
-                            {--skip-npm-build : Skip npm build}
-                            {--skip-migrations : Skip database migrations}
-                            {--skip-seed : Skip database seeding}';
+                        {--default : Use default values for quick install}
+                        {--fresh : Run fresh migrations}
+                        {--env-backup : Always backup .env file}
+                        {--skip-migrations : Skip database migrations}
+                        {--skip-seed : Skip database seeding}';
 
     protected $description = 'Setup SuperDuper Filament 3 Starter Kit';
 
@@ -31,13 +29,11 @@ class SetupCommand extends Command
             return self::FAILURE;
         }
 
-        // Skip warning in default mode
-        if (!$this->option('default')) {
-            $this->info('⚠️  WARNING: This command should NOT be run on production servers.');
-            if (!$this->confirm('Are you sure want countinue?', false)) {
-                $this->error('Setup aborted.');
-                return self::FAILURE;
-            }
+
+        $this->info('⚠️  WARNING: This command should NOT be run on production servers.');
+        if (!$this->confirm('Are you sure want countinue?', false)) {
+            $this->error('Setup aborted.');
+            return self::FAILURE;
         }
 
         // Run setup tasks
@@ -115,22 +111,12 @@ class SetupCommand extends Command
 
     protected function installComposerPackages()
     {
-        if ($this->option('skip-npm')) {
-            $this->info('   Skipped (--skip-npm flag)');
-            return true;
-        }
-
         $result = Process::tty()->run('composer install');
         return $result->successful();
     }
 
     protected function installNpmPackages()
     {
-        if ($this->option('skip-npm')) {
-            $this->info('   Skipped (--skip-npm flag)');
-            return true;
-        }
-
         $result = Process::tty()->run('npm install');
         return $result->successful();
     }
@@ -164,102 +150,88 @@ class SetupCommand extends Command
 
     protected function configureDatabaseSettings()
     {
-        // Default mode: Use .env values, display as table
-        if ($this->option('default')) {
-            // Set default database name if not set
+        // Always show current database configuration first
+        $this->newLine();
+        $this->info('📊 Current Database Configuration:');
+        $this->newLine();
+
+        $connection = config('database.default', 'mysql');
+        $dbConfig = config("database.connections.{$connection}", []);
+
+        // Get password from .env
+        $envContent = File::get('.env');
+        preg_match('/DB_PASSWORD=(.*)/', $envContent, $passwordMatch);
+        $passwordValue = $passwordMatch[1] ?? '';
+        $password = !empty($passwordValue) ? '••••••••' : '(empty)';
+
+        $this->table(
+            ['Setting', 'Value'],
+            [
+                ['Connection', $connection],
+                ['Host', $dbConfig['host'] ?? '127.0.0.1'],
+                ['Port', $dbConfig['port'] ?? '3306'],
+                ['Database', $dbConfig['database'] ?? 'laravel'],
+                ['Username', $dbConfig['username'] ?? 'root'],
+                ['Password', $password],
+            ]
+        );
+        $this->newLine();
+
+        // Interactive mode: Ask if user wants to edit
+        if (!$this->confirm('Is this configuration correct?', true)) {
+            $this->info('🛢️  Configure Database Settings');
+            $this->newLine();
+
+            $connections = ['mysql', 'sqlite', 'pgsql', 'sqlsrv'];
+
+            $connection = $this->choice(
+                'Select database connection',
+                $connections,
+                0
+            );
+
+            $config = [
+                'DB_CONNECTION' => $connection,
+                'DB_HOST' => $this->ask('Database host', '127.0.0.1'),
+                'DB_PORT' => $this->ask('Database port', $connection === 'mysql' ? '3306' : '5432'),
+                'DB_DATABASE' => $this->ask('Database name', 'superduper_filament_starter_kit'),
+                'DB_USERNAME' => $this->ask('Database username', 'root'),
+                'DB_PASSWORD' => $this->secret('Database password'),
+            ];
+
+            // Update .env file
             $env = File::get('.env');
-            if (!preg_match('/DB_DATABASE=(.+)/', $env) || preg_match('/DB_DATABASE=laravel/', $env)) {
+
+            foreach ($config as $key => $value) {
                 $env = preg_replace(
-                    '/DB_DATABASE=(.*)/',
-                    'DB_DATABASE=superduper_filament_starter_kit',
+                    "/^{$key}=.*/m",
+                    "{$key}={$value}",
                     $env
                 );
-                File::put('.env', $env);
             }
 
+            File::put('.env', $env);
             $this->call('config:clear');
-
-            // Force reload environment variables
             $this->reloadEnvConfig();
 
-            $connection = config('database.default');
-            $dbConfig = config('database.connections.' . $connection);
-
-            // Get password from .env (show masked or empty)
-            $envContent = File::get('.env');
-            preg_match('/DB_PASSWORD=(.*)/', $envContent, $passwordMatch);
-            $password = isset($passwordMatch[1]) && !empty($passwordMatch[1]) ? '••••••••' : '(empty)';
-
-            $this->info('   Using database configuration:');
+            // Display updated configuration
+            $this->newLine();
+            $this->info('   ✅ Database configuration updated:');
             $this->newLine();
             $this->table(
                 ['Setting', 'Value'],
                 [
-                    ['Connection', $connection],
-                    ['Host', $dbConfig['host'] ?? '127.0.0.1'],
-                    ['Port', $dbConfig['port'] ?? '3306'],
-                    ['Database', $dbConfig['database'] ?? 'superduper_filament_starter_kit'],
-                    ['Username', $dbConfig['username'] ?? 'root'],
-                    ['Password', $password],
+                    ['Connection', $config['DB_CONNECTION']],
+                    ['Host', $config['DB_HOST']],
+                    ['Port', $config['DB_PORT']],
+                    ['Database', $config['DB_DATABASE']],
+                    ['Username', $config['DB_USERNAME']],
+                    ['Password', !empty($config['DB_PASSWORD']) ? '••••••••' : '(empty)'],
                 ]
             );
-
-            return true;
+        } else {
+            $this->info('   Using existing configuration...');
         }
-
-        // Interactive mode: Ask for configuration
-        $this->newLine();
-        $this->info('🛢️  Database Configuration');
-
-        $connections = ['mysql', 'sqlite', 'pgsql', 'sqlsrv'];
-
-        $connection = $this->choice(
-            'Select database connection',
-            $connections,
-            0
-        );
-
-        $config = [
-            'DB_CONNECTION' => $connection,
-            'DB_HOST' => $this->ask('Database host', '127.0.0.1'),
-            'DB_PORT' => $this->ask('Database port', $connection === 'mysql' ? '3306' : '5432'),
-            'DB_DATABASE' => $this->ask('Database name', 'superduper_filament_starter_kit'),
-            'DB_USERNAME' => $this->ask('Database username', 'root'),
-            'DB_PASSWORD' => $this->secret('Database password'),
-        ];
-
-        // Update .env file
-        $env = File::get('.env');
-
-        foreach ($config as $key => $value) {
-            $env = preg_replace(
-                "/^{$key}=.*/m",
-                "{$key}={$value}",
-                $env
-            );
-        }
-
-        File::put('.env', $env);
-        $this->call('config:clear');
-
-        // Force reload environment variables
-        $this->reloadEnvConfig();
-
-        // Display configuration as table
-        $this->newLine();
-        $this->info('   Database configured:');
-        $this->newLine();
-        $this->table(
-            ['Setting', 'Value'],
-            [
-                ['Connection', $config['DB_CONNECTION']],
-                ['Host', $config['DB_HOST']],
-                ['Port', $config['DB_PORT']],
-                ['Database', $config['DB_DATABASE']],
-                ['Username', $config['DB_USERNAME']],
-                ['Password', !empty($config['DB_PASSWORD']) ? '••••••••' : '(empty)'],
-            ]
-        );
 
         return true;
     }
@@ -403,12 +375,6 @@ class SetupCommand extends Command
 
     protected function buildFrontend()
     {
-        if ($this->option('skip-npm') || $this->option('skip-npm-build')) {
-            $this->info('   Skipped');
-            $this->info('   You can run "npm run dev" or "npm run build" manually');
-            return true;
-        }
-
         // Default mode: Always skip build
         if ($this->option('default')) {
             $this->info('   Skipped (default mode)');
