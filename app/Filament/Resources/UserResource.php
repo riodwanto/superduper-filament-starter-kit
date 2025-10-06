@@ -61,7 +61,7 @@ class UserResource extends Resource
                             Action::make('resend_verification')
                                 ->label(__('resource.user.actions.resend_verification'))
                                 ->color('info')
-                                ->action(fn(MailSettings $settings, Model $record) => static::doResendEmailVerification($settings, $record))
+                                ->action(fn(MailSettings $settings, Model $record) => static::doResendEmailVerification($record, $settings))
                                 ->hidden(fn($record) => $record?->email_verified_at !== null),
                         ])
                             ->hiddenOn('create')
@@ -269,7 +269,7 @@ class UserResource extends Resource
         return __("menu.nav_group.access");
     }
 
-    public static function doResendEmailVerification($settings = null, $user): void
+    public static function doResendEmailVerification($user, $settings = null): void
     {
         if (!method_exists($user, 'notify')) {
             $userClass = $user::class;
