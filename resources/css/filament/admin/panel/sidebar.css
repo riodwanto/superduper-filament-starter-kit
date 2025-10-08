@@ -1,0 +1,190 @@
+/*
+    Filament Sidebar Classes
+*/
+
+/* Logo */
+.fi-logo {
+  @apply !h-10 transition-all duration-300 hover:scale-105;
+}
+
+.fi-sidebar-header > div[x-show] {
+    flex: 1 !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.fi-sidebar-header > div[x-show] a {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+/* SIDEBAR */
+.fi-sidebar {
+  @apply transition-all duration-300 ease-in-out;
+  background: linear-gradient(180deg, rgba(var(--primary-rgb), 0.02) 0%, rgba(var(--primary-rgb), 0.05) 100%);
+}
+
+.dark .fi-sidebar {
+  background: linear-gradient(180deg, #181A20 0%, #23263A 100%);
+}
+
+.fi-sidebar.fi-sidebar-open {
+  width: var(--sidebar-width);
+  @apply border-r border-gray-100/50 dark:border-gray-800/50;
+}
+
+.fi-sidebar-header {
+  @apply py-4 !ring-0 !shadow-none sticky top-0 z-10;
+  background: linear-gradient(180deg, rgba(var(--primary-rgb), 0.02) 0%, rgba(var(--primary-rgb), 0.05) 100%);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+}
+
+.dark .fi-sidebar-header {
+  background: linear-gradient(180deg, rgba(var(--primary-rgb), 0.1) 0%, rgba(15, 15, 20, 0.9) 100%);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.2);
+}
+
+.fi-topbar nav {
+  @apply !ring-0 py-3 !border-none !shadow-none bg-white sticky top-0 z-10;
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+}
+
+.fi-topbar,
+.fi-topbar input,
+.fi-topbar svg,
+.fi-topbar .fi-icon-btn svg,
+.fi-topbar .fi-btn svg {
+  @apply text-primary-400 dark:text-primary-300;
+}
+
+.fi-sidebar-nav-groups {
+  @apply gap-y-6 px-3 py-4;
+}
+
+.fi-sidebar-group {
+  @apply space-y-1.5;
+}
+
+.fi-sidebar-group-items {
+    @apply gap-y-2;
+}
+
+.fi-sidebar-group-label {
+  @apply text-xs font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider px-4 mb-2;
+}
+
+.dark .fi-sidebar-group-label {
+  @apply text-primary-300;
+}
+
+/* SIDEBAR ITEMS */
+.fi-sidebar-item a {
+  @apply px-4 py-2.5 rounded-xl flex items-center gap-x-3 transition-all duration-300;
+  border-left: 2px solid transparent;
+}
+
+.fi-sidebar-item a > span,
+.fi-sidebar-item a > svg {
+  @apply font-medium transition-all duration-200;
+}
+
+.fi-sidebar-item a > svg {
+  @apply w-5 h-5 shrink-0 text-primary-400 dark:text-primary-300;
+}
+
+.fi-sidebar-item a:focus,
+.fi-sidebar-item a:hover {
+  background: rgba(var(--primary-rgb), 0.12); /* More visible solid color */
+  /* Or use a custom gradient for more pop: */
+  /* background: linear-gradient(90deg, #FFD33322 0%, #2D2B8D11 100%); */
+  @apply shadow-sm transform transition-all duration-200 ease-out border-l-2 border-l-secondary-500;
+  box-shadow: 0 3px 10px -2px rgba(var(--primary-rgb), 0.15), 0 1px 2px rgba(var(--secondary-rgb), 0.1);
+}
+
+.dark .fi-sidebar-item a {
+  @apply text-primary-200;
+  background: transparent;
+}
+
+.dark .fi-sidebar-item a:focus,
+.dark .fi-sidebar-item a:hover {
+  background: linear-gradient(90deg, rgba(var(--secondary-rgb), 0.08), rgba(var(--primary-rgb), 0.18));
+  @apply text-primary-100 border-l-secondary-600;
+}
+
+.fi-sidebar-item a:hover > svg,
+.fi-sidebar-item a:focus > svg {
+  @apply text-secondary-600 dark:text-secondary-500 translate-x-0.5 scale-110;
+}
+
+.fi-sidebar-item a:hover > span,
+.fi-sidebar-item a:focus > span {
+  @apply text-primary-700 dark:text-primary-200 font-medium;
+  text-shadow: 0px 0.5px 0px rgba(var(--primary-rgb), 0.3);
+}
+
+/* Active state */
+.fi-sidebar-item-active a {
+  background: var(--primary-gradient);
+  @apply text-white shadow-md border-l-0;
+  box-shadow: 0 4px 12px -2px rgba(var(--primary-rgb), 0.6), 0 2px 4px rgba(var(--secondary-rgb), 0.15);
+}
+
+.dark .fi-sidebar-item-active a {
+    background: linear-gradient(90deg, rgba(var(--secondary-rgb), 0.08), rgba(var(--primary-rgb), 0.18));
+    @apply text-primary-100 border-l-secondary-600;
+    box-shadow: none;
+}
+
+.fi-sidebar-item-active a > svg {
+  @apply text-white scale-110;
+}
+
+.fi-sidebar-item-active a > span {
+  @apply text-white font-semibold;
+  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Active hover state */
+.fi-sidebar-item-active a:hover,
+.fi-sidebar-item-active a:focus {
+  background: var(--primary-gradient);
+  @apply text-white shadow-md border-l-0;
+  box-shadow: 0 4px 12px -2px rgba(var(--primary-rgb), 0.4), 0 2px 4px rgba(var(--secondary-rgb), 0.1);
+  filter: none;
+}
+
+/* Prevent icon movement and keep text white for active sidebar item on hover/focus */
+.fi-sidebar-item-active a:hover > svg,
+.fi-sidebar-item-active a:focus > svg {
+  @apply text-white scale-110; /* No translate-x, keep scale if you want */
+}
+
+.fi-sidebar-item-active a:hover > span,
+.fi-sidebar-item-active a:focus > span {
+  @apply text-white font-semibold; /* No color change, always white */
+  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom scrollbar for sidebar */
+.fi-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fi-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.fi-sidebar::-webkit-scrollbar-thumb {
+  @apply bg-primary-200 dark:bg-primary-800 rounded-full;
+}
+
+.fi-sidebar::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-300 dark:bg-primary-700;
+}
+
+.dark .fi-sidebar-item-active a > span,
+.dark .fi-sidebar-item-active a > svg {
+  @apply text-white;
+}
+

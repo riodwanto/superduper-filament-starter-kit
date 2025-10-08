@@ -1,0 +1,25 @@
+
+/* BADGES */
+.fi-badge.fi-badge-color-primary {
+  @apply bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300 ring-1 ring-primary-200 dark:ring-primary-800/50;
+}
+
+.fi-badge.fi-badge-color-secondary {
+  @apply bg-secondary-100 text-secondary-800 dark:bg-secondary-900/30 dark:text-secondary-300 ring-1 ring-secondary-200 dark:ring-secondary-800/50;
+}
+
+.fi-badge.fi-badge-color-success {
+  @apply bg-success-50 text-success-700 dark:bg-success-900/30 dark:text-success-300 ring-1 ring-success-200 dark:ring-success-800/50;
+}
+
+.fi-badge.fi-badge-color-danger {
+  @apply bg-error-50 text-error-700 dark:bg-error-900/30 dark:text-error-300 ring-1 ring-error-200 dark:ring-error-800/50;
+}
+
+.fi-badge.fi-badge-color-warning {
+  @apply bg-warning-50 text-warning-700 dark:bg-warning-900/30 dark:text-warning-300 ring-1 ring-warning-200 dark:ring-warning-800/50;
+}
+
+.fi-badge.fi-badge-color-info {
+  @apply bg-info-50 text-info-700 dark:bg-info-900/30 dark:text-info-300 ring-1 ring-info-200 dark:ring-info-800/50;
+}

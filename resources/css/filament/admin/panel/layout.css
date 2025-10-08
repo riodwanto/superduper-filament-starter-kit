@@ -1,0 +1,14 @@
+/*
+    Filament Layout Classes
+*/
+
+.fi-layout {
+    @apply bg-white;
+}
+.fi-main {
+  @apply mt-0 mb-0 bg-white dark:bg-gray-900 shadow-none transition-all duration-300;
+}
+
+.dark .fi-main {
+    /*  */
+}

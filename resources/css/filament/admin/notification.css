@@ -1,0 +1,18 @@
+/* FILAMENT 3 NOTIFICATION Classes */
+
+.fi-notification {
+  @apply rounded-xl shadow-lg border border-gray-100 dark:border-gray-800;
+  background: white;
+}
+
+.dark .fi-notification {
+  background: #1f2937;
+}
+
+.fi-no-database .fi-modal-content {
+    @apply p-0 m-0;
+}
+
+.fi-no-notification {
+    @apply rounded-3xl;
+}
