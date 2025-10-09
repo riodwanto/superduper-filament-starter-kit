@@ -1,0 +1,13 @@
+.fi-input-wrapper {
+  @apply transition-all duration-200;
+}
+
+.fi-input,
+.fi-select select {
+  @apply rounded-lg border-gray-300 dark:border-gray-700 shadow-sm;
+  @apply focus:border-primary-500;
+}
+
+.fi-input-wrp:focus-within {
+  @apply ring-2 ring-primary-100 dark:ring-primary-900/30 rounded-lg;
+}

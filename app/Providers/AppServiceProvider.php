@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
 
         // # \Opcodes\LogViewer
         LogViewer::auth(function ($request) {
-            return auth()->user()->can('view_log::opcodes');
+            return auth()->user() && auth()->user()->can('view_log::opcodes');
         });
 
         // # Filament Hooks

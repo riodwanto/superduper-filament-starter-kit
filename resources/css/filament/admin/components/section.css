@@ -1,0 +1,29 @@
+
+/* CONTENT SECTIONS */
+.fi-section {
+  @apply rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden transition-all duration-200 shadow-sm hover:shadow-md;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+}
+
+.dark .fi-section {
+  background: linear-gradient(145deg, #1f2937, #111827);
+}
+
+.fi-section-header {
+  @apply px-6 py-4;
+  background: linear-gradient(90deg, rgba(var(--primary-rgb), 0.05), transparent);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+}
+
+.dark .fi-section-header {
+  background: linear-gradient(90deg, rgba(var(--primary-rgb), 0.1), transparent);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.15);
+}
+
+.fi-section-header-heading {
+  @apply text-base font-semibold text-primary-800 dark:text-primary-300;
+}
+
+.fi-section-content {
+  @apply p-6;
+}

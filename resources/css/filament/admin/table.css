@@ -1,0 +1,13 @@
+
+/* TABLES */
+.fi-ta-header-cell {
+  /* @apply  ; */
+}
+
+.fi-ta-row {
+  @apply transition-colors duration-150;
+}
+
+.fi-ta-row:nth-child(even) {
+  /* @apply ; */
+}

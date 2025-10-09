@@ -1,0 +1,31 @@
+
+/* DROPDOWN MENUS */
+.fi-dropdown-panel {
+  @apply rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 overflow-hidden;
+  background: white;
+}
+
+.dark .fi-dropdown-panel {
+  background: #1f2937;
+}
+
+.fi-dropdown-panel-heading {
+  @apply text-sm font-medium text-primary-700 dark:text-primary-300 px-4 pt-2 pb-0;
+}
+
+.fi-dropdown-list {
+  @apply p-1;
+}
+
+.fi-dropdown-list-item-label {
+  @apply text-sm;
+}
+
+.fi-dropdown-list-item button:hover,
+.fi-dropdown-list-item a:hover {
+  @apply bg-primary-50 dark:bg-primary-900/30;
+}
+
+.fi-dropdown-trigger button.fi-btn {
+  @apply !p-2 rounded-lg;
+}

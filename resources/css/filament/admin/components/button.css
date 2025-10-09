@@ -1,0 +1,103 @@
+
+.fi-btn {
+  @apply rounded-lg shadow-sm transition-all duration-200 transform;
+}
+
+.fi-btn:not(:disabled):hover {
+  @apply shadow translate-y-[-1px];
+}
+
+.fi-btn:not(:disabled):active {
+  @apply shadow-inner translate-y-[1px];
+}
+
+/* Primary button styling */
+.fi-btn.fi-btn-color-primary {
+  background: var(--primary-gradient);
+  @apply text-white border-0;
+  box-shadow: 0 2px 6px -2px rgba(var(--primary-rgb), 0.25);
+}
+
+.fi-btn.fi-btn-color-primary:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(var(--primary-rgb), 0.18);
+}
+
+/* Secondary button styling */
+.fi-btn.fi-btn-color-secondary {
+  background: var(--secondary-gradient);
+  @apply text-gray-900 border-0;
+  box-shadow: 0 4px 10px -3px rgba(var(--secondary-rgb), 0.5);
+}
+
+.fi-btn.fi-btn-color-secondary:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 15px -3px rgba(var(--secondary-rgb), 0.6);
+}
+
+/* Success button styling */
+.fi-btn.fi-btn-color-success {
+  background: linear-gradient(145deg, #34D399, #10B981);
+  @apply text-white border-0;
+  box-shadow: 0 2px 6px -2px rgba(16, 185, 129, 0.18);
+}
+.fi-btn.fi-btn-color-success:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(16, 185, 129, 0.22);
+}
+
+/* Error button styling */
+.fi-btn.fi-btn-color-danger {
+  background: linear-gradient(145deg, #F87171, #EF4444);
+  @apply text-white border-0;
+  box-shadow: 0 2px 6px -2px rgba(239, 68, 68, 0.18);
+}
+.fi-btn.fi-btn-color-danger:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(239, 68, 68, 0.22);
+}
+
+/* Warning button styling */
+.fi-btn.fi-btn-color-warning {
+  background: linear-gradient(145deg, #FBBF24, #F59E0B);
+  @apply text-gray-900 border-0;
+  box-shadow: 0 2px 6px -2px rgba(245, 158, 11, 0.18);
+}
+.fi-btn.fi-btn-color-warning:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(245, 158, 11, 0.22);
+}
+
+/* Info button styling */
+.fi-btn.fi-btn-color-info {
+  background: linear-gradient(145deg, #60A5FA, #3B82F6);
+  @apply text-white border-0;
+  box-shadow: 0 2px 6px -2px rgba(59, 130, 246, 0.18);
+}
+.fi-btn.fi-btn-color-info:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 8px -2px rgba(59, 130, 246, 0.22);
+}
+
+/* Gray button styling */
+.fi-btn.fi-btn-color-gray {
+  background: linear-gradient(145deg, #f4f4f5, #e5e7eb); /* subtle gray gradient */
+  @apply text-gray-900 border-0 shadow-sm;
+}
+
+.fi-btn.fi-btn-color-gray:hover {
+  filter: brightness(1.04);
+  background: linear-gradient(145deg, #e5e7eb, #f4f4f5);
+  @apply text-gray-900;
+}
+
+.dark .fi-btn.fi-btn-color-gray {
+  background: linear-gradient(145deg, #23263A 5%, #181A20 95%);
+  @apply text-white border-0 shadow-sm;
+}
+
+.dark .fi-btn.fi-btn-color-gray:hover {
+  filter: brightness(1.08);
+  background: linear-gradient(145deg, #23263A 10%, #23263A 90%);
+  @apply text-white;
+}
